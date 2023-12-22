@@ -21,11 +21,7 @@ const Jobs = (props: Props) => {
       job_status: "ACTIVE",
       company_name: "Deloitte"
     },
-    {
-      job_title: "Graphic Designer",
-      job_status: "ACTIVE",
-      company_name: "Catwalk"
-    },
+    
   ])
 
   useEffect(() => {
