@@ -2,12 +2,15 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 import Stack from '@mui/material/Stack';
-import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
-import { CiLocationOn } from "react-icons/ci";
-import { BsHouseDoor } from "react-icons/bs";
 import Button from '@mui/material/Button';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import Box from '@mui/material/Box';
+import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
+import { CiLocationOn } from 'react-icons/ci';
+import { BsHouseDoor } from 'react-icons/bs';
 import './search.css';
+
+
 
 
 const SearchDiv = styled('div')({
@@ -24,6 +27,7 @@ const SearchDiv = styled('div')({
 const FirstDiv = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
+  border: "#4e66a2",
   alignItems: 'center',
   borderRadius: '8px',
   backgroundColor: '#fff',
@@ -125,30 +129,19 @@ const Search = () => {
         </div>
       </form>
 
-      <div className='flex items-center gap-10 justify-center'>
-        <div className='singleSearch flex items-center gap-2'>
-          <label htmlFor="relevance" className='text-[#808080] font-semibold'>Type: </label>
+      <Box style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', marginTop: '30px'  }}> 
+        <Select defaultValue="Full-Time" style={{ width: '200px', border: '2px solid #4e66a2', color: '#444444' ,  marginRight: '30px'}}>
+        <MenuItem value="Full-Time">Full-Time</MenuItem>
+        <MenuItem value="Part-Time">Part-Time</MenuItem>
+        <MenuItem value="Internship">Internship</MenuItem>
+      </Select>
 
-          <select name='' id='relevance' className='bg-white rounded-[3px] px-4 py-1'>
-            <option value="">FULL-TIME</option>
-            <option value="">PART-TIME</option>
-            <option value="">INTERNSHIP</option>
-          </select>
-        </div>
-
-        <div className='singleSearch flex items-center gap-2'>
-          <label htmlFor="level" className='text-[#808080] font-semibold'>LEVEL: </label>
-
-          <select name='' id='level' className='bg-white rounded-[3px] px-4 py-1'>
-            <option value="">JUNIOR</option>
-            <option value="">SENIOR</option>
-            <option value="">INTERN</option>
-          </select>
-        </div>
-    </div>
-
-    <span className='text-[#a1a1a1]-cursor-pointer'>Clear All</span>
-
+      <Select defaultValue="Junior" style={{ width: '200px', border: '2px solid #4e66a2', color: '#444444',  marginLeft: '30px' }}>
+        <MenuItem value="Junior">Junior</MenuItem>
+        <MenuItem value="Senior">Senior</MenuItem>
+        <MenuItem value="Intern">Intern</MenuItem>
+      </Select>
+    </Box>
     </SearchDiv>
   );
 };

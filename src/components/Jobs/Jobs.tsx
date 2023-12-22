@@ -1,7 +1,10 @@
 import React from 'react'
 import './jobs.css'
 import { useState, useEffect } from 'react'
-
+import Box from "@mui/material"
+import Grid from "@mui/material"
+import Button from '@mui/material/Button';
+import Typography from '@mui/material'
 type Props = {}
 
 const Jobs = (props: Props) => {
@@ -20,6 +23,11 @@ const Jobs = (props: Props) => {
       job_title: "Full-Stack Developer",
       job_status: "ACTIVE",
       company_name: "Deloitte"
+    },
+    {
+      job_title: "Graphic Designer",
+      job_status: "ACTIVE",
+      company_name: "Catwalk"
     },
     
   ])

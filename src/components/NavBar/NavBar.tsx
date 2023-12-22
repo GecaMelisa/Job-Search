@@ -6,9 +6,9 @@ type Props = {};
 const NavBar = (props: Props) => {
   return (
     <div className='root-container'>
-      <div className='nav-container navBar flex justify-between items-center p-[3rem]'> 
+      <div className='nav-container navBar flex justify-between items-center p-[3rem] '> 
         <div className="logoDiv"> 
-          <h1 className="logo text-[25px] text-blueColor"> 
+          <h1 className="logo text-[35px] text-blueColor"> 
             <strong>Job</strong>Search 
           </h1> 
         </div> 
