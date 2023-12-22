@@ -1,0 +1,61 @@
+
+:root { 
+  font-family: 'Poppins', sans-serif; 
+} 
+
+.nav-container { 
+  width: 100%; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+
+.text-blueColor { 
+  color: #4e66a2;  
+}
+
+.text-grayColor { 
+  color: #6f6f6f; 
+}
+
+.body { 
+  background-color: rgb(247, 239, 239); 
+}
+
+li { 
+  list-style: none;
+  cursor: pointer; 
+  position: relative; 
+}
+
+li:hover::before { 
+  position: absolute; 
+  content: ''; 
+  height: 4px;
+  width: 100%; 
+  background: #2a68ff; 
+  right: 0; 
+  bottom: -10px; 
+  color: #2a68ff;
+}
+
+/* Additional navbar styles */
+.menu {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+.menuList {
+  color: #6f6f6f;
+}
+
+.menuList:hover {
+  color: #4e66a2;
+}
+
+.logo {
+  font-size: 30px;
+  color: #4e66a2;
+}
