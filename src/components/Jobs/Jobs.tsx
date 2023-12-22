@@ -7,24 +7,24 @@ type Props = {}
 const Jobs = (props: Props) => {
   const [jobs, setJobs] = useState([
     {
-      job_title: "job",
-      job_status: "active",
-      company_name: "company"
+      job_title: "Frontend Developer",
+      job_status: "ACTIVE",
+      company_name: "IBU"
     },
     {
-      job_title: "job",
-      job_status: "active",
-      company_name: "company"
+      job_title: "Project Manager",
+      job_status: "ACTIVE",
+      company_name: "Mistral"
     },
     {
-      job_title: "job",
-      job_status: "active",
-      company_name: "company"
+      job_title: "Full-Stack Developer",
+      job_status: "ACTIVE",
+      company_name: "Deloitte"
     },
     {
-      job_title: "job",
-      job_status: "active",
-      company_name: "company"
+      job_title: "Graphic Designer",
+      job_status: "ACTIVE",
+      company_name: "Catwalk"
     },
   ])
 

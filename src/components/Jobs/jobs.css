@@ -18,6 +18,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+  
+    border-radius: 8px;
+    box-shadow: 0 6px 4px rgba(6, 46, 95, 0.1);
   }
   
   .job-title {

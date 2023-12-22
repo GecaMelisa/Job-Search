@@ -1,3 +1,32 @@
 .icon {
     cursor: pointer;
 }
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    flex-direction: row; /* Updated to row */
+
+  }
+  
+  .singleSearch {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  label {
+    color: #808080;
+    font-weight: bold;
+  }
+  
+  select {
+    background-color: rgb(243, 233, 233);
+    border-radius: 3px;
+    padding: 4px 16px;
+  }
+  
+
