@@ -1,5 +1,44 @@
 import React from 'react';
 import './navbar.css';
+import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
+import { CiLocationOn } from 'react-icons/ci';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { styled } from '@mui/system';
+
+
+
+const FirstDiv = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-between',
+  border: '1px solid #4e66a2', 
+  borderRadius: '15px',
+  backgroundColor: '#fff',
+  padding: '8px',
+  boxShadow: '0 5px 4px rgba(0, 0, 0, 0.1)',
+  width: '100%',
+  maxWidth: '1300px', 
+  borderBottom: '2px solid #6c757d', 
+  marginLeft: '35px',
+  marginRight: '35px',
+  '&:hover': {
+    color: '#4e66a2',
+  },
+});
+
+const IconStyle = {
+  fontSize: '55px',
+  color: '#6c757d',
+};
+
+const HoverIconStyle = {
+  fontSize: '55px',
+  color: '#a5a6a6',
+  cursor: 'pointer',
+  '&:hover': {
+    color: '#007bff',
+  },
+};
 
 type Props = {};
 
@@ -13,14 +52,30 @@ const NavBar = (props: Props) => {
           </h1> 
         </div> 
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          <FirstDiv>
+          <Stack direction="row" spacing={40} alignItems="center" sx={{ margin: '0 5px' }}>
+              <AiOutlineSearch style={IconStyle} />
+              <TextField
+                type="text"
+                variant="standard"
+                fullWidth
+                placeholder="Search Job..."
+                InputProps={{
+                  sx: { flex: 10, padding: '10px' },
+                }}
+              />
+              <AiOutlineCloseCircle style={HoverIconStyle} />
+            </Stack>
+          </FirstDiv>
+
         <ul className="menu flex gap-8 list-none"> 
-          <li key="jobs" className='menuList text-[#6f6f6f] hover:text-blueColor'>Jobs</li> 
-          <li key="companies" className='menuList text-[#6f6f6f] hover:text-blueColor'>Companies</li> 
-          <li key="about" className='menuList text-[#6f6f6f] hover:text-blueColor'>About Us</li> 
+          <li key="jobs" className='menuList text-[#6f6f6f] hover:text-blueColor'>Home</li> 
           <li key="login" className='menuList text-[#6f6f6f] hover:text-blueColor'>Login</li> 
           <li key="register" className='menuList text-[#6f6f6f] hover:text-blueColor'>Register</li> 
         </ul> 
       </div> 
+    </div>
     </div>
   );
 };

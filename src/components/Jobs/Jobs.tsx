@@ -37,15 +37,23 @@ const Jobs = (props: Props) => {
   }, [ ,jobs])
 
   return (
-    <div className='jobs-container'>
-      {
+    <div className='jobs-container'>      {
         jobs.map((item, index) => {
           return (
             <div className='job'>
               <span className='job-title'>{item.job_title}</span>
               <span className='job-status'>{item.job_status}</span>
               <span className='company-name'>{item.company_name}</span>
+
+              {/* 
+  <Button variant="outlined" size="small" style={{ position: 'absolute', bottom: 0, right: 0 }}>
+    Check
+  </Button>
+*/}
+
+             
             </div>
+
           )
         })
       }

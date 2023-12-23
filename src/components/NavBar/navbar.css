@@ -3,6 +3,9 @@
   font-family: 'Poppins', sans-serif; 
 } 
 
+
+
+
 .nav-container { 
   width: 100%; 
   display: flex;
@@ -20,7 +23,7 @@
 }
 
 .body { 
-  background-color: rgb(247, 239, 239); 
+  background-color: rgb(232, 219, 219); 
 }
 
 li { 
@@ -40,7 +43,6 @@ li:hover::before {
   color: #2a68ff;
 }
 
-/* Additional navbar styles */
 .menu {
   display: flex;
   gap: 8px;
@@ -48,7 +50,16 @@ li:hover::before {
 }
 
 .menuList {
+  display: flex;
+  font-size: 17px;
   color: #6f6f6f;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+
+
+
+
 }
 
 .menuList:hover {
