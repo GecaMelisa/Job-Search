@@ -5,6 +5,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
+import { Link } from 'react-router-dom'
 
 
 
@@ -45,6 +46,8 @@ type Props = {};
 const NavBar = (props: Props) => {
   return (
     <div className='root-container'>
+      <Link className="nav-link" to="/">Job Search Platform</Link>
+
       <div className='nav-container navBar flex justify-between items-center p-[3rem] '> 
         <div className="logoDiv"> 
           <h1 className="logo text-[35px] text-blueColor"> 
@@ -70,9 +73,18 @@ const NavBar = (props: Props) => {
           </FirstDiv>
 
         <ul className="menu flex gap-8 list-none"> 
-          <li key="jobs" className='menuList text-[#6f6f6f] hover:text-blueColor'>Home</li> 
-          <li key="login" className='menuList text-[#6f6f6f] hover:text-blueColor'>Login</li> 
-          <li key="register" className='menuList text-[#6f6f6f] hover:text-blueColor'>Register</li> 
+          <li key="jobs" className='menuList text-[#6f6f6f] hover:text-blueColor'>
+            <Link className="nav-link" to="/home">Home</Link>
+          </li> 
+
+          <li key="login" className='menuList text-[#6f6f6f] hover:text-blueColor'>
+            <Link className="nav-link" to="/login">Login</Link>
+          </li> 
+
+          <li key="register" className='menuList text-[#6f6f6f] hover:text-blueColor'>
+          <Link className="nav-link" to="/registration">Registration</Link>
+          </li> 
+
         </ul> 
       </div> 
     </div>
