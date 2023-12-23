@@ -1,11 +1,14 @@
 import React from 'react'
 import './jobs.css'
+import {Job} from "../../utils/types"
 import { useState, useEffect } from 'react'
 import Box from "@mui/material"
 import Grid from "@mui/material"
 import Button from '@mui/material/Button';
 import Typography from '@mui/material'
-type Props = {}
+type Props = {
+
+}
 
 const Jobs = (props: Props) => {
   const [jobs, setJobs] = useState([

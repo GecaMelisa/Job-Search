@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom"
-import { Registration, Home, Login, NotFound } from "./pages"
+import { Registration, Home, Login, NotFound, UserProfile } from "./pages"
 import NavBar from "./components/NavBar"
 import Search from "./components/Search"
 import Jobs from "./components/Jobs"
+
 
 const App = () => {
   return (
@@ -15,7 +16,9 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Registration />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/userProfile" element={<UserProfile />} />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       </div>
