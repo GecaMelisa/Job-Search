@@ -1,160 +1,147 @@
-import React from 'react';
-import {
-  styled,
-  Typography,
-  Paper,
-  Avatar,
-  Button,
-  Divider,
-  Box,
-} from '@mui/material';
-import { FaEdit, FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Container, Typography, Button, Box, Paper, Card, CardContent, CardActions } from '@mui/material';
+import { styled, Theme } from '@mui/system';
+
+interface InfoItemProps {
+  icon: string;
+  label: string;
+  value: string;
+}
+
+const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
+  <div className="info-item">
+    <i className={icon}></i>
+    <span>
+      <strong>{label}:</strong>
+      <span>{value}</span>
+    </span>
+  </div>
+);
+
+const RoleLabel = styled(Typography)({
+  marginTop: '20px',
+  fontSize: '14px',
+});
 
 const UserProfileContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
-  borderRadius: theme.spacing(2),
-  backgroundColor: 'white',
-  boxShadow: theme.shadows[4],
-  margin: 'auto', // Centriranje containera
-  marginTop: theme.spacing(10),
+  borderRadius: theme.spacing(8),
+  backgroundColor: '#4e66a2', 
+  color: 'white',
+  boxShadow: (theme as any).shadows[4], 
+  margin: 'auto',
+  marginTop: theme.spacing(20),
   marginLeft: theme.spacing(40),
   marginRight: theme.spacing(40),
   marginBottom: theme.spacing(10),
-
-
 }));
 
-const BoxContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: '#4e66a2',
-  padding: theme.spacing(2),
-  borderRadius: theme.spacing(2),
-}));
-
-const ProfileHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  marginBottom: theme.spacing(3),
-}));
-
-const AvatarImage = styled(Avatar)(({ theme }) => ({
-  width: theme.spacing(12),
-  height: theme.spacing(12),
-  marginBottom: theme.spacing(2),
-  backgroundColor: theme.palette.primary.main,
-}));
-
-const EditButton = styled(Button)(({ theme }) => ({
-  borderRadius: theme.spacing(1),
-  height: theme.spacing(4),
-  marginTop: theme.spacing(2),
-  backgroundColor: '#4e66a2',
-  color: theme.palette.secondary.contrastText,
-}));
-
-const SectionContainer = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-}));
-
-const CardContainer = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: theme.spacing(1),
-  padding: theme.spacing(2),
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  backgroundColor: theme.palette.background.default,
-}));
-
-const BoldText = styled(Typography)({
-  fontWeight: 'bold',
+const CustomButton = styled(Button)({
+  backgroundColor: 'red',
+  color: 'white',
+  padding: '10px 20px',
+  borderRadius: '5px',
+  fontSize: '16px',
+  marginTop: '-20px',
+  marginRight: '10px',
+  display: 'inline-block',
 });
 
-const IconStyle = {
-  fontSize: '1.2em',
-  marginRight: '8px',
-  marginTop: '15px',
-};
+const CloseButton = styled('span')({
+  position: 'absolute',
+  top: '15px',
+  right: '15px',
+  cursor: 'pointer',
+  fontSize: '20px',
+});
 
-const useStyles = {
-  UserProfileContainer,
-  BoxContainer,
-  ProfileHeader,
-  AvatarImage,
-  EditButton,
-  SectionContainer,
-  CardContainer,
-  BoldText,
-};
+const UserProfile: React.FC = () => {
+  const [profileData, setProfileData] = useState({
+    fullName: 'Melisa Geca',
+    email: 'melisageca@ibu.edu.ba',
+    country: 'BiH',
+    city: 'Sarajevo',
+    birthDate: '2002-01-25',
+    phone: '123-456-7890',
+  });
 
-const UserProfile = () => {
+  useEffect(() => {
+    // Fetch profile data and update the state (profileData)
+  }, []); 
+
+  const showChangePasswordForm = () => {
+    // Logic to show change password form
+  };
+
+  const closeChangePasswordForm = () => {
+    // Logic to close change password form
+  };
+
   return (
-    <BoxContainer>
-      <UserProfileContainer>
-        <ProfileHeader>
-          <AvatarImage
-            alt="User Avatar"
-            src="https://placekitten.com/200/200" // Zamijenite sa stvarnim URL-om slike profila
-          />
-          <div>
-            <BoldText variant="h5" align="center">
-              Melisa Geca
-            </BoldText>
-            <Typography variant="subtitle1" color="textSecondary" align="center">
-              Web Developer
-            </Typography>
-            <div style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
-              <FaMapMarkerAlt style={IconStyle} />
-              <Typography variant="body2">Sarajevo</Typography>
-            </div>
-          </div>
-        </ProfileHeader>
-
-        <Divider />
-
-        <SectionContainer>
-          <Typography variant="h6">Applied Jobs</Typography>
-          <BoldText variant="body1">6</BoldText>
-        </SectionContainer>
-
-        <Divider />
-
-        <SectionContainer>
-          <Typography variant="h6">About</Typography>
-          <Typography variant="body1">
-            <BoldText>Passionate Web Developer</BoldText>with a keen eye for design.
+    <Container maxWidth="lg">
+      <Box sx={{ mt: 3 }}>
+        <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#4e66a2', color: 'white' }}>
+          <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <i className="fas fa-user fa-fw"></i>
+            <span>User Profile</span>
           </Typography>
-          <Typography variant="body1">
-            <BoldText>Lives in Sarajevo</BoldText>Bosnia and Herzegovina.
+
+          <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+            <Box sx={{ mr: 4 }}>
+              <img src="images/mely.jpg" alt="User Image" style={{ width: '150px', height: '150px', borderRadius: '50%' }} />
+              <RoleLabel variant="subtitle2">MEMBER</RoleLabel>
+            </Box>
+            <Box>
+              <Typography variant="h5">John Doe</Typography>
+              <InfoItem icon="fas fa-envelope" label="Email" value={profileData.email} />
+              <InfoItem icon="fas fa-globe" label="Country" value={profileData.country} />
+              <InfoItem icon="fas fa-city" label="City" value={profileData.city} />
+              <InfoItem icon="fas fa-birthday-cake" label="Birth Date" value={profileData.birthDate} />
+              <InfoItem icon="fas fa-phone" label="Phone" value={profileData.phone} />
+            </Box>
+          </Box>
+
+          <Box sx={{ textAlign: 'end', position: 'relative' }}>
+            <CustomButton onClick={showChangePasswordForm}>Change Password</CustomButton>
+          </Box>
+
+          <Box id="change-password-container"></Box>
+          <CloseButton onClick={closeChangePasswordForm}>&times;</CloseButton>
+        </Paper>
+      </Box>
+
+      <Box sx={{ mt: 3 }}>
+        <Paper elevation={3} sx={{ padding: 3}}>
+          <Typography variant="h6" sx={{ marginBottom: 2 }}>
+            Applied Jobs
           </Typography>
-          <Typography variant="body1">
-            <BoldText>Enthusiastic photographer</BoldText>capturing moments.
-          </Typography>
-        </SectionContainer>
-
-        <Divider />
-
-        <SectionContainer>
-          <Typography variant="h6">Recent Applied Jobs</Typography>
-          <CardContainer>
-            <div>
-              <BoldText variant="h6">Senior Frontend Developer</BoldText>
-              <Typography variant="body2" color="textSecondary">
-                Tech Co.
-              </Typography>
-            </div>
-            <FaClipboardList style={IconStyle} />
-          </CardContainer>
-        </SectionContainer>
-
-        <Divider />
-
-        <EditButton variant="outlined"  startIcon={<FaEdit style={IconStyle}  />}>
-          Edit Profile
-        </EditButton>
-      </UserProfileContainer>
-    </BoxContainer>
+          {/* Example: */}
+          <Card>
+            <CardContent >
+              <Typography variant="subtitle1">Job Title</Typography>
+              <Typography variant="body2">Company Name</Typography>
+              {/* Add more job details*/}
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="primary">
+                View Details
+              </Button>
+            </CardActions>
+          </Card>
+          <Card>
+            <CardContent>
+              <Typography variant="subtitle1">Job Title</Typography>
+              <Typography variant="body2">Company Name</Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="primary">
+                View Details
+              </Button>
+            </CardActions>
+          </Card>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

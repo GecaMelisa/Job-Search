@@ -4,6 +4,11 @@
 } 
 
 
+.search-bar {
+  width: 100%;
+  margin: 0px 30px;
+  
+}
 
 
 .nav-container { 
@@ -11,7 +16,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3rem;
+  padding: 4.5rem;
+  background-color: #b9cadf;
 }
 
 .text-blueColor { 
@@ -52,13 +58,10 @@ li:hover::before {
 .menuList {
   display: flex;
   font-size: 17px;
-  color: #6f6f6f;
+  color: #3d3939;
   justify-content: space-between;
   align-items: center;
   padding: 4px;
-
-
-
 
 }
 

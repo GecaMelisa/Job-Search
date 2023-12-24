@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom'
+import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
 
 
 
@@ -46,17 +47,32 @@ type Props = {};
 const NavBar = (props: Props) => {
   return (
     <div className='root-container'>
-      <Link className="nav-link" to="/">Job Search Platform</Link>
-
-      <div className='nav-container navBar flex justify-between items-center p-[3rem] '> 
+      <div className='nav-container navBar flex justify-between items-center p-[3.2rem] '> 
         <div className="logoDiv"> 
           <h1 className="logo text-[35px] text-blueColor"> 
             <strong>Job</strong>Search 
           </h1> 
         </div> 
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          <FirstDiv>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
+        <div className='search-bar' style={{ marginLeft: '30px', marginRight: '1px', borderRadius: '15px' }}>
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <InputLabel htmlFor="outlined-adornment-amount">&nbsp;</InputLabel>
+            <OutlinedInput
+              color='info'
+              id="outlined-adornment-amount"
+              startAdornment={<InputAdornment position="start"><AiOutlineSearch/></InputAdornment>}
+              placeholder="Search for Job..."
+              sx={{
+                borderRadius: '8px',
+                border: '1px solid #4e66a2',
+              }}
+            />
+          </FormControl>
+        </div>
+
+
+          {/*<FirstDiv >
           <Stack direction="row" spacing={40} alignItems="center" sx={{ margin: '0 5px' }}>
               <AiOutlineSearch style={IconStyle} />
               <TextField
@@ -71,21 +87,22 @@ const NavBar = (props: Props) => {
               <AiOutlineCloseCircle style={HoverIconStyle} />
             </Stack>
           </FirstDiv>
+              */}
 
-        <ul className="menu flex gap-8 list-none"> 
-          <li key="jobs" className='menuList text-[#6f6f6f] hover:text-blueColor'>
-            <Link className="nav-link" to="/home">Home</Link>
-          </li> 
+          <ul className="menu flex gap-8 list-none"> 
+            <li key="jobs" className='menuList text-[#4e66a2] hover:text-blueColor'>
+              <Link className="nav-link font-bold" to="/home">Home</Link>
+            </li> 
 
-          <li key="login" className='menuList text-[#6f6f6f] hover:text-blueColor'>
-            <Link className="nav-link" to="/login">Login</Link>
-          </li> 
+            <li key="login" className='menuList text-[#4e66a2] hover:text-blueColor'>
+              <Link className="nav-link font-bold" to="/login">Login</Link>
+            </li> 
 
-          <li key="register" className='menuList text-[#6f6f6f] hover:text-blueColor'>
-          <Link className="nav-link" to="/registration">Registration</Link>
-          </li> 
+            <li key="register" className='menuList text-[#4e66a2] hover:text-blueColor'>
+              <Link className="nav-link font-bold" to="/registration">Registration</Link>
+            </li> 
+          </ul>
 
-        </ul> 
       </div> 
     </div>
     </div>

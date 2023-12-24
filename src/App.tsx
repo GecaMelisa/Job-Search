@@ -5,22 +5,23 @@ import Search from "./components/Search"
 import Jobs from "./components/Jobs"
 
 
+
 const App = () => {
+
+
   return (
     <div className='root-container' >
       <div className='w-[95%] m-auto bg'>
-      <NavBar/>
-      <Search/>
-      <Jobs/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path="/userProfile" element={<UserProfile />} />
+        <Route path="/userProfile" element={<UserProfile/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
+
       </div>
     </div>
   )
