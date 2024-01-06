@@ -58,9 +58,9 @@ const CloseButton = styled('span')({
 const UserProfile: React.FC = () => {
   const [profileData, setProfileData] = useState({
     fullName: 'Melisa Geca',
-    email: 'melisageca@ibu.edu.ba',
-    country: 'BiH',
-    city: 'Sarajevo',
+    email: ' melisageca@ibu.edu.ba',
+    country: ' BiH',
+    city: ' Sarajevo',
     birthDate: '2002-01-25',
     phone: '123-456-7890',
   });
@@ -80,19 +80,19 @@ const UserProfile: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ mt: 3 }}>
-        <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#4e66a2', color: 'white' }}>
+        <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#175e5e', color: 'white' }}>
           <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <i className="fas fa-user fa-fw"></i>
-            <span>User Profile</span>
+          <i className="fas fa-user fa-fw"></i>
+          <span style={{ color: '#e3e3a4e3' }}>JobSearch</span>
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-            <Box sx={{ mr: 4 }}>
-              <img src="images/mely.jpg" alt="User Image" style={{ width: '150px', height: '150px', borderRadius: '50%' }} />
-              <RoleLabel variant="subtitle2">MEMBER</RoleLabel>
+            <Box sx={{ mr: 3}}>
             </Box>
             <Box>
-              <Typography variant="h5">John Doe</Typography>
+              <Typography variant="h5">Melisa Geca</Typography>
+              <RoleLabel variant="subtitle2" >MEMBER</RoleLabel>
+
               <InfoItem icon="fas fa-envelope" label="Email" value={profileData.email} />
               <InfoItem icon="fas fa-globe" label="Country" value={profileData.country} />
               <InfoItem icon="fas fa-city" label="City" value={profileData.city} />
@@ -115,12 +115,10 @@ const UserProfile: React.FC = () => {
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             Applied Jobs
           </Typography>
-          {/* Example: */}
           <Card>
             <CardContent >
               <Typography variant="subtitle1">Job Title</Typography>
               <Typography variant="body2">Company Name</Typography>
-              {/* Add more job details*/}
             </CardContent>
             <CardActions>
               <Button size="small" color="primary">

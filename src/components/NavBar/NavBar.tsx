@@ -1,13 +1,9 @@
 import React from 'react';
 import './navbar.css';
 import { AiOutlineSearch, AiOutlineCloseCircle } from 'react-icons/ai';
-import { CiLocationOn } from 'react-icons/ci';
-import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom'
 import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
-
 
 
 const FirstDiv = styled('div')({
@@ -24,7 +20,7 @@ const FirstDiv = styled('div')({
   marginLeft: '35px',
   marginRight: '35px',
   '&:hover': {
-    color: '#4e66a2',
+    color: '#ff862a',
   },
 });
 
@@ -56,20 +52,25 @@ const NavBar = (props: Props) => {
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', width: '100%' }}>
         <div className='search-bar' style={{ marginLeft: '30px', marginRight: '1px', borderRadius: '15px' }}>
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <InputLabel htmlFor="outlined-adornment-amount">&nbsp;</InputLabel>
-            <OutlinedInput
-              color='info'
-              id="outlined-adornment-amount"
-              startAdornment={<InputAdornment position="start"><AiOutlineSearch/></InputAdornment>}
-              placeholder="Search for Job..."
-              sx={{
-                borderRadius: '8px',
-                border: '1px solid #4e66a2',
-              }}
-            />
-          </FormControl>
-        </div>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <InputLabel htmlFor="outlined-adornment-amount">&nbsp;</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            startAdornment={<InputAdornment position="start"><AiOutlineSearch/></InputAdornment>}
+            placeholder="Search for Job..."
+            sx={{
+              borderRadius: '8px',
+              border: '1px solid ',
+              backgroundColor: '#edede0e3', 
+              '&:hover': {
+                color: '#175e5e',
+              },
+            }}
+          />
+        </FormControl>
+      </div>
+
+        
 
 
           {/*<FirstDiv >
@@ -102,6 +103,8 @@ const NavBar = (props: Props) => {
               <Link className="nav-link font-bold" to="/registration">Registration</Link>
             </li> 
           </ul>
+
+     
 
       </div> 
     </div>

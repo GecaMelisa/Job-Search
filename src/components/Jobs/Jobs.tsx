@@ -6,11 +6,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Job } from '../../utils/types';
 import { useState, useEffect } from 'react';
+import ApplicationModal from '../Modals/ApplicationModal';
+
 
 type Props = {};
 
 const Jobs = (props: Props) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>([
+    
     {
       job_title: 'Frontend Developer',
       job_status: 'ACTIVE',
@@ -35,6 +39,14 @@ const Jobs = (props: Props) => {
 
   useEffect(() => {}, [jobs]);
 
+  const handleApplyClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className='jobs-container'>
       {jobs.map((item, index) => (
@@ -42,10 +54,10 @@ const Jobs = (props: Props) => {
           key={index}
           className='job-card'
           sx={{
-            margin: '25px 250px 40px 250px',
-            border: '1px solid #4e66a2',
+            margin: '35px 250px 40px 250px',
+            border: '1px solid #175e5e',
             borderRadius: '7px',
-            backgroundColor: '#e6e6ff',
+            backgroundColor: '#edede0e3',
             position: 'relative', 
           }}
         >
@@ -59,6 +71,7 @@ const Jobs = (props: Props) => {
             </Typography>
             <Button
               variant='outlined'
+              onClick={handleApplyClick}
               size='medium'
               sx={{
                 position: 'absolute',
@@ -66,15 +79,17 @@ const Jobs = (props: Props) => {
                 marginBottom: '11px',
                 bottom: '8px',
                 right: '8px',
-                backgroundColor: '#4e66a2', 
+                backgroundColor: '#175e5e', 
                 color: '#fff',
               }}
             >
-              Check
+              Apply
             </Button>
           </CardContent>
         </Card>
       ))}
+
+     <ApplicationModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 };

@@ -16,16 +16,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4.5rem;
-  background-color: #b9cadf;
+  padding: 6.1rem;
+  background-color: #175e5e;
 }
 
 .text-blueColor { 
-  color: #4e66a2;  
+  color: #ffffff;  
 }
 
 .text-grayColor { 
-  color: #6f6f6f; 
+  color: #ffffff; 
 }
 
 .body { 
@@ -43,10 +43,10 @@ li:hover::before {
   content: ''; 
   height: 4px;
   width: 100%; 
-  background: #2a68ff; 
+  background: #cd6225; 
   right: 0; 
   bottom: -10px; 
-  color: #2a68ff;
+  color: #ff862a;
 }
 
 .menu {
@@ -58,7 +58,7 @@ li:hover::before {
 .menuList {
   display: flex;
   font-size: 17px;
-  color: #3d3939;
+  color: #e3e3a4e3;
   justify-content: space-between;
   align-items: center;
   padding: 4px;
@@ -66,10 +66,10 @@ li:hover::before {
 }
 
 .menuList:hover {
-  color: #4e66a2;
+  color: #c5ad36;
 }
 
 .logo {
   font-size: 30px;
-  color: #4e66a2;
+  color: #e3e3a4e3;
 }
