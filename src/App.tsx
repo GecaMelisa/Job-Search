@@ -1,9 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { Registration, Home, Login, NotFound, UserProfile } from "./pages"
 import NavBar from "./components/NavBar"
-import Search from "./components/Search"
-import Jobs from "./components/Jobs"
-
 
 
 const App = () => {

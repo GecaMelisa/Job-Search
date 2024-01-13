@@ -1,7 +1,8 @@
-import React from 'react'
 import NavBar from '../components/NavBar'
 import Search from '../components/Search'
-import Jobs from '../components/Jobs'
+import JobList from '../components/JobList/JobList'
+import JobListAxios from '../components/JobList/JobListAxios'
+
 
 type Props = {}
 
@@ -10,7 +11,8 @@ const Home = (props: Props) => {
     <>
       <NavBar />
       <Search />
-      <Jobs />
+      <JobList/>
+      <JobListAxios />
     </>
   )
 }

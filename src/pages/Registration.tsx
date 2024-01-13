@@ -1,4 +1,6 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
+
 import {
   Button,
   Card,
@@ -13,6 +15,8 @@ import {
   createTheme,
 } from '@mui/material';
 
+
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -21,9 +25,26 @@ const theme = createTheme({
   },
 });
 
+type Props = {}
+
+export type RegisterFormData = {
+  userType: string,
+  firstName: string,
+  lastName: string,
+  dateOfBirth: string,
+  phoneNumber: string,
+  email: string,
+  address: string,
+  education: string,
+  workExperience: string,
+  username: string,
+  password: string,
+
+}
+
 const userTypes = ['Member', 'Company Owner'];
 
-function Registration() {
+const Registration= (props: Props) => {
   const [formData, setFormData] = React.useState({
     userType: '',
     firstName: '',
@@ -42,6 +63,12 @@ function Registration() {
     const { name, value } = event.target;
     setFormData({ ...formData, [name!]: value as string });
   };
+
+  const {register, handleSubmit, formState: {errors}} = useForm<RegisterFormData>()
+
+  const onSubmit=(data: RegisterFormData) => {
+    console.log(data)
+  }
 
   return (
     <ThemeProvider theme={theme}>

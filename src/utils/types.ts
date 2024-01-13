@@ -1,5 +1,13 @@
 export type Job =  {
-   job_title: string,
-   job_status: string,
-   company_name: string
+   companyName: string;
+   position: string;
+   description: string;
+   location: string;
+   jobType: string;
+   salary: string;
+   requirements: string;
+   postedDate: string;
+   deadline: string;
+   jobStatus: string;
 }
+

@@ -3,7 +3,7 @@ import { JobService} from "../services";
 
 
 const useJobs = () => {
-   return useQuery('books',
+   return useQuery('articles',
        () => JobService.getJobs()
    );
 }

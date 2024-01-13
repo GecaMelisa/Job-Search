@@ -3,7 +3,7 @@ import { Job } from "../utils/types";
 
 
 const getJobs = async (): Promise<Job[]> => {
-   return appAxios.get(`/jobs`).then(
+   return appAxios.get(`/jobs/`).then(
        (response) => {
            const data = response.data;
            console.log(data);
