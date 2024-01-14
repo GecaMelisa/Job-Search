@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import appAxios from '../services/appAxios'
 import { RegisterFormData } from '../pages/Registration'
-//import { LoginFormData } from '../pages/Login'
+import {LoginFormData} from '../pages/Login'
+
 
 // initialize userToken from local storage
 const userToken = localStorage.getItem('userToken')
@@ -35,7 +36,6 @@ export const registerUser = createAsyncThunk(
     }
 )
 
-/*
 export const login = createAsyncThunk(
     'auth/login',
     async (body: LoginFormData, { rejectWithValue }) => {
@@ -55,7 +55,7 @@ export const login = createAsyncThunk(
             }
         }
     }
-)*/
+)
 
 const authSlice = createSlice({
     name: 'auth',
@@ -69,9 +69,8 @@ const authSlice = createSlice({
             state.error = null
         }
     },
-    
     extraReducers: (builder) => {
-       /* // Login user
+        // Login user
         builder.addCase(login.pending, (state) => {
             state.loading = true
             state.error = null
@@ -84,7 +83,7 @@ const authSlice = createSlice({
         builder.addCase(login.rejected, (state, action: any) => {
             state.loading = false
             state.error = action.payload
-        })*/
+        })
         // Register user
         builder.addCase(registerUser.pending, (state) => {
             state.loading = true
@@ -103,4 +102,4 @@ const authSlice = createSlice({
 
 // ...
 export const { logout } = authSlice.actions
-export default authSlice.reducer;
+export default authSlice.reducer

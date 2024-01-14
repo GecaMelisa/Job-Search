@@ -3,18 +3,20 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
 import './navbar.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../store'
+import { logout } from '../../store/authSlice'
+//import { useNavigate } from 'react-router-dom';
 
-type NavBarProps = {
-  onSearch: (query: string) => void;
-};
 
-const NavBar: React.FC<NavBarProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+type Props = {}
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    onSearch(e.target.value); // Poziv funkcije pretraživanja iznad, koja će se implementirati u roditeljskoj komponenti
-  };
+const NavBar = (props: Props) => {
+
+  const { userToken } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  //const navigate = useNavigate();
+
 
   return (
     <div className='root-container'>
@@ -33,8 +35,6 @@ const NavBar: React.FC<NavBarProps> = ({ onSearch }) => {
                 id="outlined-adornment-amount"
                 startAdornment={<InputAdornment position="start"><AiOutlineSearch /></InputAdornment>}
                 placeholder="Search for Job..."
-                value={searchQuery}
-                onChange={handleSearchChange}
                 sx={{
                   borderRadius: '8px',
                   border: '1px solid ',
@@ -52,14 +52,36 @@ const NavBar: React.FC<NavBarProps> = ({ onSearch }) => {
               <Link className="nav-link font-bold" to="/home">Home</Link>
             </li>
 
-            <li key="login" className='menuList text-[#4e66a2] hover:text-blueColor'>
-              <Link className="nav-link font-bold" to="/login">Login</Link>
-            </li>
+            {userToken ? (
+            <>
+              <li key="logout" className='menuList text-[#4e66a2] hover:text-blueColor'>
+                <a
+                  className="nav-link font-bold"
+                  style={{ color: '#cd6225' }}
+                  onClick={() => {
+                    dispatch(logout());
+                    // navigate('/login'); // Redirekcija na login stranicu nakon odjave
+                  }}
+                >
+                  Logout
+                </a>
+              </li>
 
-            <li key="register" className='menuList text-[#4e66a2] hover:text-blueColor'>
-              <Link className="nav-link font-bold" to="/registration">Registration</Link>
-            </li>
-          </ul>
+              <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
+                <Link className="nav-link font-bold" to="/userProfile">MyProfile</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li key="login" className='menuList text-[#4e66a2] hover:text-blueColor'>
+                <Link className="nav-link font-bold" to="/login">Login</Link>
+              </li>
+              <li key="register" className='menuList text-[#4e66a2] hover:text-blueColor'>
+                <Link className="nav-link font-bold" to="/registration">Registration</Link>
+              </li>
+            </>
+          )}
+        </ul>
         </div>
       </div>
     </div>
