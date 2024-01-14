@@ -1,13 +1,12 @@
-export type Job =  {
+export type Job = {
    companyName: string;
-   position: string;
-   description: string;
-   location: string;
-   jobType: string;
-   salary: string;
-   requirements: string;
-   postedDate: string;
    deadline: string;
-   jobStatus: string;
-}
-
+   description: string;
+   jobType: string;
+   location: string;
+   position: string;
+   postedDate: string;
+   requirements: string[];
+   salary: string;
+   statusRequest: string;
+ }

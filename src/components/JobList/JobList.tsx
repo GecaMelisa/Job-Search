@@ -3,7 +3,6 @@ import axios from 'axios';
 import JobCard from '../JobCard';
 import { Job } from '../../utils/types';
 import { JobService } from '../../services';
-import ApplicationModal from '../Modals/ApplicationModal';
 import './jobs.css';
 
 const JobListAxios: React.FC = () => {

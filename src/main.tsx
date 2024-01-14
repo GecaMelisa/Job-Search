@@ -13,10 +13,9 @@ const queryClient = new QueryClient({
       retry: 1,
     },
   },
- });
- 
- 
- ReactDOM.createRoot(document.getElementById('root')!).render(
+});
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -27,4 +26,3 @@ const queryClient = new QueryClient({
     </QueryClientProvider>
   </React.StrictMode>,
 )
- 

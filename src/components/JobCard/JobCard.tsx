@@ -10,17 +10,15 @@ import './jobs.css';
 type JobCardProps = {
   job: {
     companyName: string;
+    deadline: string;
     description: string;
-    jobId: string;
     jobType: string;
     location: string;
-    position?: string;
-    postedDate?: string;
-    deadline: string;
-    salary: number;
+    position: string;
+    postedDate: string;
     requirements: string[];
+    salary: string;
     statusRequest: string;
-    submittedApplication: any[];
   };
 };
 
