@@ -54,6 +54,10 @@ const NavBar = (props: Props) => {
 
             {userToken ? (
             <>
+            <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
+                <Link className="nav-link font-bold" to="/userProfile">MyProfile</Link>
+              </li>
+
               <li key="logout" className='menuList text-[#4e66a2] hover:text-blueColor'>
                 <a
                   className="nav-link font-bold"
@@ -66,10 +70,7 @@ const NavBar = (props: Props) => {
                   Logout
                 </a>
               </li>
-
-              <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
-                <Link className="nav-link font-bold" to="/userProfile">MyProfile</Link>
-              </li>
+            
             </>
           ) : (
             <>
