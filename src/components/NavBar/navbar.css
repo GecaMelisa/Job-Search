@@ -18,6 +18,7 @@
   align-items: center;
   padding: 6.1rem;
   background-color: #175e5e;
+  margin-bottom: 0px;
 }
 
 .text-blueColor { 
@@ -51,13 +52,13 @@ li:hover::before {
 
 .menu {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   list-style: none;
 }
 
 .menuList {
   display: flex;
-  font-size: 17px;
+  font-size: 20px;
   color: #e3e3a4e3;
   justify-content: space-between;
   align-items: center;

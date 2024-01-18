@@ -1,3 +1,5 @@
+// JobModal.tsx
+
 import React, { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
@@ -6,17 +8,17 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 
-type ApplicationModalProps = {
+type JobModalProps = {
   isOpen: boolean;
   onClose: () => void;
-   job: {
+  job?: {
     id: string;
   };
 };
 
-const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, job}) => {
-
+const JobModal: React.FC<JobModalProps> = ({ isOpen, onClose, job }) => {
   const [formData, setFormData] = useState({
+    // Your form data properties here
     education: '',
     workExperience: '',
     cv: '',
@@ -29,19 +31,18 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
   const handleSendClick = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/applications/submitApp', {
-        jobId: '65a6b5460c14eb2be7c9e594', 
+        jobId: job?.id, // Using optional chaining in case job is undefined
         education: formData.education,
         workExperience: formData.workExperience,
         cv: formData.cv,
       });
-       console.log('Application submitted successfully:', response.data);
+      console.log('Application submitted successfully:', response.data);
 
-       onClose();
-     } catch (error) {
-       // Ukoliko dođe do greške, možete dodati logiku za prikazivanje poruke korisniku
-       console.error('Error submitting application:', error);
-     }
-   };
+      onClose();
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    }
+  };
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -50,7 +51,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           A few steps to Your dream Job..
         </Typography>
 
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}> </Box>
+        {/* Your form fields go here */}
 
         <TextField
           label="Education"
@@ -63,38 +64,17 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           margin="normal"
         />
 
-        <TextField
-          label="Work Experience"
-          name="workExperience"
-          value={formData.workExperience}
-          onChange={handleChange}
-          multiline
-          rows={4}
-          fullWidth
-          margin="normal"
-        />
+        {/* Other form fields... */}
 
-        <TextField
-          label="CV"
-          name="cv"
-          value={formData.cv}
-          onChange={handleChange}
-          multiline
-          rows={10}
-          fullWidth
-          margin="normal"
-        />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-          <Button onClick={onClose} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
-            Cancel
-          </Button>
-          <Button onClick={handleSendClick} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
-            Send
-          </Button>
-        </Box>
+        <Button onClick={onClose} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+          Cancel
+        </Button>
+        <Button onClick={handleSendClick} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+          Send
+        </Button>
       </Box>
     </Modal>
   );
 };
 
-export default ApplicationModal;
+export default JobModal;

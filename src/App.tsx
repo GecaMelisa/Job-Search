@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom"
-import { Registration, Home, Login, NotFound, UserProfile } from "./pages"
-import NavBar from "./components/NavBar"
+import { Registration, Home, Login, NotFound, UserProfile, About } from "./pages"
+//import ProtectedRoute from "./utils/ProtectedRoute"
 
 
 const App = () => {
@@ -12,9 +12,16 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Registration />} />
-        <Route path="/userProfile" element={<UserProfile/>} />
+        <Route path="/userProfile/${id}" element={<UserProfile/>} />
+         {/* add any other protected routes here 
+        <Route element={<ProtectedRoute />}>
+        
+
+        </Route>*/}
+      
 
         <Route path="*" element={<NotFound />} />
       </Routes>

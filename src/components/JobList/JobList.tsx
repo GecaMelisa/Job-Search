@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import JobCard from '../JobCard';
 import { Job } from '../../utils/types';
 import { JobService } from '../../services';
 import './jobs.css';
+import { jobList } from '../../constants';
 
-const JobListAxios: React.FC = () => {
+const JobList: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>();
+
+  const search = (e: ChangeEvent<HTMLInputElement>) => {
+    const filteredJobs = jobList.filter(job => job.position.toLowerCase().includes(e.target.value.toLowerCase()))
+ 
+ 
+    setJobs(filteredJobs)
+ }
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,15 +45,15 @@ const JobListAxios: React.FC = () => {
         <hr />
         <p className="mb-0">Something went wrong, please try again.</p>
       </div>}
-      {!loading &&
+      {/*{!loading &&
         <div className="row">
           {jobs.map((job, index) => (
             <JobCard key={index} job={job} />
           ))}
         </div>
-      }
+      }*/}
     </>
   );
 };
 
-export default JobListAxios;
+export default JobList;

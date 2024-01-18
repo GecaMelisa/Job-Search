@@ -7,8 +7,10 @@ import Typography from '@mui/material/Typography';
 import ApplicationModal from '../Modals/ApplicationModal';
 import './jobs.css';
 
+
 type JobCardProps = {
   job: {
+    id: string;
     companyName: string;
     deadline: string;
     description: string;
@@ -86,7 +88,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         >
           Apply
         </Button>
-        <ApplicationModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        <ApplicationModal isOpen={isModalOpen} onClose={handleCloseModal} job={job} />  
       </CardContent>
     </Card>
   );

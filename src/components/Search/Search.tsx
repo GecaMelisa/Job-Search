@@ -71,7 +71,7 @@ const Search = () => {
         <FormContainer>
           <SearchContainer>
       
-
+{/*
             <Box style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '20px', marginRight: '30px'}}>
               <Select defaultValue="Full-Time" style={{ width: '200px', border: '2px solid #4e66a2', height: '40px' }}>
                 <MenuItem value="Full-Time">Full-Time</MenuItem>
@@ -85,7 +85,7 @@ const Search = () => {
                 <MenuItem value="Intern">Intern</MenuItem>
               </Select>
             </Box>
-
+  */}
            
           </SearchContainer>
 
