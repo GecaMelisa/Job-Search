@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import axios from 'axios';
 import JobCard from '../JobCard';
 import { Job } from '../../utils/types';
 import { JobService } from '../../services';

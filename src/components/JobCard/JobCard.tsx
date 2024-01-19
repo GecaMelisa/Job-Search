@@ -10,7 +10,7 @@ import './jobs.css';
 
 type JobCardProps = {
   job: {
-    id: string;
+    jobId: string;
     companyName: string;
     deadline: string;
     description: string;

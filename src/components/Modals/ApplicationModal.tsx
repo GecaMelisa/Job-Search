@@ -10,7 +10,7 @@ type ApplicationModalProps = {
   isOpen: boolean;
   onClose: () => void;
    job: {
-    id: string;
+    jobId: string;
   };
 };
 
@@ -29,14 +29,18 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
   };
 
   const handleSendClick = async () => {
+    var token = localStorage.getItem("userToken");
     try {
       const response = await axios.post('http://localhost:8080/api/applications/submitApp', {
-        jobId: formData.jobId, 
-        userId: formData.userId,
+        jobId: job.jobId, 
+        userId: "ovotinetreba",
         education: formData.education,
         workExperience: formData.workExperience,
         cv: formData.cv,
-      });
+
+      },
+      {headers: {"Authorization": "Bearer "+token}}
+      );
        console.log('Application submitted successfully:', response.data);
 
        onClose();
@@ -54,28 +58,6 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
         </Typography>
 
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}> </Box>
-        
-        <TextField
-          label="JobId"
-          name="jobId"
-          value={formData.jobId}
-          onChange={handleChange}
-          multiline
-          rows={1}
-          fullWidth
-          margin="normal"
-        />
-           
-          <TextField
-          label="UserId"
-          name="userId"
-          value={formData.userId}
-          onChange={handleChange}
-          multiline
-          rows={1}
-          fullWidth
-          margin="normal"
-        />
 
         <TextField
           label="Education"
