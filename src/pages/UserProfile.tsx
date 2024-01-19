@@ -183,13 +183,14 @@ const UserProfile: React.FC = () => {
 
       <Box sx={{ mt: 3 }}>
      
-      <Button variant="contained" color="primary" onClick={handleCreateJobClick}>
-        Create Job
-      </Button>
-
-      <Button variant="contained" color="primary" onClick={handleCreateCompanyClick}>
-          Create Company
-        </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+          <Button onClick={handleCreateCompanyClick} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '180px', height: '50px' }}>
+            Create Company
+          </Button>
+          <Button onClick={handleCreateJobClick} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '180px', height: '50px' }}>
+            Create Job
+         </Button>
+        </Box>
 
       
         {isJobModalOpen && (

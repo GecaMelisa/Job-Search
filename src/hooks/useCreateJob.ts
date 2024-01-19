@@ -1,6 +1,4 @@
-import { JobService } from "../services"
-import { Job } from "../utils/types"
-import { useQuery, useMutation } from "react-query";
+import {useMutation } from "react-query";
 import axios from 'axios';
 
 const addJob = (job: any) => {

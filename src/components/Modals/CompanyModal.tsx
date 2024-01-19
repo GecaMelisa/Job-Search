@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateCompany } from '../../hooks/useCreateCompany';
 import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { toast } from 'react-toastify';
 
 type Props = {
   onCancel: () => void;
@@ -26,15 +27,16 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
   const { mutate: addCompany } = useCreateCompany();
 
   const handleCreateCompany = async () => {
-    const company: CompanyCreation = { companyName, companyOwnerId, address, phone, email };
+    const company = { companyName, companyOwnerId, address, phone, email };
     addCompany(company);
+    toast.success('Company created successfully');
   };
 
   return (
     <Dialog open={true} onClose={onCancel} maxWidth="md" fullWidth>
       <DialogTitle>Create a New Company</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmit(handleCreateCompany)}>
+      <form onSubmit={handleSubmit(handleCreateCompany)}>
           <TextField
             label="Company Name"
             variant="outlined"
@@ -96,6 +98,10 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
           />
 
           <DialogActions>
+
+           <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+              Cancel
+            </Button>
             <Button onClick={handleCreateCompany} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
               Create
             </Button>

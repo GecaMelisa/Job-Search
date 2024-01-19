@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateJob } from '../../hooks/useCreateJob';
-import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Box, Grid } from '@mui/material';
+import { toast } from 'react-toastify';
+import * as yup from 'yup';
+
 
 type Props = {
   onCancel: () => void;
@@ -23,7 +26,7 @@ export type JobCreation = {
   statusRequest: string;
 };
 
-const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
+const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<JobCreation>({});
   const [companyName, setCompanyName] = useState ('');
   const [position, setPosition] = useState ('');
@@ -52,6 +55,19 @@ const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
     salary: '',
     statusRequest: '',
   });
+  const schema = yup
+  .object({
+    companyId: yup.string().required('This filed is required.'),
+    companyName: yup.string().required('This filed is required'),
+    deadline:yup.string().required('This filed is required.'),
+    description: yup.string().required('This filed is required.'),
+    jobType: yup.string().required('This filed is required.'),
+    location: yup.string().required('This filed is required.'),
+    position: yup.string().required('This filed is required.'),
+    requirements: yup.string().required('This filed is required.'),
+    salary: yup.string().required('This filed is required.')
+  })
+  .required();
 
   const createJobMutation = useCreateJob();
 
@@ -66,6 +82,8 @@ const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
    console.log({companyId,position, description, location, jobType, salary, requirements, deadline})
    const job = {companyId, position, description, location, salary, jobType, requirements: requirements.split(',').map(item => item.trim()), deadline}
    addJob(job)
+   toast.success('Application submitted successfully');
+
   };
 
   return (
@@ -73,7 +91,7 @@ const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
       <DialogTitle>Create a New Job</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(handleCreateJob)}>
-
+    
         <TextField
             label="Company Id"
             variant="outlined"
@@ -84,8 +102,8 @@ const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
             onChange={(e) => setCompanyId(e.target.value)}
             fullWidth
             margin="normal"
-          />
 
+          />
           <TextField
             label="Position"
             variant="outlined"
@@ -169,12 +187,14 @@ const JobModal: React.FC<Props> = ({ onCancel, onSubmitJob }: Props) => {
             margin="normal"
           />
 
-          <DialogActions>
-         
-          <Button onClick={handleCreateJob} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
-            Send
-          </Button>
-          </DialogActions>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+            <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+              Cancel
+            </Button>
+            <Button onClick={handleCreateJob} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+              Create
+            </Button>
+          </Box>
         </form>
       </DialogContent>
     </Dialog>

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 type ApplicationModalProps = {
   isOpen: boolean;
@@ -41,13 +42,13 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
       },
       {headers: {"Authorization": "Bearer "+token}}
       );
-       console.log('Application submitted successfully:', response.data);
+      toast.success('Application submitted successfully');
 
        onClose();
      } catch (error) {
        // Ukoliko dođe do greške, možete dodati logiku za prikazivanje poruke korisniku
-       console.error('Error submitting application:', error);
-     }
+       toast.error('Error submitting application');
+      }
    };
 
   return (
@@ -65,7 +66,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.education}
           onChange={handleChange}
           multiline
-          rows={3}
+          rows={4}
           fullWidth
           margin="normal"
         />
@@ -76,7 +77,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.workExperience}
           onChange={handleChange}
           multiline
-          rows={3}
+          rows={4}
           fullWidth
           margin="normal"
         />
@@ -87,7 +88,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.cv}
           onChange={handleChange}
           multiline
-          rows={5}
+          rows={8}
           fullWidth
           margin="normal"
         />
@@ -97,7 +98,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           </Button>
           <Button onClick={handleSendClick} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
             Send
-          </Button>
+         </Button>
         </Box>
       </Box>
     </Modal>
