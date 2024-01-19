@@ -17,6 +17,8 @@ type ApplicationModalProps = {
 const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, job}) => {
 
   const [formData, setFormData] = useState({
+    jobId: '',
+    userId: '',
     education: '',
     workExperience: '',
     cv: '',
@@ -29,7 +31,8 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
   const handleSendClick = async () => {
     try {
       const response = await axios.post('http://localhost:8080/api/applications/submitApp', {
-        jobId: '65a6b5460c14eb2be7c9e594', 
+        jobId: formData.jobId, 
+        userId: formData.userId,
         education: formData.education,
         workExperience: formData.workExperience,
         cv: formData.cv,
@@ -51,6 +54,28 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
         </Typography>
 
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2 }}> </Box>
+        
+        <TextField
+          label="JobId"
+          name="jobId"
+          value={formData.jobId}
+          onChange={handleChange}
+          multiline
+          rows={1}
+          fullWidth
+          margin="normal"
+        />
+           
+          <TextField
+          label="UserId"
+          name="userId"
+          value={formData.userId}
+          onChange={handleChange}
+          multiline
+          rows={1}
+          fullWidth
+          margin="normal"
+        />
 
         <TextField
           label="Education"
@@ -58,7 +83,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.education}
           onChange={handleChange}
           multiline
-          rows={4}
+          rows={3}
           fullWidth
           margin="normal"
         />
@@ -69,7 +94,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.workExperience}
           onChange={handleChange}
           multiline
-          rows={4}
+          rows={3}
           fullWidth
           margin="normal"
         />
@@ -80,7 +105,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
           value={formData.cv}
           onChange={handleChange}
           multiline
-          rows={10}
+          rows={5}
           fullWidth
           margin="normal"
         />

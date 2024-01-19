@@ -23,3 +23,12 @@ export type Job = {
     education: string;
     username: string;
 };
+
+
+export type Company = {
+      companyName: string;
+      companyOwnerId: string;
+      address: string;
+      phone: string;
+      email: string;
+}

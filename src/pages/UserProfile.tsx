@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography, Button, Box, Paper, Card, CardContent, CardActions } from '@mui/material';
 import { styled } from '@mui/system';
 import { Link, useParams } from 'react-router-dom';
@@ -9,8 +9,10 @@ import { UserService } from '../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useQuery } from 'react-query';
+import JobModal from '../components/Modals/JobModal';
+import CompanyModal from '../components/Modals/CompanyModal';
 
-interface UserInfo {
+type UserInfo = {
   user: {
     id: string;
     userType: string;
@@ -24,7 +26,6 @@ interface UserInfo {
     username: string;
   };
 }
-
 
 interface InfoItemProps {
   icon: string;
@@ -80,9 +81,28 @@ const CloseButton = styled('span')({
 });
 
 const UserProfile: React.FC = () => {
+  const [isJobModalOpen, setJobModalOpen] = useState(false);
+  const [isCompanyModalOpen, setCompanyModalOpen] = useState(false);
+
+  const handleCreateJobClick = () => {
+    setJobModalOpen(true);
+  }
+
+  const handleCreateCompanyClick = () => {
+    setCompanyModalOpen(true);
+  }
+
+  const handleCloseJobModal = () => {
+    setJobModalOpen(false);
+  }
+
+  const handleCloseCompanyModal = () => {
+    setCompanyModalOpen(false);
+  }
+
   const dispatch = useDispatch();
   const { id } = useParams();
-  const userToken = useSelector((state: RootState) => state.auth.userToken || ''); // Provide a default value
+  const userToken = useSelector((state: RootState) => state.auth.userToken || '');
 
   const { data: user, isLoading, isError } = useQuery<UserInfo, Error>(
     ['user', id],
@@ -91,30 +111,24 @@ const UserProfile: React.FC = () => {
       enabled: Boolean(id) && Boolean(userToken), // Execute the query only when id and userToken are available
     }
   );
-  const showChangePasswordForm = () => {
-    // Logika za prikaz forme za promjenu lozinke
-  };
 
-  const closeChangePasswordForm = () => {
-    // Logika za zatvaranje forme za promjenu lozinke
-  };
-
+ 
   return (
     <Container maxWidth="lg">
       <Box sx={{ mt: 3 }}>
         {/* Navigacija */}
         <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#175e5e', color: 'white' }}>
-          <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 2 , marginTop: '10px'}}>
             <i className="fas fa-user fa-fw"></i>
-            <span style={{ color: '#e3e3a4e3' }}>JobSearch</span>
+            <span style={{ color: '#e3e3a4e3', marginTop: '20px' }}>JobSearch</span>
           </Typography>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mt: 2 }}>
-            <li key="jobs" className='menuList text-[#4e66a2] hover:text-blueColor'>
+            <li key="home" className='menuList text-[#4e66a2] hover:text-blueColor'>
               <Link className="nav-link font-bold" to="/home">Home</Link>
             </li>
 
-            <li key="jobs" className='menuList text-[#4e66a2] hover:text-blueColor'>
+            <li key="about" className='menuList text-[#4e66a2] hover:text-blueColor'>
               <Link className="nav-link font-bold" to="/about">About</Link>
             </li>
 
@@ -160,17 +174,39 @@ const UserProfile: React.FC = () => {
             <InfoItem icon="fas fa-envelope" label="Email" value={user.user.email} />
             {/* Dodati ostale InfoItem komponente prema potrebi s odgovarajućim podacima iz profila */}
             <Box sx={{ textAlign: 'end', position: 'relative' }}>
-              <CustomButton onClick={showChangePasswordForm}>Change Password</CustomButton>
             </Box>
 
-            <Box id="change-password-container"></Box>
-            <CloseButton onClick={closeChangePasswordForm}>&times;</CloseButton>
           </Paper>
+          
         )}
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        {/* Prikaz primijenjenih poslova */}
+     
+      <Button variant="contained" color="primary" onClick={handleCreateJobClick}>
+        Create Job
+      </Button>
+
+      <Button variant="contained" color="primary" onClick={handleCreateCompanyClick}>
+          Create Company
+        </Button>
+
+      
+        {isJobModalOpen && (
+          <JobModal onCancel={handleCloseJobModal} onSubmitJob={(formData) => {
+            console.log('Job data submitted:', formData);
+            handleCloseJobModal();
+          }} />
+        )}
+
+        {isCompanyModalOpen && (
+          <CompanyModal onCancel={handleCloseCompanyModal} />
+        )}
+
+  	  
+
+
+
         <Paper elevation={3} sx={{ padding: 3 }}>
           <Typography variant="h6" sx={{ marginBottom: 2 }}>
             Applied Jobs

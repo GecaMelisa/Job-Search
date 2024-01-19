@@ -1,14 +1,12 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { JobService } from '../services';
-import { Job } from '../utils/types';
+import { JobService } from "../services"
+import { Job } from "../utils/types"
+import { useQuery, useMutation } from "react-query";
+import axios from 'axios';
 
-const useCreateJob = () => {
-    const queryClient = useQueryClient();
-    return useMutation((data: Job) => JobService.addJob(data), {
-        onSuccess: () => {
-            queryClient.invalidateQueries('jobs');
-        },
-    });
-};
+const addJob = (job: any) => {
+    return axios.post("http://localhost:8080/api/jobs/createJob", job);
+}
 
-export default useCreateJob;
+export const useCreateJob = () => {
+    return useMutation(addJob)
+}
