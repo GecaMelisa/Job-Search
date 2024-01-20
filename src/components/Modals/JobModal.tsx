@@ -55,19 +55,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
     salary: '',
     statusRequest: '',
   });
-  const schema = yup
-  .object({
-    companyId: yup.string().required('This filed is required.'),
-    companyName: yup.string().required('This filed is required'),
-    deadline:yup.string().required('This filed is required.'),
-    description: yup.string().required('This filed is required.'),
-    jobType: yup.string().required('This filed is required.'),
-    location: yup.string().required('This filed is required.'),
-    position: yup.string().required('This filed is required.'),
-    requirements: yup.string().required('This filed is required.'),
-    salary: yup.string().required('This filed is required.')
-  })
-  .required();
+  
 
   const createJobMutation = useCreateJob();
 
@@ -79,10 +67,18 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
   };
 
   const handleCreateJob = async () => {
+    var token = localStorage.getItem("userToken");
+    if (!token) {
+      toast.error('Only company owners can create jobs');
+      return;
+    }
+    
    console.log({companyId,position, description, location, jobType, salary, requirements, deadline})
    const job = {companyId, position, description, location, salary, jobType, requirements: requirements.split(',').map(item => item.trim()), deadline}
+
    addJob(job)
-   toast.success('Application submitted successfully');
+  toast.success('Application submitted successfully');
+  
 
   };
 

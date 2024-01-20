@@ -19,7 +19,6 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
 
   const [formData, setFormData] = useState({
     jobId: '',
-    userId: '',
     education: '',
     workExperience: '',
     cv: '',
@@ -30,11 +29,20 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
   };
 
   const handleSendClick = async () => {
+
     var token = localStorage.getItem("userToken");
+    if (!token) {
+      toast.error('Only members can apply for jobs. Please register or login.');
+      return;
+    }
+    
+    if (!formData.education || !formData.workExperience || !formData.cv) {
+      toast.error('Please, enter all required fields.');
+      return;
+    }
     try {
       const response = await axios.post('http://localhost:8080/api/applications/submitApp', {
         jobId: job.jobId, 
-        userId: "ovotinetreba",
         education: formData.education,
         workExperience: formData.workExperience,
         cv: formData.cv,
@@ -42,13 +50,15 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({ isOpen, onClose, jo
       },
       {headers: {"Authorization": "Bearer "+token}}
       );
-      toast.success('Application submitted successfully');
-
-       onClose();
-     } catch (error) {
-       // Ukoliko dođe do greške, možete dodati logiku za prikazivanje poruke korisniku
-       toast.error('Error submitting application');
+      if (response.status === 200) {
+        toast.success('Application submitted successfully');
+        onClose();
+      } else {
+        toast.error('Error submitting application');
       }
+    } catch (error) {
+      toast.error('Error submitting application');
+    }
    };
 
   return (

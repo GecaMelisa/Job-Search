@@ -4,7 +4,6 @@ import { styled } from '@mui/system';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/authSlice';
-import { User } from '../utils/types';
 import { UserService } from '../services';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
@@ -101,16 +100,6 @@ const UserProfile: React.FC = () => {
   }
 
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const userToken = useSelector((state: RootState) => state.auth.userToken || '');
-
-  const { data: user, isLoading, isError } = useQuery<UserInfo, Error>(
-    ['user', id],
-    () => UserService.getCurrentUser(userToken),
-    {
-      enabled: Boolean(id) && Boolean(userToken), // Execute the query only when id and userToken are available
-    }
-  );
 
  
   return (
@@ -136,49 +125,10 @@ const UserProfile: React.FC = () => {
               <Link className="nav-link font-bold" to="/userProfile/${id}">MyProfile</Link>
             </li>
 
-          <li key="logout" className='menuList text-[#4e66a2] hover:text-blueColor'>
-            <a
-              className="nav-link font-bold"
-              style={{ color: '#cd6225' }}
-              onClick={() => {
-                dispatch(logout());
-                // navigate('/login'); // Redirekcija na login stranicu nakon odjave
-              }}
-            >
-              Logout
-            </a>
-          </li>
+          
           </Box>
         </Paper>
-
-        {/* Podaci o korisniku */}
-        {isLoading && (
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        )}
-        {isError && typeof isError === 'boolean' && (
-          <div className="alert alert-danger" role="alert">
-            <h4 className="alert-heading">Unable to render data!</h4>
-            <p>Something went wrong, please try again.</p>
-            <hr />
-            <p className="mb-0">Another error message if needed.</p>
-          </div>
-        )}
-
-        {!isLoading && userToken && user && (
-          <Paper elevation={3} sx={{ padding: 3, marginTop: 3 }}>
-            <Typography variant="h5">{`${user.user.firstName} ${user.user.lastName}`}</Typography>
-            <RoleLabel variant="subtitle2">{user.user.userType}</RoleLabel>
-
-            <InfoItem icon="fas fa-envelope" label="Email" value={user.user.email} />
-            {/* Dodati ostale InfoItem komponente prema potrebi s odgovarajućim podacima iz profila */}
-            <Box sx={{ textAlign: 'end', position: 'relative' }}>
-            </Box>
-
-          </Paper>
-          
-        )}
+        
       </Box>
 
       <Box sx={{ mt: 3 }}>
