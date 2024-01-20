@@ -46,7 +46,7 @@ const NavBar = (props: Props) => {
          {} 
          <span className="tagline" style={{ 
           marginLeft: '10px',
-          marginRight: '500px',
+          marginRight: '505px',
           overflow: 'hidden', 
           display: 'inline-block',
           fontSize: '1.5rem', 

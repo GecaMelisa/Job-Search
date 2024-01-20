@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import JobCard from '../JobCard';
 import { Job } from '../../utils/types';
 import { JobService } from '../../services';
 import './jobs.css';
@@ -45,13 +44,7 @@ const JobList: React.FC = () => {
         <hr />
         <p className="mb-0">Something went wrong, please try again.</p>
       </div>}
-      {/*{!loading &&
-        <div className="row">
-          {jobs.map((job, index) => (
-            <JobCard key={index} job={job} />
-          ))}
-        </div>
-      }*/}
+     
     </>
   );
 };

@@ -1,20 +1,31 @@
 import axios from "axios";
+import { User } from "../utils/types";
+import appAxios from "./appAxios";
 
-const UserService = {
-  getCurrentUser: async (userToken: string) => {
-    try {
-      const response = await axios.get(`/users/65a2781e31279a17a8cfedcd`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
 
+const getUserInfo = () => {
+  try {
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:8080/api/users/userInfo',
+      headers: { 
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjEyMyIsImlhdCI6MTcwNTc4MTUwOSwiZXhwIjoxNzA1NzgyOTQ5fQ.ey5xME7-SGhhhYe2G15rA6RCGThrBEXHdxLDX7FzRYs'
+      }
+    };
+    
+    axios.request(config)
+    .then((response) => {
       return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
+    })
+    .catch((error) => {
+      console.log(error);
+    });    
+  } catch (error) {
+    console.error('Error fetching users info:', error);
+    throw error;
+  }
 };
 
-export default UserService;
+export default {getUserInfo};
 
