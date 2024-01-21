@@ -26,7 +26,6 @@ const theme = createTheme({
   },
 });
 
-type Props = {};
 
 export type LoginFormData = {
   email: string;
@@ -40,7 +39,7 @@ const schema = yup
   })
   .required();
 
-const Login = (props: Props) => {
+const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
   });
@@ -120,6 +119,7 @@ const Login = (props: Props) => {
                         fullWidth
                         margin="normal"
                         label="Password"
+                        type="password"
                         variant="outlined"
                         {...register('password')}
                         error={!!errors.password}
@@ -127,6 +127,7 @@ const Login = (props: Props) => {
                         sx={{ '& label': { color: '#175e5e' }, '& fieldset': { borderColor: '#175e5e' } }}
                       />
                     </Grid>
+
 
                     <Grid item xs={6}>
                       <Button

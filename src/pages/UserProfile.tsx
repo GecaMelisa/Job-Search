@@ -38,7 +38,7 @@ const Position = styled('strong')({
   color: '#175e5e',
   fontSize: '1.3rem',
   marginBottom: '50px',
-  marginTop: '30px'
+  marginTop: '25px'
 
 });
 
@@ -220,8 +220,8 @@ const UserProfile: React.FC = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center', // Centrira horizontalno
-        justifyContent: 'center', // Centrira vertikalno
+        alignItems: 'center',
+        justifyContent: 'center', 
       }}
     >
 
@@ -230,8 +230,8 @@ const UserProfile: React.FC = () => {
     </Position>
     
       {applications.map((application) => (
-    <Card key={application.id} sx={{ width: 1300, marginBottom: 3, backgroundColor: '#edede0e3'}}>
-      <CardContent sx={{ color: '#175e5e', fontSize: '1.4rem', border: '1.3px solid #175e5e', borderRadius: '1.3px'}}>
+    <Card key={application.id} sx={{ width: '100%', maxWidth: 600, marginBottom: 3, backgroundColor: '#edede0e3' }}>
+    <CardContent sx={{ color: '#175e5e', fontSize: '1.4rem', border: '1.3px solid #175e5e', borderRadius: '1.3px' }}>
             <UserType>{application.job.position}</UserType>
             <Typography variant="body2"><strong>Name: </strong>{application.user.name}</Typography>
             <Typography variant="body2"><strong>Email: </strong>{application.user.email}</Typography>

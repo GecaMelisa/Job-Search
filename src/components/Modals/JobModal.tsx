@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateJob } from '../../hooks/useCreateJob';
-import { Button, TextField, Dialog, DialogTitle, DialogContent, DialogActions, Box, Grid } from '@mui/material';
+import { Button, TextField, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
 import { toast } from 'react-toastify';
-import * as yup from 'yup';
 
 
 type Props = {
@@ -27,8 +26,7 @@ export type JobCreation = {
 };
 
 const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<JobCreation>({});
-  const [companyName, setCompanyName] = useState ('');
+  const { register, handleSubmit, formState: { errors } } = useForm<JobCreation>({});
   const [position, setPosition] = useState ('');
   const [description, setDescription] = useState ('');
   const [location, setLocation] = useState ('');
@@ -41,7 +39,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
   const {mutate: addJob} = useCreateJob()
 
 
-  const [formData, setFormData] = useState<JobCreation>({
+  const [] = useState<JobCreation>({
     id:  '',
     companyId: '',
     companyName: '',
@@ -57,14 +55,8 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
   });
   
 
-  const createJobMutation = useCreateJob();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+ 
 
   const handleCreateJob = async () => {
     var token = localStorage.getItem("userToken");
@@ -72,12 +64,18 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
       toast.error('Only company owners can create jobs');
       return;
     }
+
+    if (!companyId || !position || !description || !location || !jobType || !salary || !requirements || !deadline) {
+      toast.error('Please enter all required fields');
+      return;
+    }
     
    console.log({companyId,position, description, location, jobType, salary, requirements, deadline})
    const job = {companyId, position, description, location, salary, jobType, requirements: requirements.split(',').map(item => item.trim()), deadline}
 
    addJob(job)
-  toast.success('Application submitted successfully');
+   toast.success('Application submitted successfully');
+   onCancel();
   
 
   };

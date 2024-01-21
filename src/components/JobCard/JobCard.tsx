@@ -17,7 +17,6 @@ type JobCardProps = {
     jobType: string;
     location: string;
     position: string;
-    postedDate: string;
     requirements: string[];
     salary: string;
     statusRequest: string;
@@ -67,9 +66,6 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         </Typography>
         <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
           <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Salary:</span> {job.salary}
-        </Typography>
-        <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-          <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Posted Date:</span> {job.postedDate}
         </Typography>
         <Typography variant='body2' color='textSecondary' sx={{ fontSize: '15px', fontWeight: 'bold', marginTop: '8px', color: 'red' }}>
           <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Deadline:</span> {job.deadline}

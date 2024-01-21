@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { ApplicationService, JobService} from "../services";
+import { ApplicationService} from "../services";
 
 
 const useMyApplictions = () => {

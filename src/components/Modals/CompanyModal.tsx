@@ -27,9 +27,15 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
   const { mutate: addCompany } = useCreateCompany();
 
   const handleCreateCompany = async () => {
+    if (!companyName || !companyOwnerId || !address || !phone || !email) {
+      toast.error('Please enter all required fields');
+      return;
+    }
     const company = { companyName, companyOwnerId, address, phone, email };
     addCompany(company);
     toast.success('Company created successfully');
+    onCancel();
+    
   };
 
   return (
@@ -97,12 +103,11 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
             margin="normal"
           />
 
-          <DialogActions>
-
-           <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2  }}>
+           <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '130px', height: '45px' }}>
               Cancel
             </Button>
-            <Button onClick={handleCreateCompany} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+            <Button onClick={handleCreateCompany} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '130px', height: '45px' }}>
               Create
             </Button>
           </DialogActions>

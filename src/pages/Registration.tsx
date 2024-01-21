@@ -1,5 +1,5 @@
 import  { useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,10 @@ import {
   Typography,
   ThemeProvider,
   createTheme,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 
 const theme = createTheme({
@@ -26,7 +30,6 @@ const theme = createTheme({
   },
 });
 
-type Props = {};
 
 export type RegisterFormData = {
   firstName: string;
@@ -50,8 +53,9 @@ const schema = yup
   })
   .required();
 
-const Registration = (props: Props) => {
+const Registration = () => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -146,16 +150,31 @@ const Registration = (props: Props) => {
                     </Grid>
 
                     <Grid item xs={6}>
-                      <TextField
+                      <FormControl
                         fullWidth
-                        margin="normal"
-                        label="Usertype"
                         variant="outlined"
-                        {...register('userType')}
-                        error={!!errors.lastName}
-                        helperText={errors.lastName?.message}
-                        sx={{ '& label': { color: '#175e5e' }, '& fieldset': { borderColor: '#175e5e' } }}
-                      />
+                        margin="normal"
+                        sx={{
+                          '& label': { color: '#175e5e' },
+                          '& fieldset': { borderColor: '#175e5e' },
+                        }}
+                      >
+                        <InputLabel id="userTypeLabel">User Type</InputLabel>
+                        <Controller
+                          control={control}
+                          name="userType"
+                          render={({ field }) => (
+                            <Select
+                              labelId="userTypeLabel"
+                              label="User Type"
+                              {...field}
+                            >
+                              <MenuItem value="MEMBER">Member</MenuItem>
+                              <MenuItem value="COMPANY_OWNER">Company Owner</MenuItem>
+                            </Select>
+                          )}
+                        />
+                      </FormControl>
                     </Grid>
 
                     <Grid item xs={6}>

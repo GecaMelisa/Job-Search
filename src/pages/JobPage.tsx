@@ -5,7 +5,7 @@ import { jobList } from '../constants';
 
 type Props = {};
 
-const JobPage: React.FC<Props> = (props: Props) => {
+const JobPage: React.FC<Props> = () => {
   const { position } = useParams<{ position: string }>();
   const job: Job | undefined = jobList.find((j) => j.position === position);
 
