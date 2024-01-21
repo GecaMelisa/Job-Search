@@ -24,6 +24,31 @@ export type Job = {
     username: string;
 };
 
+export type Application = {
+      user: {
+        id: string;
+        name: string;
+        userType: string;
+        dateOfBirth: string;
+        email: string;
+      };
+      job: {
+        jobId: string;
+        companyName: string;
+        position: string;
+        description: string;
+        location: string;
+        jobType: string;
+        requirements: string[];
+        postedDate: string;
+        deadline: string;
+      };
+      id: string;
+      education: string;
+      workExperience: string;
+      cv: string;
+      applicationDate: string;
+    };
 
 export type Company = {
       companyName: string;

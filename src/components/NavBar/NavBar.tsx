@@ -1,12 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { FormControl, InputLabel, OutlinedInput, InputAdornment } from '@mui/material';
 import './navbar.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { logout } from '../../store/authSlice'
-//import { useNavigate } from 'react-router-dom';
 import { jobList } from '../../constants';
 import { Job } from '../../utils/types';
 

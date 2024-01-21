@@ -1,94 +1,110 @@
 import React, { useEffect, useState } from 'react';
-import {Typography, Button, Box, Paper, Card, CardContent, CardActions } from '@mui/material';
+import { Typography, Button, Box, Paper, Card, CardContent } from '@mui/material';
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Application, User } from '../utils/types';
 import JobModal from '../components/Modals/JobModal';
 import CompanyModal from '../components/Modals/CompanyModal';
-import axios from 'axios';
-import {User} from '../utils/types'
 
 const UserInfoContainer = styled(Box)({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    marginTop: '20px',
-    marginLeft: '80px',
-    marginRight: '80px',
-    backgroundColor: '#edede0e3',
-    border: '1.2px solid #175e5e',
-    borderRadius: '5px',
-    padding: '20px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  marginTop: '20px',
+  marginLeft: '80px',
+  marginRight: '80px',
+  backgroundColor: '#edede0e3',
+  border: '1.3px solid #175e5e',
+  borderRadius: '4px',
+  padding: '20px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 });
 
 const UserInfoItem = styled('div')({
   marginBottom: '9px',
-  color: '#175e5e'
+  color: '#175e5e',
 });
 
 const UserType = styled('strong')({
-  color: '#ff862a', 
-  fontSize: '1.2rem',
-  marginBottom: '15px'
+  color: '#ff862a',
+  fontSize: '1.3rem',
+  marginBottom: '15px',
 });
 
+const Position = styled('strong')({
+  display: 'flex',
+  alignItems: 'flex-start',
+  color: '#175e5e',
+  fontSize: '1.3rem',
+  marginBottom: '50px',
+  marginTop: '30px'
+
+});
 
 const UserProfile: React.FC = () => {
+  const [applications, setApplications] = useState<Application[]>([]);
   const [info, setInfo] = useState<User>({
-    userType: "",
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    email: "",
-    phoneNumber: "",
-    address: "",
-    education: "",
-    username: "",
+    userType: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    education: '',
+    username: '',
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>();
-
-
   const [isJobModalOpen, setJobModalOpen] = useState(false);
   const [isCompanyModalOpen, setCompanyModalOpen] = useState(false);
 
   const handleCreateJobClick = () => {
     setJobModalOpen(true);
-  }
+  };
 
   const handleCreateCompanyClick = () => {
     setCompanyModalOpen(true);
-  }
+  };
 
   const handleCloseJobModal = () => {
     setJobModalOpen(false);
-  }
+  };
 
   const handleCloseCompanyModal = () => {
     setCompanyModalOpen(false);
-  }
-  
+  };
+
   useEffect(() => {
-    var userToken = localStorage.getItem("userToken");   
-    const fetchData = () => {
+    var userToken = localStorage.getItem('userToken');
+    const fetchData = async () => {
       try {
         setLoading(true);
-        let config = {
+
+        // Fetch user info
+        let userConfig = {
           method: 'get',
           maxBodyLength: Infinity,
           url: 'http://localhost:8080/api/users/userInfo',
-          headers: { 
-            'Authorization': 'Bearer ' + userToken
-          }
+          headers: {
+            'Authorization': 'Bearer ' + userToken,
+          },
         };
-        
-        axios.request(config)
-        .then((response) => {
-          setInfo(response.data);//
-        })
-        .catch((error) => {
-          console.log(error);
-        });  
+        const userResponse = await axios.request(userConfig);
+        setInfo(userResponse.data);
+
+        // Fetch applications
+        let applicationsConfig = {
+          method: 'get',
+          maxBodyLength: Infinity,
+          url: 'http://localhost:8080/api/applications/',
+          headers: {
+            'Authorization': 'Bearer ' + userToken,
+          },
+        };
+        const applicationsResponse = await axios.request(applicationsConfig);
+        setApplications(applicationsResponse.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -99,55 +115,49 @@ const UserProfile: React.FC = () => {
     fetchData();
   }, []);
 
-
-
- 
   return (
-   <>
+    <>
+      <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#175e5e', color: 'white', width: '100%', borderRadius: 0 }}>
+        <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: '30px' }}>
+          <i className="fas fa-user fa-fw"></i>
+          <span style={{ color: '#e3e3a4e3', marginTop: '20px' }}>JobSearch</span>
+        </Typography>
 
-      <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#175e5e', color: 'white', width: '100%', borderRadius: 0}}>
-          <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 8 , marginTop: '30px'}}>
-            <i className="fas fa-user fa-fw"></i>
-            <span style={{ color: '#e3e3a4e3', marginTop: '20px' }}>JobSearch</span>
-          </Typography>
-        
-         
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mt: 1, mb: 5, mr: 10, gap: '10px'}}>
-            <li key="home" className='menuList text-[#4e66a2] hover:text-blueColor'>
-              <Link className="nav-link font-bold" to="/home">Home</Link>
-            </li>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mt: 1, mb: 5, mr: 10, gap: '10px' }}>
+          <li key="home" className="menuList text-[#4e66a2] hover:text-blueColor">
+            <Link className="nav-link font-bold" to="/home">
+              Home
+            </Link>
+          </li>
 
-            <li key="about" className='menuList text-[#4e66a2] hover:text-blueColor'>
-              <Link className="nav-link font-bold" to="/about">About</Link>
-            </li>
+          <li key="about" className="menuList text-[#4e66a2] hover:text-blueColor">
+            <Link className="nav-link font-bold" to="/about">
+              About
+            </Link>
+          </li>
 
-            <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
+          <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
               <Link className="nav-link font-bold" to="/userProfile/${id}">MyProfile</Link>
             </li>
+        </Box>
+      </Paper>
 
-          </Box>
-        
-        </Paper>
-        
-     
-      
-      {
-      loading && <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-      }
-      {
-      error && <div className="alert alert-danger" role="alert">
-        <h4 className="alert-heading">Unable to render data!</h4>
-        <p>{error?.response?.data?.message || error?.message}</p>
-        <hr />
-        <p className="mb-0">Something went wrong, please try again.</p>
-      </div>
-      }
-       {!loading && (
+      {loading && (
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      )}
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Unable to render data!</h4>
+          <p>{error?.response?.data?.message || error?.message}</p>
+          <hr />
+          <p className="mb-0">Something went wrong, please try again.</p>
+        </div>
+      )}
+      {!loading && (
         <Box sx={{ mt: 5 }}>
           <UserInfoContainer>
-            
             <UserType>
               <strong>{info.userType}</strong>
             </UserType>
@@ -163,28 +173,38 @@ const UserProfile: React.FC = () => {
             <UserInfoItem>
               <strong>Email:</strong> {info.email}
             </UserInfoItem>
-            
             <UserInfoItem>
               <strong>Username:</strong> {info.username}
             </UserInfoItem>
 
             {info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 3, width: '100%' }}>
-              <Button onClick={handleCreateCompanyClick} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '180px', height: '50px', marginBottom: '10px' }}>
-                Create Company
-              </Button>
-              <Button onClick={handleCreateJobClick} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '180px', height: '50px', marginBottom: '10px', marginLeft: 'auto' }}>
-                Create Job
-              </Button>
-            </Box>
-          ) : null}
-            
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 3, width: '100%' }}>
+                <Button
+                  onClick={handleCreateCompanyClick}
+                  sx={{ backgroundColor: '#175e5e', color: '#fff', width: '180px', height: '50px', marginBottom: '10px' }}
+                >
+                  Create Company
+                </Button>
+                <Button
+                  onClick={handleCreateJobClick}
+                  sx={{
+                    backgroundColor: '#ff862a',
+                    color: '#fff',
+                    width: '180px',
+                    height: '50px',
+                    marginBottom: '10px',
+                    marginLeft: 'auto',
+                  }}
+                >
+                  Create Job
+                </Button>
+              </Box>
+            ) : null}
           </UserInfoContainer>
         </Box>
       )}
-      <Box sx={{ mt: 3 }}>
-     
-        {isJobModalOpen && (
+    <Box sx={{ mt: 5 }}>
+       {isJobModalOpen && (
           <JobModal onCancel={handleCloseJobModal} onSubmitJob={(formData) => {
             console.log('Job data submitted:', formData);
             handleCloseJobModal();
@@ -195,25 +215,43 @@ const UserProfile: React.FC = () => {
           <CompanyModal onCancel={handleCloseCompanyModal} />
         )}
 
-          <Paper elevation={3} sx={{ padding: 3 }}>
-          <Typography variant="h6" sx={{ marginBottom: 2 }}>
-            Applied Jobs
-          </Typography>
-          <Card>
-            <CardContent>
-              <Typography variant="subtitle1">Job Title</Typography>
-              <Typography variant="body2">Company Name</Typography>
-            </CardContent>
-            <CardActions>
-              <Button size="small" color="primary">
-                View Details
-              </Button>
-            </CardActions>
-          </Card>
-          {/* Dodajte logiku za prikaz primijenjenih poslova */}
-        </Paper>
-      </Box>
-   </>
+{info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center', // Centrira horizontalno
+        justifyContent: 'center', // Centrira vertikalno
+      }}
+    >
+
+    <Position>
+      <strong>VIEW ALL APPLICATIONS FOR YOUR JOB</strong>
+    </Position>
+    
+      {applications.map((application) => (
+    <Card key={application.id} sx={{ width: 1300, marginBottom: 3, backgroundColor: '#edede0e3'}}>
+      <CardContent sx={{ color: '#175e5e', fontSize: '1.4rem', border: '1.3px solid #175e5e', borderRadius: '1.3px'}}>
+            <UserType>{application.job.position}</UserType>
+            <Typography variant="body2"><strong>Name: </strong>{application.user.name}</Typography>
+            <Typography variant="body2"><strong>Email: </strong>{application.user.email}</Typography>
+            <Typography variant="body2"><strong>Date of Birth: </strong>{application.user.dateOfBirth}</Typography>
+            <Typography variant="body2"><strong>Education: </strong>{application.education}</Typography>
+            <Typography variant="body2"><strong>Work Experience: </strong>{application.workExperience}</Typography>
+            <Typography variant="body2"><strong>CV: </strong>{application.cv}</Typography>
+          </CardContent>
+          
+        </Card>
+      ))}
+  </Box>
+   ) : null}
+
+
+  </Box>
+
+
+
+    </>
   );
 };
 
