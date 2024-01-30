@@ -19,9 +19,9 @@ const FormContainer = styled('div')({
 
 const SearchContainer = styled('div')({
   display: 'flex',
-  justifyContent: 'center', // Centriraj horizontalno
-  alignItems: 'center', // Centriraj vertikalno
-  flexDirection: 'column', // Postavi na kolonu kako bi elementi bili jedan ispod drugog
+  justifyContent: 'center',
+  alignItems: 'center', 
+  flexDirection: 'column', 
 });
 
 const FirstDiv = styled('div')({
@@ -36,7 +36,7 @@ const FirstDiv = styled('div')({
   boxShadow: '0 5px 4px rgba(0, 0, 0, 0.1)',
   width: '100%',
   maxWidth: '320px',
-  margin: '15px 0 4px 0', // Adjusted margin
+  margin: '15px 0 4px 0', 
   '&:hover': {
     color: '#4e66a2',
   },
@@ -52,15 +52,15 @@ const ButtonContainer = styled('div')({
 
 const IconStyle = {
   fontSize: '22px',
-  color: '#6c757d',
+  color: '#175e5e',
 };
 
 const HoverIconStyle = {
   fontSize: '22px',
-  color: '#a5a6a6',
+  color: '#175e5e',
   cursor: 'pointer',
   '&:hover': {
-    color: '#6c757d',
+    color: '#175e5e',
   },
 };
 
@@ -70,23 +70,9 @@ const Search = () => {
       <form action="">
         <FormContainer>
           <SearchContainer>
-          <FirstDiv>
-          <Stack direction="row" spacing={0.2} alignItems="center">
-            <BsHouseDoor style={IconStyle} />
-            <TextField
-              type="text"
-              variant="standard"
-              fullWidth
-              placeholder="Search by company..."
-              InputProps={{
-                sx: { flex: 1, borderBottom: 'none', padding: '10px' },  // Postavljamo borderBottom na none
-              }}
-            />
-          </Stack>
-        </FirstDiv>
-
-
-            <Box style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '20px', marginRight: '30px', marginTop: '8px' }}>
+      
+{/*
+            <Box style={{ display: 'flex', justifyContent: 'space-between', marginLeft: '20px', marginRight: '30px'}}>
               <Select defaultValue="Full-Time" style={{ width: '200px', border: '2px solid #4e66a2', height: '40px' }}>
                 <MenuItem value="Full-Time">Full-Time</MenuItem>
                 <MenuItem value="Part-Time">Part-Time</MenuItem>
@@ -99,27 +85,10 @@ const Search = () => {
                 <MenuItem value="Intern">Intern</MenuItem>
               </Select>
             </Box>
-
+  */}
            
           </SearchContainer>
 
-          <ButtonContainer>
-            <Button
-              variant="contained"
-              style={{
-                backgroundColor: '#4e66a2',
-                borderRadius: '7px',
-                color: '#white',
-                cursor: 'pointer',
-                boxShadow: '0 5px 4px rgba(0, 0, 0, 0.1)',
-                width: '100%',
-                maxWidth: '600px',
-                height: '50px',
-              }}
-            >
-              Search
-            </Button>
-          </ButtonContainer>
         </FormContainer>
       </form>
     </div>
