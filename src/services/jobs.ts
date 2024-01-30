@@ -42,6 +42,16 @@ const addJob = async (job: Job): Promise<Job> => {
       });
     }
 
+    const updateJob=async(job:Job)=>{
+      return await appAxios.put(`/jobs/${job.jobId}`, job);
+  }
+
+  const deleteJob=async(id:String)=>{
+    return await appAxios.delete(`/jobs/${id}`)
+}
 
 
-export default {getJobs, submitApplication, addJob};
+
+
+
+export default {getJobs, submitApplication, addJob, updateJob, deleteJob};

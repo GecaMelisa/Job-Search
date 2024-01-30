@@ -13,16 +13,19 @@ const JobListAxios: React.FC = () => {
   const [error, setError] = useState<any>();
 
   const search = (e: ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value.toLowerCase();
+    const searchTerm = e.target.value ? e.target.value.toLowerCase() : '';
     console.log('Search Term:', searchTerm);
-
-    const filteredJobs = allJobs.filter(job => job.position.toLowerCase().includes(searchTerm));
-    
+  
+    const filteredJobs = allJobs.filter(
+      job => job.position && job.position.toLowerCase().includes(searchTerm)
+    );
+  
     console.log('Filtered Jobs:', filteredJobs);
-
+  
     setFilteredJobs(filteredJobs);
   };
-
+  
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

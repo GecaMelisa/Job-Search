@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateJob } from '../../hooks/useCreateJob';
 import { Button, TextField, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
-import { toast } from 'react-toastify';
-
+//import { toast } from 'react-toastify';
 
 type Props = {
-  onCancel: () => void;
-  onSubmitJob: (formData: JobCreation) => void;
-};
+    isOpen: boolean;
+    onCancel: () => void;
+    onSubmitJob: (formData: JobUpdate) => void;
+    initialJobData: JobUpdate;
+  };
 
-export type JobCreation = {
-  id: string;
-  companyId: string;
+export type JobUpdate = {
+  jobId: string;
   companyName: string;
   deadline: string;
   description: string;
@@ -25,80 +24,55 @@ export type JobCreation = {
   statusRequest: string;
 };
 
-const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<JobCreation>({});
-  const [position, setPosition] = useState ('');
-  const [description, setDescription] = useState ('');
-  const [location, setLocation] = useState ('');
-  const [jobType, setJobType] = useState ('');
-  const [requirements, setRequirements] = useState ('');
-  const [salary, setSalary] = useState ('');
-  const [deadline, setDeadline] = useState ('');
-  const [companyId, setCompanyId] = useState ('');
+const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initialJobData }: Props) => {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<JobUpdate>({});
+  const [position, setPosition] = useState(initialJobData.position);
+  const [description, setDescription] = useState(initialJobData.description);
+  const [location, setLocation] = useState(initialJobData.location);
+  const [jobType, setJobType] = useState(initialJobData.jobType);
+  const [requirements, setRequirements] = useState<string[]>(initialJobData.requirements); // Ispravljeno
+  const [salary, setSalary] = useState(initialJobData.salary);
+  const [deadline, setDeadline] = useState(initialJobData.deadline);
 
-  const {mutate: addJob} = useCreateJob()
+  useEffect(() => {
+    // Reset the form fields when the initialJobData changes
+    reset({
+      position: initialJobData.position,
+      description: initialJobData.description,
+      location: initialJobData.location,
+      jobType: initialJobData.jobType,
+      requirements: initialJobData.requirements, // Ispravljeno
+      salary: initialJobData.salary,
+      deadline: initialJobData.deadline,
+    });
+  }, [initialJobData, reset]);
 
+  const handleUpdateJob = (data: JobUpdate) => {
+    // Validate and submit the updated job data
+    const updatedJob: JobUpdate = {
+      ...initialJobData,
+      position,
+      description,
+      location,
+      jobType,
+      requirements: data.requirements.map(item => item.trim()), 
+      salary,
+      deadline,
+    };
 
-  const [] = useState<JobCreation>({
-    id:  '',
-    companyId: '',
-    companyName: '',
-    deadline: '',
-    description: '',
-    jobType: '',
-    location: '',
-    position: '',
-    postedDate: '',
-    requirements: [],
-    salary: '',
-    statusRequest: '',
-  });
-  
+    onSubmitJob(updatedJob);
+    //toast.success('Job updated successfully');
 
-
- 
-
-  const handleCreateJob = async () => {
-    var token = localStorage.getItem("userToken");
-    if (!token) {
-      toast.error('Only company owners can create jobs');
-      return;
-    }
-
-    if (!companyId || !position || !description || !location || !jobType || !salary || !requirements || !deadline) {
-      toast.error('Please enter all required fields');
-      return;
-    }
-    
-   console.log({companyId,position, description, location, jobType, salary, requirements, deadline})
-   const job = {companyId, position, description, location, salary, jobType, requirements: requirements.split(',').map(item => item.trim()), deadline}
-
-   addJob(job)
-   toast.success('Job created successfully');
-   onCancel();
-  
-
+    onCancel();
   };
 
   return (
-    <Dialog open={true} onClose={onCancel} maxWidth="md" fullWidth>
-      <DialogTitle>Create a New Job</DialogTitle>
+    <Dialog open={isOpen} onClose={onCancel} maxWidth="md" fullWidth>
+      <DialogTitle>Edit Job</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleSubmit(handleCreateJob)}>
-    
-        <TextField
-            label="Company Id"
-            variant="outlined"
-            {...register('companyId', { required: 'This field is required' })}
-            error={!!errors.companyId}
-            helperText={errors.companyId?.message}
-            value={companyId}
-            onChange={(e) => setCompanyId(e.target.value)}
-            fullWidth
-            margin="normal"
+        <form onSubmit={handleSubmit(handleUpdateJob)}>
 
-          />
-          <TextField
+        <TextField
             label="Position"
             variant="outlined"
             {...register('position', { required: 'This field is required' })}
@@ -163,9 +137,8 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
             {...register('requirements', { required: 'This field is required' })}
             error={!!errors.requirements}
             helperText={errors.requirements?.message}
-            value={requirements}
-            onChange={(e) => setRequirements(e.target.value)}
-            fullWidth
+            value={requirements.join(', ')} // Convert the array to a string for display
+            onChange={(e) => setRequirements(e.target.value.split(',').map(item => item.trim()))} // Split the string into an array            fullWidth
             margin="normal"
           />
 
@@ -181,12 +154,14 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
             margin="normal"
           />
 
+
+
           <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
             <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
               Cancel
             </Button>
-            <Button onClick={handleCreateJob} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
-              Create
+            <Button type="submit" sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+              Update
             </Button>
           </Box>
         </form>
@@ -195,4 +170,4 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
   );
 };
 
-export default JobModal;
+export default UpdateJobModal;

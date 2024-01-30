@@ -3,7 +3,7 @@ import { Typography, Button, Box, Paper, Card, CardContent } from '@mui/material
 import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Application, User } from '../utils/types';
+import { Application, Company, User } from '../utils/types';
 import JobModal from '../components/Modals/JobModal';
 import CompanyModal from '../components/Modals/CompanyModal';
 
@@ -30,6 +30,7 @@ const UserType = styled('strong')({
   color: '#ff862a',
   fontSize: '1.3rem',
   marginBottom: '15px',
+
 });
 
 const Position = styled('strong')({
@@ -44,6 +45,8 @@ const Position = styled('strong')({
 
 const UserProfile: React.FC = () => {
   const [applications, setApplications] = useState<Application[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+
   const [info, setInfo] = useState<User>({
     userType: '',
     firstName: '',
@@ -105,6 +108,20 @@ const UserProfile: React.FC = () => {
         };
         const applicationsResponse = await axios.request(applicationsConfig);
         setApplications(applicationsResponse.data);
+
+
+        let companiesConfig = {
+          method: 'get',
+          maxBodyLength: Infinity,
+          url: 'http://localhost:8080/api/companies/',
+          headers: {
+            'Authorization': 'Bearer ' + userToken,
+          },
+        };
+        const companiesResponse = await axios.request(companiesConfig);
+        setCompanies(companiesResponse.data);
+
+
       } catch (error) {
         setError(error);
       } finally {
@@ -215,7 +232,7 @@ const UserProfile: React.FC = () => {
           <CompanyModal onCancel={handleCloseCompanyModal} />
         )}
 
-{info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
+{info.userType === 'COMPANY_OWNER'  ? (
     <Box
       sx={{
         display: 'flex',
@@ -230,8 +247,8 @@ const UserProfile: React.FC = () => {
     </Position>
     
       {applications.map((application) => (
-    <Card key={application.id} sx={{ width: '100%', maxWidth: 600, marginBottom: 3, backgroundColor: '#edede0e3' }}>
-    <CardContent sx={{ color: '#175e5e', fontSize: '1.4rem', border: '1.3px solid #175e5e', borderRadius: '1.3px' }}>
+    <Card key={application.id} sx={{ width: '100%', maxWidth: 1100, marginBottom: 3, backgroundColor: '#edede0e3', height: '220px'}}>
+    <CardContent sx={{ color: '#175e5e', fontSize: '6', border: '1.5px solid #175e5e', borderRadius: '8px', height: '220px' }}>
             <UserType>{application.job.position}</UserType>
             <Typography variant="body2"><strong>Name: </strong>{application.user.name}</Typography>
             <Typography variant="body2"><strong>Email: </strong>{application.user.email}</Typography>
@@ -245,6 +262,37 @@ const UserProfile: React.FC = () => {
       ))}
   </Box>
    ) : null}
+
+{info.userType === 'ADMIN'  ? (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center', 
+      }}
+    >
+
+    <Position>
+      <strong>VIEW ALL COMPANIES</strong>
+    </Position>
+    
+      {companies.map((company) => (
+    <Card key={company.id} sx={{ width: '100%', maxWidth: 1100, marginBottom: 3, backgroundColor: '#edede0e3', height: '150px'}}>
+    <CardContent sx={{ color: '#175e5e', fontSize: '6', border: '1.5px solid #175e5e', borderRadius: '8px', height: '220px' }}>
+            <UserType>{company.companyName}</UserType>
+            <Typography variant="body2"><strong>Name: </strong>{company.email}</Typography>
+            <Typography variant="body2"><strong>Email: </strong>{company.address}</Typography>
+            <Typography variant="body2"><strong>Phone: </strong>{company.phone}</Typography>
+          </CardContent>
+          
+        </Card>
+      ))}
+  </Box>
+   ) : null}
+
+
+
 
 
   </Box>

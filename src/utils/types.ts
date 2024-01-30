@@ -51,6 +51,7 @@ export type Application = {
     };
 
 export type Company = {
+      id: string;
       companyName: string;
       companyOwnerId: string;
       address: string;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import  { ChangeEvent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './navbar.css';
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,9 +8,8 @@ import { jobList } from '../../constants';
 import { Job } from '../../utils/types';
 
 
-type Props = {}
 
-const NavBar = (props: Props) => {
+const NavBar = () => {
   const { userToken } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -43,7 +42,7 @@ const NavBar = (props: Props) => {
          {} 
          <span className="tagline" style={{ 
           marginLeft: '10px',
-          marginRight: '505px',
+          marginRight: '500px',
           overflow: 'hidden', 
           display: 'inline-block',
           fontSize: '1.5rem', 

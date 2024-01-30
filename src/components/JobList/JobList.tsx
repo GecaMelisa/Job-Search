@@ -12,10 +12,9 @@ const JobList: React.FC = () => {
   const search = (e: ChangeEvent<HTMLInputElement>) => {
     const filteredJobs = jobList.filter(job => job.position.toLowerCase().includes(e.target.value.toLowerCase()))
  
- 
     setJobs(filteredJobs)
  }
- 
+
 
   useEffect(() => {
     const fetchData = async () => {
