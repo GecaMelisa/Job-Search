@@ -1,22 +1,70 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Job } from '../../utils/types';
 import { JobService } from '../../services';
-import './jobs.css';
+import './jobList.css';
 import { jobList } from '../../constants';
+import axios from 'axios';
 
-const JobList: React.FC = () => {
+const JobList = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>();
+
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  /*
 
   const search = (e: ChangeEvent<HTMLInputElement>) => {
     const filteredJobs = jobList.filter(job => job.position.toLowerCase().includes(e.target.value.toLowerCase()))
  
     setJobs(filteredJobs)
- }
+ }*/
+
+ const handlePageSizeChange = (e: any) => {
+  setPageSize(Number(e.target.value));
+  setPage(0)
+}
+
+useEffect(() => {
+  console.log('jobs after update:', jobs);
+}, [jobs]);
 
 
   useEffect(() => {
+    var userToken = localStorage.getItem('userToken');
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+         //fetch jobs
+
+         let jobsConfig = {
+          method: 'get',
+          maxBodyLength: Infinity,
+          url:`http://localhost:8080/api/jobs/jobsWithPagination?offset=${page * pageSize}&pageSize=${pageSize}&field=${searchTerm}`,
+          headers: {
+            'Authorization': 'Bearer ' + userToken,
+          },
+        };
+        const jobsResponse = await axios.request(jobsConfig);
+        setJobs(jobsResponse.data.data);
+        setTotalCount(jobsResponse.data.total)
+
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [page, pageSize, searchTerm]);
+
+
+    /*
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -31,6 +79,8 @@ const JobList: React.FC = () => {
 
     fetchData();
   }, []);
+  */
+
 
   return (
     <>
@@ -43,6 +93,8 @@ const JobList: React.FC = () => {
         <hr />
         <p className="mb-0">Something went wrong, please try again.</p>
       </div>}
+
+  
      
     </>
   );

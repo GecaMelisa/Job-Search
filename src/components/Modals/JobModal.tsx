@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useCreateJob } from '../../hooks/useCreateJob';
-import { Button, TextField, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
-import { toast } from 'react-toastify';
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useCreateJob } from "../../hooks/useCreateJob";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Box,
+} from "@mui/material";
+import { toast } from "react-toastify";
 
 type Props = {
   onCancel: () => void;
@@ -23,61 +29,79 @@ export type JobCreation = {
   requirements: string[];
   salary: string;
   statusRequest: string;
+  seniority: string;
 };
 
 const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<JobCreation>({});
-  const [position, setPosition] = useState ('');
-  const [description, setDescription] = useState ('');
-  const [location, setLocation] = useState ('');
-  const [jobType, setJobType] = useState ('');
-  const [requirements, setRequirements] = useState ('');
-  const [salary, setSalary] = useState ('');
-  const [deadline, setDeadline] = useState ('');
-  const [companyId, setCompanyId] = useState ('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<JobCreation>({});
+  const [position, setPosition] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [requirements, setRequirements] = useState("");
+  const [salary, setSalary] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [companyId, setCompanyId] = useState("");
+  const [seniority, setSeniority] = useState("");
 
-  const {mutate: addJob} = useCreateJob()
-
+  const { mutate: addJob } = useCreateJob();
 
   const [] = useState<JobCreation>({
-    id:  '',
-    companyId: '',
-    companyName: '',
-    deadline: '',
-    description: '',
-    jobType: '',
-    location: '',
-    position: '',
-    postedDate: '',
+    id: "",
+    companyId: "",
+    companyName: "",
+    deadline: "",
+    description: "",
+    jobType: "",
+    location: "",
+    position: "",
+    postedDate: "",
     requirements: [],
-    salary: '',
-    statusRequest: '',
+    salary: "",
+    statusRequest: "",
+    seniority: "",
   });
-  
-
-
- 
 
   const handleCreateJob = async () => {
     var token = localStorage.getItem("userToken");
     if (!token) {
-      toast.error('Only company owners can create jobs');
+      toast.error("Only company owners can create jobs");
       return;
     }
 
-    if (!companyId || !position || !description || !location || !jobType || !salary || !requirements || !deadline) {
-      toast.error('Please enter all required fields');
+    if (
+      !companyId ||
+      !position ||
+      !description ||
+      !location ||
+      !jobType ||
+      !salary ||
+      !requirements ||
+      !deadline ||
+      !seniority
+    ) {
+      toast.error("Please enter all required fields");
       return;
     }
-    
-   console.log({companyId,position, description, location, jobType, salary, requirements, deadline})
-   const job = {companyId, position, description, location, salary, jobType, requirements: requirements.split(',').map(item => item.trim()), deadline}
+    const job = {
+      companyId,
+      position,
+      description,
+      location,
+      salary,
+      jobType,
+      requirements: requirements.split(",").map((item) => item.trim()),
+      deadline,
+      seniority,
+    };
 
-   addJob(job)
-   toast.success('Job created successfully');
-   onCancel();
-  
-
+    addJob(job);
+    toast.success("Job created successfully");
+    onCancel();
   };
 
   return (
@@ -85,23 +109,21 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
       <DialogTitle>Create a New Job</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(handleCreateJob)}>
-    
-        <TextField
+          <TextField
             label="Company Id"
             variant="outlined"
-            {...register('companyId', { required: 'This field is required' })}
+            {...register("companyId", { required: "This field is required" })}
             error={!!errors.companyId}
             helperText={errors.companyId?.message}
             value={companyId}
             onChange={(e) => setCompanyId(e.target.value)}
             fullWidth
             margin="normal"
-
           />
           <TextField
             label="Position"
             variant="outlined"
-            {...register('position', { required: 'This field is required' })}
+            {...register("position", { required: "This field is required" })}
             error={!!errors.position}
             helperText={errors.position?.message}
             value={position}
@@ -113,7 +135,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Description"
             variant="outlined"
-            {...register('description', { required: 'This field is required' })}
+            {...register("description", { required: "This field is required" })}
             error={!!errors.description}
             helperText={errors.description?.message}
             value={description}
@@ -125,7 +147,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Location"
             variant="outlined"
-            {...register('location', { required: 'This field is required' })}
+            {...register("location", { required: "This field is required" })}
             error={!!errors.location}
             helperText={errors.location?.message}
             value={location}
@@ -137,7 +159,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Job Type"
             variant="outlined"
-            {...register('jobType', { required: 'This field is required' })}
+            {...register("jobType", { required: "This field is required" })}
             error={!!errors.jobType}
             helperText={errors.jobType?.message}
             value={jobType}
@@ -149,7 +171,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Salary"
             variant="outlined"
-            {...register('salary', { required: 'This field is required' })}
+            {...register("salary", { required: "This field is required" })}
             error={!!errors.salary}
             helperText={errors.salary?.message}
             value={salary}
@@ -160,7 +182,9 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Requirements"
             variant="outlined"
-            {...register('requirements', { required: 'This field is required' })}
+            {...register("requirements", {
+              required: "This field is required",
+            })}
             error={!!errors.requirements}
             helperText={errors.requirements?.message}
             value={requirements}
@@ -172,7 +196,7 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
           <TextField
             label="Deadline"
             variant="outlined"
-            {...register('deadline', { required: 'This field is required' })}
+            {...register("deadline", { required: "This field is required" })}
             error={!!errors.deadline}
             helperText={errors.deadline?.message}
             value={deadline}
@@ -181,11 +205,45 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
             margin="normal"
           />
 
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-            <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+          <TextField
+            label="Seniority"
+            variant="outlined"
+            {...register("seniority", { required: "This field is required" })}
+            error={!!errors.seniority}
+            helperText={errors.seniority?.message}
+            value={seniority}
+            onChange={(e) => setSeniority(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 2,
+            }}
+          >
+            <Button
+              onClick={onCancel}
+              sx={{
+                backgroundColor: "#ff862a",
+                color: "#fff",
+                width: "120px",
+                height: "40px",
+              }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleCreateJob} sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+            <Button
+              onClick={handleCreateJob}
+              sx={{
+                backgroundColor: "#175e5e",
+                color: "#fff",
+                width: "120px",
+                height: "40px",
+              }}
+            >
               Create
             </Button>
           </Box>
