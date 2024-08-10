@@ -14,6 +14,7 @@ export type CompanyCreation = {
   address: string;
   phone: string;
   email: string;
+  companyDescription: string;
 };
 
 const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
@@ -23,15 +24,17 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
+  const [companyDescription, setCompanyDescription] = useState('');
+
 
   const { mutate: addCompany } = useCreateCompany();
 
   const handleCreateCompany = async () => {
-    if (!companyName || !companyOwnerId || !address || !phone || !email) {
+    if (!companyName || !companyOwnerId || !address || !phone || !email || !companyDescription) {
       toast.error('Please enter all required fields');
       return;
     }
-    const company = { companyName, companyOwnerId, address, phone, email };
+    const company = { companyName, companyOwnerId, address, phone, email, companyDescription};
     addCompany(company);
     toast.success('Company created successfully');
     onCancel();
@@ -51,6 +54,18 @@ const CompanyModal: React.FC<Props> = ({ onCancel }: Props) => {
             helperText={errors.companyName?.message}
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+
+          <TextField
+            label="Company Decription"
+            variant="outlined"
+            {...register('companyDescription', { required: 'This field is required' })}
+            error={!!errors.companyDescription}
+            helperText={errors.companyDescription?.message}
+            value={companyDescription}
+            onChange={(e) => setCompanyDescription(e.target.value)}
             fullWidth
             margin="normal"
           />

@@ -1,52 +1,105 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button, Box, Paper, Card, CardContent } from '@mui/material';
+import { Typography, Button, Box, FormControl, InputLabel, OutlinedInput, InputAdornment, Avatar, Card, CardContent, Grid } from '@mui/material';
 import { styled } from '@mui/system';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { AiOutlineSearch } from 'react-icons/ai';
+import NavBar from '../components/NavBar';
 import { Application, Company, User } from '../utils/types';
+import axios from 'axios';
+import { MdPerson } from 'react-icons/md'; 
 import JobModal from '../components/Modals/JobModal';
 import CompanyModal from '../components/Modals/CompanyModal';
+
+import BackgroundImage from '../utils/backk.jpg'; // Importujte vašu sliku
+
+const BackgroundBox = styled(Box)({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundImage: `url(${BackgroundImage})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  filter: 'blur(3.5px)', // Efekat zamagljenja
+  zIndex: -1, 
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+    zIndex: -1,
+  },
+});
+
+const ContentBox = styled(Box)({
+  position: 'relative',
+  zIndex: 1, 
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+});
 
 const UserInfoContainer = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'flex-start',
+  alignItems: 'center', 
   marginTop: '20px',
   marginLeft: '80px',
   marginRight: '80px',
-  backgroundColor: '#edede0e3',
-  border: '1.3px solid #175e5e',
+  backgroundColor: '#transapent',
+  border: '0px solid #ffffff',
   borderRadius: '4px',
-  padding: '20px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  padding: '8px',
+});
+
+const StyledCard = styled(Card)({
+  width: '320px',
+  height: '320px', 
+  borderRadius: '15px',
+  border: '1px solid #175e5e',
+  transition: 'transform 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'scale(1.02)',
+  },
+  margin: '20px', 
+});
+
+const StyledCardContent = styled(CardContent)({
+  color: '#175e5e',
+  padding: '15px', 
+  textAlign: 'center',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  height: 'auto',
+  borderRadius: '15px',
 });
 
 const UserInfoItem = styled('div')({
   marginBottom: '9px',
-  color: '#175e5e',
+  color: '#f0f0f0',
 });
 
 const UserType = styled('strong')({
-  color: '#ff862a',
+  color: '#f0f0f0',
   fontSize: '1.3rem',
   marginBottom: '15px',
-
-});
-
-const Position = styled('strong')({
-  display: 'flex',
-  alignItems: 'flex-start',
-  color: '#175e5e',
-  fontSize: '1.3rem',
-  marginBottom: '50px',
-  marginTop: '25px'
-
 });
 
 const UserProfile: React.FC = () => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [companies, setCompanies] = useState<Company[]>([]);
-
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [pageSize, setPageSize] = useState(3);
+  const [searchTerm, setSearchTerm] = useState('');
   const [info, setInfo] = useState<User>({
     userType: '',
     firstName: '',
@@ -58,32 +111,15 @@ const UserProfile: React.FC = () => {
     education: '',
     username: '',
   });
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<any>();
   const [isJobModalOpen, setJobModalOpen] = useState(false);
   const [isCompanyModalOpen, setCompanyModalOpen] = useState(false);
 
-  const handleCreateJobClick = () => {
-    setJobModalOpen(true);
-  };
-
-  const handleCreateCompanyClick = () => {
-    setCompanyModalOpen(true);
-  };
-
-  const handleCloseJobModal = () => {
-    setJobModalOpen(false);
-  };
-
-  const handleCloseCompanyModal = () => {
-    setCompanyModalOpen(false);
-  };
-
   useEffect(() => {
-    var userToken = localStorage.getItem('userToken');
     const fetchData = async () => {
       try {
-        setLoading(true);
+
+        let userToken = localStorage.getItem('userToken');
 
         // Fetch user info
         let userConfig = {
@@ -109,18 +145,18 @@ const UserProfile: React.FC = () => {
         const applicationsResponse = await axios.request(applicationsConfig);
         setApplications(applicationsResponse.data);
 
-
+        // Fetch companies
         let companiesConfig = {
           method: 'get',
           maxBodyLength: Infinity,
-          url: 'http://localhost:8080/api/companies/',
+          url: `http://localhost:8080/api/companies/withPagination?offset=${page * pageSize}&pageSize=${pageSize}&field=${searchTerm}`,
           headers: {
             'Authorization': 'Bearer ' + userToken,
           },
         };
         const companiesResponse = await axios.request(companiesConfig);
-        setCompanies(companiesResponse.data);
-
+        setCompanies(companiesResponse.data.data);
+        setTotalCount(companiesResponse.data.total);
 
       } catch (error) {
         setError(error);
@@ -130,34 +166,35 @@ const UserProfile: React.FC = () => {
     };
 
     fetchData();
-  }, []);
+  }, [page, pageSize, searchTerm]);
+
+  const handleCreateJobClick = () => {
+    setJobModalOpen(true);
+  };
+
+  const handleCreateCompanyClick = () => {
+    setCompanyModalOpen(true);
+  };
+
+  const handleCloseJobModal = () => {
+    setJobModalOpen(false);
+  };
+
+  const handleCloseCompanyModal = () => {
+    setCompanyModalOpen(false);
+  };
+
+  const handlePageSizeChange = (e: any) => {
+    setPageSize(Number(e.target.value));
+    setPage(0);
+  };
 
   return (
     <>
-      <Paper elevation={3} sx={{ padding: 3, position: 'relative', backgroundColor: '#175e5e', color: 'white', width: '100%', borderRadius: 0 }}>
-        <Typography variant="h4" sx={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: '30px' }}>
-          <i className="fas fa-user fa-fw"></i>
-          <span style={{ color: '#e3e3a4e3', marginTop: '20px' }}>JobSearch</span>
-        </Typography>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', mt: 1, mb: 5, mr: 10, gap: '10px' }}>
-          <li key="home" className="menuList text-[#4e66a2] hover:text-blueColor">
-            <Link className="nav-link font-bold" to="/home">
-              Home
-            </Link>
-          </li>
-
-          <li key="about" className="menuList text-[#4e66a2] hover:text-blueColor">
-            <Link className="nav-link font-bold" to="/about">
-              About
-            </Link>
-          </li>
-
-          <li key="userProfile" className='menuList text-[#4e66a2] hover:text-blueColor'>
-              <Link className="nav-link font-bold" to="/userProfile/${id}">MyProfile</Link>
-            </li>
-        </Box>
-      </Paper>
+      <Box sx={{ position: 'relative', minHeight: '100vh' }}>
+        <BackgroundBox />
+        <ContentBox>
+          <NavBar />
 
       {loading && (
         <div className="spinner-border text-primary" role="status">
@@ -175,14 +212,15 @@ const UserProfile: React.FC = () => {
       {!loading && (
         <Box sx={{ mt: 5 }}>
           <UserInfoContainer>
-            <UserType>
-              <strong>{info.userType}</strong>
-            </UserType>
+            {/* Avatar or icon for user */}
+            <Avatar sx={{ width: 150, height: 150, backgroundColor: '#afaf63e3', marginBottom: '20px' }}>
+              <MdPerson size={80} color="#fff" />
+            </Avatar>
+
+            {/* User information */}
+            <Typography variant="h4" sx={{ marginBottom: '20px', color: '#f0f0f0' }}>{info.firstName} {info.lastName}</Typography>
             <UserInfoItem>
-              <strong>First Name:</strong> {info.firstName}
-            </UserInfoItem>
-            <UserInfoItem>
-              <strong>Last Name:</strong> {info.lastName}
+              <strong>User Type:</strong> {info.userType}
             </UserInfoItem>
             <UserInfoItem>
               <strong>Date of Birth:</strong> {info.dateOfBirth}
@@ -194,23 +232,26 @@ const UserProfile: React.FC = () => {
               <strong>Username:</strong> {info.username}
             </UserInfoItem>
 
+            {/* Buttons for creating company and job */}
             {info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
               <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 3, width: '100%' }}>
                 <Button
                   onClick={handleCreateCompanyClick}
-                  sx={{ backgroundColor: '#175e5e', color: '#fff', width: '180px', height: '50px', marginBottom: '10px' }}
+                  sx={{ backgroundColor: '#737680', color: '#ffff', width: '180px', height: '50px', marginBottom: '10px', borderRadius: '25px', marginLeft: '205px' }}
                 >
                   Create Company
                 </Button>
                 <Button
                   onClick={handleCreateJobClick}
                   sx={{
-                    backgroundColor: '#ff862a',
+                    backgroundColor: '#afaf63e3',
                     color: '#fff',
                     width: '180px',
                     height: '50px',
                     marginBottom: '10px',
                     marginLeft: 'auto',
+                    borderRadius: '25px',
+                    marginRight: '205px'
                   }}
                 >
                   Create Job
@@ -220,85 +261,114 @@ const UserProfile: React.FC = () => {
           </UserInfoContainer>
         </Box>
       )}
-    <Box sx={{ mt: 5 }}>
-       {isJobModalOpen && (
-          <JobModal onCancel={handleCloseJobModal} onSubmitJob={(formData) => {
-            console.log('Job data submitted:', formData);
-            handleCloseJobModal();
-          }} />
-        )}
 
-        {isCompanyModalOpen && (
-          <CompanyModal onCancel={handleCloseCompanyModal} />
-        )}
+        {/* Search bar */}
+        <div className='search-bar' style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '30px', width: '100%' }}>
+        <FormControl fullWidth variant="outlined" sx={{ borderRadius: '25px', backgroundColor: '#f0f0f0', maxWidth: '650px' }}>
+          <OutlinedInput
+            startAdornment={<InputAdornment position="start"><AiOutlineSearch /></InputAdornment>}
+            placeholder="Search for..."
+            onChange={(e) => setSearchTerm(e.target.value)}
+            sx={{
+              borderRadius: '30px',
+              '&:hover': {
+                backgroundColor: '#f0f0f0',
+              },
+            }}
+          />
+        </FormControl>
+      </div>
 
-{info.userType === 'COMPANY_OWNER'  ? (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center', 
-      }}
-    >
-
-    <Position>
-      <strong>VIEW ALL APPLICATIONS FOR YOUR JOB</strong>
-    </Position>
+        {/* Pagination and Search */}
+        <Box sx={{ mt: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#f0f0f0', marginTop:'10px', marginBottom: '5px'}}>
+        {/* Pagination controls */}
+        <label htmlFor="">Select page size:</label>
+        <br />
+        <select name="pageSize" id="" value={pageSize} onChange={handlePageSizeChange}>
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="9">9</option>
+          <option value="12">12</option>
+        </select>
     
-      {applications.map((application) => (
-    <Card key={application.id} sx={{ width: '100%', maxWidth: 1100, marginBottom: 3, backgroundColor: '#edede0e3', height: '220px'}}>
-    <CardContent sx={{ color: '#175e5e', fontSize: '6', border: '1.5px solid #175e5e', borderRadius: '8px', height: '220px' }}>
-            <UserType>{application.job.position}</UserType>
-            <Typography variant="body2"><strong>Name: </strong>{application.user.name}</Typography>
-            <Typography variant="body2"><strong>Email: </strong>{application.user.email}</Typography>
-            <Typography variant="body2"><strong>Date of Birth: </strong>{application.user.dateOfBirth}</Typography>
-            <Typography variant="body2"><strong>Education: </strong>{application.education}</Typography>
-            <Typography variant="body2"><strong>Work Experience: </strong>{application.workExperience}</Typography>
-            <Typography variant="body2"><strong>CV: </strong>{application.cv}</Typography>
-          </CardContent>
-          
-        </Card>
-      ))}
-  </Box>
-   ) : null}
+    {/* Conditional rendering based on user type */}
+      {info.userType === 'COMPANY_OWNER' && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          {/* View all applications */}
+          <Typography variant="h5" sx={{ mb: 2, textAlign: 'center' }}>
+            {/*<strong>VIEW ALL APPLICATIONS FOR YOUR JOB</strong>*/}
+          </Typography>
+          {/* Display applications */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: '1200px' }}>
+              {applications.map((application) => (
+                <Grid item xs={12} sm={6} md={4} key={application.id} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <StyledCard>
+                    <StyledCardContent>
+                      <Typography variant="h6">{application.job.position}</Typography>
+                      <Typography variant="body2"><strong>Name: </strong>{application.user.name}</Typography>
+                      <Typography variant="body2"><strong>Email: </strong>{application.user.email}</Typography>
+                      <Typography variant="body2"><strong>Date of Birth: </strong>{application.user.dateOfBirth}</Typography>
+                      <Typography variant="body2"><strong>Education: </strong>{application.education}</Typography>
+                      <Typography variant="body2"><strong>Work Experience: </strong>{application.workExperience}</Typography>
+                      <Typography variant="body2"><strong>CV: </strong>{application.cv}</Typography>
+                    </StyledCardContent>
+                  </StyledCard>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Box>
+      )}
 
-{info.userType === 'ADMIN'  ? (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center', 
-      }}
-    >
+      {info.userType === 'ADMIN' && (
+        <Box sx={{ mt: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          <Typography variant="h5" sx={{ mb: 3, textAlign: 'center' }}>
+            {/*<strong>VIEW ALL COMPANIES</strong>*/}
+          </Typography>
+          {/* Grid for displaying companies */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: '1200px' }}>
+              {companies.map((company) => (
+                <Grid item xs={12} sm={6} md={4} key={company.id} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                  <StyledCard>
+                    <StyledCardContent>
+                      <Typography sx={{marginBottom: '15px'}} variant="h5">{company.companyName}</Typography>
+                      <Typography variant="body2"><strong>Email: </strong>{company.email}</Typography>
+                      <Typography variant="body2"><strong>Address: </strong>{company.address}</Typography>
+                      <Typography variant="body2"><strong>Phone: </strong>{company.phone}</Typography>
+                    </StyledCardContent>
+                  </StyledCard>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+      
 
-    <Position>
-      <strong>VIEW ALL COMPANIES</strong>
-    </Position>
-    
-      {companies.map((company) => (
-    <Card key={company.id} sx={{ width: '100%', maxWidth: 1100, marginBottom: 3, backgroundColor: '#edede0e3', height: '150px'}}>
-    <CardContent sx={{ color: '#175e5e', fontSize: '6', border: '1.5px solid #175e5e', borderRadius: '8px', height: '220px' }}>
-            <UserType>{company.companyName}</UserType>
-            <Typography variant="body2"><strong>Name: </strong>{company.email}</Typography>
-            <Typography variant="body2"><strong>Email: </strong>{company.address}</Typography>
-            <Typography variant="body2"><strong>Phone: </strong>{company.phone}</Typography>
-          </CardContent>
-          
-        </Card>
-      ))}
-  </Box>
-   ) : null}
+            {/* Pagination controls */}
+            <Button onClick={() => { setPage(page - 1) }} disabled={page === 0}>Previous Page</Button>
+            <Typography variant="body1" sx={{ mx: 2 }}>
+              {page + 1} of {Math.ceil(totalCount / pageSize)}
+            </Typography>
+            <Button onClick={() => { setPage(page + 1) }} disabled={(page * pageSize) + companies.length === totalCount}>Next Page</Button>
+          </Box>
+        )}
+      </Box>
 
+      {/* Modals */}
+      {isJobModalOpen && (
+        <JobModal onCancel={handleCloseJobModal} onSubmitJob={(formData) => {
+          console.log('Job data submitted:', formData);
+          handleCloseJobModal();
+        }} />
+      )}
 
-
-
-
-  </Box>
-
-
-
+      {isCompanyModalOpen && (
+        <CompanyModal onCancel={handleCloseCompanyModal} />
+      )}
+           
+        </ContentBox>
+      </Box>
     </>
   );
 };

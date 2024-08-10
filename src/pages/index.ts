@@ -5,4 +5,4 @@ export { default as NotFound } from './NotFound'
 export { default as JobPage } from './JobPage'
 export { default as UserProfile } from './UserProfile'
 export { default as About } from './About'
-
+export { default as Companies } from './Companies'

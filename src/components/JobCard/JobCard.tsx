@@ -1,42 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import ApplicationModal from '../Modals/ApplicationModal';
-import './jobs.css';
-import { useUpdateJob } from '../../hooks/useUpdateJob';
-import UpdateJobModal from '../Modals/UpdateJobModal';
-import { Job, User } from '../../utils/types';
-import axios from 'axios';
-import useDeleteJob from '../../hooks/useDeleteJob';
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CardActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
+import { LocationOn, Schedule } from "@mui/icons-material";
+import ApplicationModal from "../Modals/ApplicationModal";
+import UpdateJobModal from "../Modals/UpdateJobModal";
+import { useUpdateJob } from "../../hooks/useUpdateJob";
+import useDeleteJob from "../../hooks/useDeleteJob";
+import { Job, User, Company } from "../../utils/types";
+import axios from "axios";
+import Modal from "@mui/joy/Modal";
+import ModalDialog from "@mui/joy/ModalDialog";
+import ModalClose from "@mui/joy/ModalClose";
+import ShareLocationIcon from "@mui/icons-material/ShareLocation";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import "./jobCard.css";
 
 type JobCardProps = {
   job: Job;
+  company: Company;
 };
 
-
-const JobCard: React.FC<JobCardProps> = ({ job }) => {
+const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState<boolean>(false);
+  const [info, setInfo] = useState<User | null>(null);
   const updateJobMutation = useUpdateJob();
-  const deleteJobMutation =useDeleteJob();
-
-  const [info, setInfo] = useState<User>({
-    userType: '',
-    firstName: '',
-    lastName: '',
-    dateOfBirth: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    education: '',
-    username: '',
-  });
-
-  const [loading, setLoading] = useState<boolean>(false); 
-  const [error, setError] = useState<any>(null); 
+  const deleteJobMutation = useDeleteJob();
+  const [jobInfoModal, setJobInfoModal] = useState(false);
 
   const handleApplyClick = () => {
     setIsModalOpen(true);
@@ -50,165 +48,220 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
     setIsUpdateModalOpen(true);
   };
 
-  const handleUpdateJob = (updatedJobData: Job) => {
-    updateJobMutation.mutate(updatedJobData);
-    setIsUpdateModalOpen(false);
-  };
-
-  const handleCancelUpdate = () => {
-    setIsUpdateModalOpen(false); // Close the modal when canceling
-  };
-
   const handleDeleteClick = async () => {
-      if (window.confirm('Are you sure you want to delete this job?')) {
-        await deleteJobMutation.mutateAsync(job.jobId);
-      }
-    };
+    if (window.confirm("Are you sure you want to delete this job?")) {
+      await deleteJobMutation.mutateAsync(job.jobId);
+    }
+  };
 
   useEffect(() => {
-    var userToken = localStorage.getItem('userToken');
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-
-        // Fetch user info
-        let userConfig = {
-          method: 'get',
-          maxBodyLength: Infinity,
-          url: 'http://localhost:8080/api/users/userInfo',
-          headers: {
-            'Authorization': 'Bearer ' + userToken,
-          },
-        };
-        const userResponse = await axios.request(userConfig);
-        setInfo(userResponse.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+    const fetchUserInfo = async () => {
+      const userToken = localStorage.getItem("userToken");
+      if (userToken) {
+        try {
+          const response = await axios.get(
+            "http://localhost:8080/api/users/userInfo",
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            }
+          );
+          setInfo(response.data);
+        } catch (error) {
+          console.error("Error fetching user info:", error);
+        }
       }
     };
 
-    fetchData();
+    fetchUserInfo();
   }, []);
+
+  const formatDeadline = (deadline: string) => {
+    const deadlineDate = new Date(deadline);
+    const now = new Date();
+
+    if (deadlineDate < now) {
+      return `Deadline`;
+    } else {
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return `Deadline: ${deadlineDate.toLocaleDateString("en-US")}`; //moment
+    }
+  };
+
   return (
-    
-    <Card
-      className='job-card'
-      sx={{
-        margin: '20px auto',
-        borderRadius: '10px',
-        border: '1.5px solid #175e5e',
-        backgroundColor: '#edede0e3',
-        position: 'relative',
-        width: '80%',
-        maxWidth: '980px',
-      }}
-    >
+    <>
+      <Card
+        className="job-card"
+        style={{
+          borderRadius: "10px",
+          border: "2px solid #ccc",
+          marginBottom: "20px",
+        }}
+      >
+        <CardContent
+          className="card-content"
+          onClick={() => setJobInfoModal(true)}
+        >
+          <div className="job-header">
+            <h6 className="job-title">{job.position}</h6>
+            <Typography variant="body2" className="job-company">
+              {job.companyName}
+            </Typography>
+          </div>
+          <div className="job-details">
+            <div className="job-location">
+              <span>
+                <LocationOn className="job-location-icon" /> Location
+              </span>
 
-      {loading && (
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <Typography variant="body2" className="job-info">
+                {job.location}
+              </Typography>
             </div>
-          )}
-          {error && (
-            <div className="alert alert-danger" role="alert">
-              <h4 className="alert-heading">Unable to render data!</h4>
-              <p>{error?.response?.data?.message || error?.message}</p>
-              <hr />
-              <p className="mb-0">Something went wrong, please try again.</p>
+            <div className="job-deadline">
+              <Schedule className="job-deadline-icon" />
+              <Typography variant="body2" className="job-info">
+                {formatDeadline(job.deadline)}
+              </Typography>
             </div>
-          )}
-          {!loading && (
-            <>
-          <CardHeader title={job.position} sx={{ fontSize: '15px', fontWeight: 'bold', marginBottom: '8px', color: '#175e5e' }} />
-          <CardContent>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Company:</span> {job.companyName}
-            </Typography>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Description:</span> {job.description}
-            </Typography>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Job Type:</span> {job.jobType}
-            </Typography>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Location:</span> {job.location}
-            </Typography>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Requirements:</span> {job.requirements.join(', ')}
-            </Typography>
-            <Typography variant='body2' color='#333' sx={{ fontSize: '15px', marginBottom: '4px' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Salary:</span> {job.salary}
-            </Typography>
-          
-            <Typography variant='body2' color='textSecondary' sx={{ fontSize: '15px', fontWeight: 'bold', marginTop: '8px', color: 'red' }}>
-              <span style={{ fontWeight: 'bold', color: '#175e5e' }}>Deadline:</span> {job.deadline}
-            </Typography>
-          
-            {info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
-            
-            <Button
-              variant='outlined'
-              onClick={handleDeleteClick}
-              size='medium'
-              disabled={deleteJobMutation.isLoading}
-              sx={{
-                position: 'absolute',
-                bottom: '25px',
-                right: '230px',
-                backgroundColor: 'red',
-                color: '#fff',
-              }}
-            >
-              {deleteJobMutation.isLoading ? 'Deleting...' : 'Delete'}
-            </Button>
-            ) : null}
-          
-            {info.userType === 'COMPANY_OWNER' || info.userType === 'ADMIN' ? (
+          </div>
+        </CardContent>
+        <ApplicationModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          job={job}
+        />
+        <UpdateJobModal
+          isOpen={isUpdateModalOpen}
+          onCancel={() => setIsUpdateModalOpen(false)}
+          onSubmitJob={(formData) =>
+            updateJobMutation.mutate({ ...job, ...formData })
+          }
+          initialJobData={job}
+        />
+      </Card>
 
-            <Button
-              variant='outlined'
-              onClick={handleUpdateClick}
-              size='medium'
-              disabled={updateJobMutation.isLoading}
-              sx={{
-                position: 'absolute',
-                bottom: '25px',
-                right: '120px',
-                backgroundColor: '#ff862a',
-                color: '#fff',
-              }}
-            >
-              {updateJobMutation.isLoading ? 'Updating...' : 'Update'}
-            </Button>
-            ) : null}
+      <Modal open={jobInfoModal} onClose={() => setJobInfoModal(false)}>
+        <ModalDialog
+          layout="fullscreen"
+          sx={{
+            justifyContent: "center",
+            backgroundColor: "rgba(240, 240, 255, 0.5)",
+          }}
+        >
+          <ModalClose />
+          <DialogTitle
+            sx={{
+              fontSize: "40px",
+              justifyContent: "center",
+              textAlign: "center",
+              marginTop: "80px",
+              color: "#141b39",
+            }}
+          >
+            {job.position}
+          </DialogTitle>
+          <DialogContent
+            sx={{
+              justifyContent: "center",
+              textAlign: "left",
+              alignItems: "center",
+              marginTop: "30px",
+              marginBottom: "",
+            }}
+          >
+            <hr />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <div style={{ marginRight: "20px" }}>
+                <ShareLocationIcon
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    marginRight: "10px",
+                    color: "#141b39",
+                  }}
+                />
+                <strong style={{ color: "#141b39" }}>{job.location}</strong>
+              </div>
+              <div style={{ marginRight: "20px" }}>
+                <WorkOutlineIcon
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    marginRight: "10px",
+                    color: "#141b39",
+                  }}
+                />
+                <strong style={{ color: "#141b39" }}>{job.jobType}</strong>
+              </div>
+              <div>
+                <AccessTimeIcon
+                  sx={{
+                    width: "30px",
+                    height: "30px",
+                    marginRight: "10px",
+                    color: "#141b39",
+                  }}
+                />
+                <strong style={{ color: "#141b39" }}>
+                  {formatDeadline(job.deadline)}
+                </strong>
+              </div>
+            </div>
+            <hr />
+            <h3>About the Company</h3>
+            <p>{company.companyName}</p>
+            <div>Some info about the company</div>
+            <hr />
+            <h3>About the Job</h3>
+            <p>{job.description}</p>
 
-            <Button
-              variant='outlined'
-              onClick={handleApplyClick}
-              size='medium'
-              sx={{
-                position: 'absolute',
-                bottom: '25px',
-                right: '25px',
-                backgroundColor: '#175e5e',
-                color: '#fff',
-              }}
-            >
-              Apply
-            </Button>
-            <ApplicationModal isOpen={isModalOpen} onClose={handleCloseModal} job={job} />  
-            <UpdateJobModal
-              isOpen={isUpdateModalOpen}
-              onCancel={handleCancelUpdate} 
-              onSubmitJob={handleUpdateJob}
-              initialJobData={job}
-            />
-          </CardContent>
-          </>
-            )}
-        </Card>
+            <div>
+              Additional information about the job
+              <p>Salary: {job.salary}</p>
+              <p>Type: {job.jobType}</p>
+              <p>Location: {job.location}</p>
+              <p>Location: {job.location}</p>
+              <p>Location: {job.deadline}</p>
+            </div>
+            <h3></h3>
+            <hr />
+
+            <CardActions className="job-actions">
+              {info &&
+                (info.userType === "COMPANY_OWNER" ||
+                  info.userType === "ADMIN") && (
+                  <>
+                    <Button
+                      variant="contained"
+                      className="update-button action-button"
+                      onClick={handleUpdateClick}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      variant="contained"
+                      className="delete-button action-button"
+                      onClick={handleDeleteClick}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                )}
+              <Button
+                variant="contained"
+                className="apply-button action-button"
+                onClick={handleApplyClick}
+                disabled={!info}
+              >
+                Apply
+              </Button>
+            </CardActions>
+          </DialogContent>
+        </ModalDialog>
+      </Modal>
+    </>
   );
 };
 

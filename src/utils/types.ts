@@ -1,4 +1,5 @@
 export type Job = {
+  company: any;
    jobId: string;
    companyName: string;
    deadline: string;
@@ -10,7 +11,20 @@ export type Job = {
    requirements: string[];
    salary: string;
    statusRequest: string;
+   seniority: string;
  }
+
+export type JobUpdate = {
+  jobId: string; 
+  position?: string; 
+  companyName?: string; 
+  description?: string; 
+  jobType?: string; 
+  location?: string; 
+  salary?: number; 
+  seniority?: string; 
+  // Add other fields that can be updated
+};
  
  export type User = {
     userType: string;
@@ -53,8 +67,14 @@ export type Application = {
 export type Company = {
       id: string;
       companyName: string;
+      companyDescription: string;
       companyOwnerId: string;
       address: string;
       phone: string;
       email: string;
-}
+};
+
+export type UserType = {
+  enumType: string;
+  value: string;
+};

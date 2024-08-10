@@ -9,6 +9,8 @@ import {
   Typography,
   ThemeProvider,
   createTheme,
+  Box,
+  styled,
 } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -17,7 +19,41 @@ import { AppDispatch, RootState } from '../store';
 import { login } from '../store/authSlice';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import BackgroundImage from '../utils/backk.jpg'; // Import your background image
 
+
+const BackgroundBox = styled(Box)({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundImage: `url(${BackgroundImage})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  filter: 'blur(3.5px)', // Efekat zamagljenja
+  zIndex: -1, // Da bi pozadinska slika bila iza sadržaja
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', 
+    zIndex: -1,
+  },
+});
+
+const ContentBox = styled(Box)({
+  position: 'relative',
+  zIndex: 1, 
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+});
 const theme = createTheme({
   palette: {
     primary: {
