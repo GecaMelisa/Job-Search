@@ -181,11 +181,12 @@ const Search = ({ filterOptions, setFilterOptions }: Props) => {
             company={{
               id: "",
               companyName: "",
-              companyDescription: "",
+              description: "",
               companyOwnerId: "",
               address: "",
               phone: "",
               email: "",
+              companyOwner: {},
             }}
           />
         ))}

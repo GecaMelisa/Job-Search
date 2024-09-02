@@ -1,10 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import appAxios from '../services/appAxios';
-import { RegisterFormData } from '../pages/Registration';
-import { LoginFormData } from '../pages/Login';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import appAxios from "../services/appAxios";
+import { RegisterFormData } from "../pages/Registration";
+import { LoginFormData } from "../pages/Login";
+import { toast } from "react-toastify";
 
 // Initialize userToken from local storage
-const userToken = localStorage.getItem('userToken') || null;
+const userToken = localStorage.getItem("userToken") || null;
 
 const initialState = {
   loading: false,
@@ -15,10 +16,10 @@ const initialState = {
 };
 
 export const registerUser = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (data: RegisterFormData, { rejectWithValue }) => {
     try {
-      await appAxios.post('/auth/register', data);
+      await appAxios.post("/auth/register", data);
     } catch (error: any) {
       // Return custom error message from the backend if present
       if (error.response && error.response.data.message) {
@@ -31,11 +32,11 @@ export const registerUser = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (body: LoginFormData, { rejectWithValue }) => {
     try {
-      const { data } = await appAxios.post('/auth/login', body);
-      localStorage.setItem('userToken', data.jwt);
+      const { data } = await appAxios.post("/auth/login", body);
+      localStorage.setItem("userToken", data.jwt);
       return data;
     } catch (error: any) {
       // Return custom error message from the backend if present
@@ -49,15 +50,17 @@ export const login = createAsyncThunk(
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('userToken'); // Deletes token from storage
+      localStorage.removeItem("userToken"); // Deletes token from storage
+      toast.success("User logged out!");
       state.loading = false;
       state.userInfo = null;
       state.userToken = null;
       state.error = null;
+      window.location.pathname = "/";
     },
   },
   extraReducers: (builder) => {
@@ -79,7 +82,7 @@ const authSlice = createSlice({
       } else {
         // Handle the case where there is no payload (default error message)
         state.loading = false;
-        state.error = 'Login failed';
+        state.error = "Login failed";
       }
     });
     // Register user
@@ -99,7 +102,7 @@ const authSlice = createSlice({
       } else {
         // Handle the case where there is no payload (default error message)
         state.loading = false;
-        state.error = 'Registration failed';
+        state.error = "Registration failed";
       }
     });
   },

@@ -133,21 +133,11 @@ const JobListAxios: React.FC = () => {
       )}
       {!loading && (
         <div className="row">
-          {filteredJobs.map((job, index) => (
-            <JobCard
-              key={index}
-              job={job}
-              company={{
-                id: "",
-                companyName: "",
-                companyDescription: "",
-                companyOwnerId: "",
-                address: "",
-                phone: "",
-                email: "",
-              }}
-            />
-          ))}
+          {filteredJobs.map((job, index) => {
+            console.log(job.company, "company in map");
+
+            return <JobCard key={index} job={job} company={job.company} />;
+          })}
         </div>
       )}
     </>

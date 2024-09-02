@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import JobList from "../components/JobList/JobList";
 import JobListAxios from "../components/JobList/JobListAxios";
 import BackgroundImage from "../utils/slika.avif";
+import Footer from "../components/Footer/Footer";
 
 const BackgroundBox = styled(Box)({
   position: "absolute",
@@ -50,6 +51,7 @@ const Home = (props: Props) => {
         {/*<JobList />*/}
         <JobListAxios />
       </ContentBox>
+      <Footer />
     </Box>
   );
 };

@@ -8,10 +8,17 @@ import {
   DialogTitle,
   DialogContent,
   Box,
+  Select,
+  MenuItem,
+  InputLabel,
+  OutlinedInput,
+  FormControl,
 } from "@mui/material";
 import { toast } from "react-toastify";
+import { Company } from "../../utils/types";
 
 type Props = {
+  allCompanies: any;
   onCancel: () => void;
   onSubmitJob: (formData: JobCreation) => void;
 };
@@ -32,7 +39,7 @@ export type JobCreation = {
   seniority: string;
 };
 
-const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
+const JobModal: React.FC<Props> = ({ onCancel, allCompanies }: Props) => {
   const {
     register,
     handleSubmit,
@@ -109,17 +116,28 @@ const JobModal: React.FC<Props> = ({ onCancel }: Props) => {
       <DialogTitle>Create a New Job</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(handleCreateJob)}>
-          <TextField
-            label="Company Id"
-            variant="outlined"
-            {...register("companyId", { required: "This field is required" })}
-            error={!!errors.companyId}
-            helperText={errors.companyId?.message}
-            value={companyId}
-            onChange={(e) => setCompanyId(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
+          <FormControl fullWidth style={{ marginTop: "5px" }}>
+            <InputLabel id="company-id">Company</InputLabel>
+            <Select
+              labelId="company-id"
+              // id="company"
+              label="Company"
+              // variant="outlined"
+              {...register("companyId", { required: "This field is required" })}
+              error={!!errors.companyId}
+              // helperText={errors.companyId?.message}
+              value={companyId}
+              onChange={(e) => setCompanyId(e.target.value)}
+              fullWidth
+              // placeholder="Select company"
+            >
+              {allCompanies.map((company: any) => {
+                return (
+                  <MenuItem value={company.id}>{company.companyName}</MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
           <TextField
             label="Position"
             variant="outlined"

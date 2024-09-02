@@ -1,5 +1,5 @@
 .navbar {
-  background-color: 'transparet';
+  background-color: "transparet";
   color: #175e5e;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 0 20px;
@@ -20,12 +20,12 @@
 
 .navbar-title {
   color: #175e5e;
-  text-shadow: 
-    2px 2px 4px rgb(246, 244, 244),  
-    -1px -1px 2px rgba(255, 255, 255, 0.6);  
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  letter-spacing: 1px;  
+  text-shadow: 2px 2px 4px rgb(246, 244, 244),
+    -1px -1px 2px rgba(255, 255, 255, 0.6);
+  font-family: "Apple Chancery", cursive;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-size: 48px;
 }
 
 .navbar-link {
