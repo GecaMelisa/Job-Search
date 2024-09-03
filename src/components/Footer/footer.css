@@ -1,22 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+
 .footer-container {
-  background-color: rgba(255, 255, 255, 0.6);
-  height: 200px;
-  color: white;
-  width: 100%;
-  padding: 20px;
-  position: relative;
-  bottom: 0;
-  z-index: 1;
+  background-color: #f4f4f4;
+  padding: 40px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  color: #175e5e;
+  width: 100%;
+  border-top: 2px solid #a9a965e3;
+}
+
+.footer-title-container {
+  max-width: 300px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .footer-title {
-  color: #175e5e;
-  text-shadow: 2px 2px 4px rgb(246, 244, 244),
-    -1px -1px 2px rgba(255, 255, 255, 0.6);
-  font-family: "Apple Chancery", cursive;
-  font-weight: 900;
-  letter-spacing: 1px;
+  font-family: "Satisfy", cursive;
   font-size: 40px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-heading {
+  color: #a9a965e3;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.footer-icon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.footer-section span,
+.footer-section a {
+  font-size: 18px;
 }

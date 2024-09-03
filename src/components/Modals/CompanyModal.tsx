@@ -172,7 +172,7 @@ const CompanyModal: React.FC<Props> = ({ onCancel, companyOwners }: Props) => {
             <Button
               onClick={onCancel}
               sx={{
-                backgroundColor: "#ff862a",
+                backgroundColor: "#a9a965e3",
                 color: "#fff",
                 width: "130px",
                 height: "45px",

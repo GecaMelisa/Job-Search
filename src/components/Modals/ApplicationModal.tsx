@@ -139,7 +139,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
           <Button
             onClick={onClose}
             sx={{
-              backgroundColor: "#ff862a",
+              backgroundColor: "#a9a965e3",
               color: "#fff",
               width: "120px",
               height: "40px",

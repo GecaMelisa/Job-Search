@@ -245,7 +245,7 @@ const JobModal: React.FC<Props> = ({ onCancel, allCompanies }: Props) => {
             <Button
               onClick={onCancel}
               sx={{
-                backgroundColor: "#ff862a",
+                backgroundColor: "#a9a965e3",
                 color: "#fff",
                 width: "120px",
                 height: "40px",

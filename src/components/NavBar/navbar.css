@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+
+.footer-title {
+  font-family: "Dancing Script", cursive;
+  font-size: 40px;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: #175e5e;
+}
 .navbar {
   background-color: "transparet";
   color: #175e5e;
@@ -22,10 +32,10 @@
   color: #175e5e;
   text-shadow: 2px 2px 4px rgb(246, 244, 244),
     -1px -1px 2px rgba(255, 255, 255, 0.6);
-  font-family: "Apple Chancery", cursive;
-  font-weight: 900;
+  font-family: "Satisfy", cursive;
+  font-weight: 2000;
   letter-spacing: 1px;
-  font-size: 48px;
+  font-size: 1200px;
 }
 
 .navbar-link {
