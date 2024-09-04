@@ -1,8 +1,13 @@
+import React from "react";
 import styled from "@emotion/styled";
-import { Box } from "@mui/material";
+import { Box, Typography, Container, Grid, Paper } from "@mui/material";
 import NavBar from "../components/NavBar";
-import BackgroundImage from "../utils/slika.avif";
 import Footer from "../components/Footer/Footer";
+import BackgroundImage from "../utils/slika.avif";
+import TeamImage from "../utils/teamImage4.jpg";
+import MissionImage from "../utils/job.jpg";
+import FounderImage from "../utils/founder1.jpg";
+import ContactBackgroundImage from "../utils/contactBackground.jpg";
 
 const BackgroundBox = styled(Box)({
   position: "absolute",
@@ -13,8 +18,8 @@ const BackgroundBox = styled(Box)({
   backgroundImage: `url(${BackgroundImage})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
-  filter: "blur(0.5px)", // Efekat zamagljenja
-  zIndex: -1, // Da bi pozadinska slika bila iza sadržaja
+  filter: "blur(0.2px)",
+  zIndex: -1,
   "&::after": {
     content: '""',
     position: "absolute",
@@ -27,163 +32,209 @@ const BackgroundBox = styled(Box)({
   },
 });
 
-const ContentBox = styled(Box)({
+const ContentContainer = styled(Container)({
   position: "relative",
   zIndex: 1,
+  padding: "50px 50px",
+  backgroundColor: "transaprent",
+  borderRadius: "8px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+  marginTop: "70px",
+  marginBottom: "70px",
+  maxWidth: "1500px",
+});
+
+const Card = styled(Paper)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  justifyContent: "center",
-  width: "100%",
+  padding: "20px",
+  borderRadius: "8px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+  textAlign: "center",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  "&:hover": {
+    transform: "scale(1.02)",
+    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+  },
+  flex: 1,
+  height: "100%", // Ensures cards take full height of their container
 });
 
-type Props = {};
+const Heading = styled(Typography)({
+  fontSize: "2.5em",
+  fontWeight: 700,
+  color: "#175e5e",
+  marginBottom: "20px",
+  textAlign: "center",
+});
 
-const About = (props: Props) => {
+const SubHeading = styled(Typography)({
+  fontSize: "2em",
+  fontWeight: 600,
+  color: "#175e5e",
+  marginTop: "20px",
+  marginBottom: "20px",
+  textAlign: "center",
+});
+
+const Paragraph = styled(Typography)({
+  textAlign: "justify",
+  fontSize: "1.1em",
+  lineHeight: "1.8",
+  marginBottom: "20px",
+});
+
+const ImageStyled = styled("img")({
+  width: "75%",
+  borderRadius: "8px",
+});
+
+const FounderCard = styled(Paper)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  padding: "20px",
+  borderRadius: "8px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+  textAlign: "center",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  "&:hover": {
+    transform: "scale(1.02)",
+    boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.3)",
+  },
+  flex: 1,
+  height: "100%", // Ensures cards take full height of their container
+});
+
+const FounderImageStyled = styled("img")({
+  width: "75%",
+  height: "auto",
+  borderRadius: "4px",
+  marginBottom: "20px",
+});
+
+const Separator = styled("div")({
+  width: "50%",
+  height: "2px",
+  backgroundColor: "#175e5e",
+  margin: "40px auto",
+});
+
+const ContactBox = styled(Box)({
+  textAlign: "center",
+  padding: "40px",
+  backgroundColor: "#f5f5f5",
+  borderRadius: "8px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+  marginTop: "40px",
+});
+
+const GetInTouchContainer = styled(Grid)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-between",
+  textAlign: "center",
+  padding: "40px",
+  backgroundColor: "#f5f5f5",
+  borderRadius: "8px",
+  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+  marginTop: "40px",
+});
+
+const GetInTouchText = styled(Box)({
+  flex: 1,
+  padding: "20px",
+  textAlign: "left",
+});
+
+const GetInTouchImage = styled("img")({
+  flex: 1,
+  maxWidth: "100%",
+  height: "auto",
+  borderRadius: "8px",
+});
+
+const About = () => {
   return (
     <>
       <Box sx={{ position: "relative", minHeight: "100vh" }}>
         <BackgroundBox />
-        <ContentBox>
-          <NavBar />
-          <Box
-            sx={{
-              maxWidth: "800px",
-              margin: "auto",
-              padding: "40px",
-              color: "#fff",
-            }}
-          >
-            <h1
-              style={{
-                color: "#175e5e",
-                fontSize: "2.5em",
-                marginBottom: "20px",
-              }}
-            >
-              About Us
-            </h1>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-              }}
-            >
-              Welcome to [Your Platform Name]! At [Your Platform Name], we
-              believe that the right job can transform a life, and the right
-              person can transform a business. Our mission is to connect
-              talented individuals with exciting career opportunities, helping
-              both job seekers and employers achieve their goals.
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **Our Story**
-              <br />
-              Founded in [Year], [Your Platform Name] was born out of a passion
-              for innovation and a commitment to excellence in the recruitment
-              industry. Our team of experts has decades of combined experience
-              in talent acquisition, HR, and technology, making us uniquely
-              positioned to understand the challenges and needs of both
-              candidates and employers.
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **What We Offer**
-              <br />
-              - **Job Listings:** Explore thousands of job openings across
-              various industries, tailored to meet your career aspirations.
-              <br />
-              - **Company Profiles:** Learn more about the companies behind the
-              job postings. Our detailed company profiles provide insights into
-              their culture, values, and mission.
-              <br />- **Career Resources:** From resume tips to interview
-              preparation, we offer a range of resources designed to help you
-              succeed in your job search.
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **Our Values**
-              <br />
-              - **Integrity:** We are committed to honesty and transparency in
-              everything we do.
-              <br />
-              - **Innovation:** We embrace new ideas and technologies to better
-              serve our users.
-              <br />- **Excellence:** We strive to exceed expectations and
-              deliver outstanding results.
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **Get in Touch**
-              <br />
-              We are here to support you every step of the way. Whether you are
-              a job seeker looking for your next opportunity or an employer
-              searching for the perfect candidate, our team is ready to assist
-              you.
-              <br />
-              - **Location:** Stup, Sarajevo
-              <br />- **Email:** melisa.geca@gmail.com
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **Connect with Us**
-              <br />
-              Stay updated on the latest job opportunities and company news by
-              following us on social media:
-              <br />
-              - [LinkedIn Icon] [LinkedIn]
-              <br />
-              - [Facebook Icon] [Facebook]
-              <br />- [Instagram Icon] [Instagram]
-            </p>
-            <p
-              style={{
-                textAlign: "justify",
-                fontSize: "1.2em",
-                lineHeight: "1.6",
-                marginTop: "20px",
-              }}
-            >
-              **Join Us**
-              <br />
-              At [Your Platform Name], we are more than just a job search
-              platform. We are a community dedicated to helping you achieve your
-              career goals. Join us today and take the next step in your
-              professional journey.
-            </p>
-          </Box>
-        </ContentBox>
+        <NavBar />
+        <ContentContainer>
+          <Grid container spacing={4}>
+            {/* Sekcija sa osnivačem */}
+            <Grid item xs={12} md={6}>
+              <FounderCard>
+                <SubHeading variant="h2">Meet the Founder</SubHeading>
+                <FounderImageStyled src={FounderImage} alt="Founder" />
+                <Paragraph>
+                  As the main driver and lead developer of both the backend and
+                  frontend, including databases and system architecture, I am
+                  deeply committed to the success of our platform. My role
+                  encompasses overseeing the development process, ensuring the
+                  seamless integration of technologies, and driving innovation
+                  to deliver the best possible solutions for our users.
+                </Paragraph>
+                <SubHeading variant="h5">Melisa Geca</SubHeading>
+              </FounderCard>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <ImageStyled src={TeamImage} alt="Our Team" />
+                <SubHeading variant="h2">Our Team</SubHeading>
+                <Paragraph>
+                  Meet our dedicated team that works tirelessly to connect
+                  talented individuals with exceptional career opportunities.
+                  Our diverse backgrounds and expertise drive us to deliver the
+                  best results for our clients and candidates.
+                </Paragraph>
+              </Card>
+            </Grid>
+          </Grid>
+          <Separator />
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <ImageStyled src={MissionImage} alt="Our Mission" />
+                <SubHeading variant="h2">Our Mission</SubHeading>
+                <Paragraph>
+                  Our mission is to bridge the gap between talent and
+                  opportunity. We strive to make the job search process seamless
+                  and effective for job seekers, while providing employers with
+                  top-tier candidates who align with their values and needs. We
+                  are committed to creating a platform that fosters professional
+                  growth and career advancement for everyone involved. By
+                  leveraging technology and insights, we aim to transform the
+                  way people find their ideal jobs and how companies discover
+                  their future stars.
+                </Paragraph>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <ContactBox>
+                <SubHeading variant="h2">Get in Touch</SubHeading>
+                <GetInTouchText>
+                  <Paragraph>
+                    Have questions or want to get in touch with us? We’d love to
+                    hear from you. Whether you're looking for more information
+                    or want to discuss opportunities, feel free to reach out to
+                    us. Our team is here to assist you with any inquiries you
+                    may have.
+                  </Paragraph>
+                  <Typography variant="h6" color="#000">
+                    Email: contact@yourplatform.com
+                  </Typography>
+                  <Typography variant="h6" color="#000">
+                    Location: Stup, Sarajevo
+                  </Typography>
+                </GetInTouchText>
+                <GetInTouchImage src={ContactBackgroundImage} alt="Contact" />
+              </ContactBox>
+            </Grid>
+          </Grid>
+        </ContentContainer>
         <Footer />
       </Box>
     </>

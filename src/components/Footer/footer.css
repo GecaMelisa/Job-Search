@@ -1,14 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 .footer-container {
   background-color: #f4f4f4;
-  padding: 40px 20px;
+  padding: 28px 20px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   color: #175e5e;
   width: 100%;
   border-top: 2px solid #a9a965e3;
+  position: relative;
+  bottom: 0;
 }
 
 .footer-title-container {
@@ -18,10 +21,18 @@
 }
 
 .footer-title {
-  font-family: "Satisfy", cursive;
-  font-size: 40px;
+  font-family: "Great Vibes", cursive;
+  font-size: 48px;
   font-weight: bold;
   line-height: 1.2;
+}
+
+.offer-highlight {
+  color: #175e5e;
+}
+
+.career-highlight {
+  color: #a9a965e3;
 }
 
 .footer-section {
@@ -47,4 +58,24 @@
 .footer-section span,
 .footer-section a {
   font-size: 18px;
+}
+
+.contact-section {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-title-container,
+.footer-section {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.footer-title {
+  margin-bottom: 10px;
 }

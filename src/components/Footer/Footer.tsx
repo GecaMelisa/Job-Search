@@ -23,8 +23,8 @@ const Footer = () => {
     <div className="footer-container">
       <div className="footer-title-container">
         <h1 className="footer-title">
-          <span style={{ color: "#175e5e" }}>The best offer</span> <br />
-          <span style={{ color: "#a9a965e3" }}> for your career</span>
+          <span className="offer-highlight">The best offer</span> <br />
+          <span className="career-highlight">for your career</span>
         </h1>
       </div>
       <div className="footer-section">
@@ -48,10 +48,7 @@ const Footer = () => {
           <StyledLink href="https://www.instagram.com">Instagram</StyledLink>
         </span>
       </div>
-      <div
-        className="footer-section"
-        style={{ marginLeft: "50px", marginRight: "50px" }}
-      >
+      <div className="footer-section contact-section">
         <p className="footer-heading">Contact Us</p>
         <span>
           <LocationOn className="footer-icon" /> Stup, Sarajevo

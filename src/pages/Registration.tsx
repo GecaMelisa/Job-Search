@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { registerUser } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -173,8 +173,8 @@ const Registration = () => {
                         label="Date of Birth"
                         variant="outlined"
                         {...register("dateOfBirth")}
-                        error={!!errors.lastName}
-                        helperText={errors.lastName?.message}
+                        error={!!errors.dateOfBirth}
+                        helperText={errors.dateOfBirth?.message}
                         sx={{
                           "& label": { color: "#175e5e" },
                           "& fieldset": { borderColor: "#175e5e" },
@@ -278,6 +278,23 @@ const Registration = () => {
                       >
                         {loading ? "Submitting..." : "Submit"}
                       </Button>
+                    </Grid>
+
+                    {/* Add the sign-in link below the form */}
+                    <Grid
+                      item
+                      xs={12}
+                      sx={{ textAlign: "center", marginTop: "16px" }}
+                    >
+                      <Typography variant="body2" color="textSecondary">
+                        Have an account?{" "}
+                        <Link
+                          to="/login"
+                          style={{ color: "#175e5e", textDecoration: "none" }}
+                        >
+                          Sign in
+                        </Link>
+                      </Typography>
                     </Grid>
                   </Grid>
                 </form>

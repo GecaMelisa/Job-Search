@@ -1,65 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
-
-.footer-title {
-  font-family: "Dancing Script", cursive;
-  font-size: 40px;
-  font-weight: bold;
-  margin-left: 20px;
-  margin-right: 20px;
-  color: #175e5e;
-}
-.navbar {
-  background-color: "transparet";
-  color: #175e5e;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 0 20px;
-  overflow: scroll;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.navbar-buttons a {
-  text-decoration: none;
-
-  &:hover {
-    color: rgb(31, 100, 71);
-  }
-}
-
 .navbar-title {
-  color: #175e5e;
-  text-shadow: 2px 2px 4px rgb(246, 244, 244),
-    -1px -1px 2px rgba(255, 255, 255, 0.6);
   font-family: "Satisfy", cursive;
-  font-weight: 2000;
-  letter-spacing: 1px;
-  font-size: 1200px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #175e5e;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.navbar-title-highlight {
+  color: #c7c776e3;
+  font-weight: 700;
+  font-family: "Satisfy", cursive;
+  border-bottom: 3px solid #175e5e;
+  padding-bottom: 4px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-link {
   text-decoration: none;
   color: inherit;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.navbar-buttons {
-  display: flex;
-  align-items: center;
-  margin-left: auto;
-}
-
-.navbar-buttons button {
-  color: #ceceb6e3;
-  font-weight: 600;
-  margin-left: 0.5rem;
-  transition: color 0.3s, background-color 0.3s;
-  border-radius: 8px;
 }
 
 .navbar-buttons button:hover {
   color: #175e5e;
-  background-color: #175e5e;
+  background-color: #e0e0e0;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
 }
