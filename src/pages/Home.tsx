@@ -2,10 +2,10 @@ import React from "react";
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
 import NavBar from "../components/NavBar";
-import JobList from "../components/JobList/JobList";
 import JobListAxios from "../components/JobList/JobListAxios";
 import BackgroundImage from "../utils/slika.avif";
 import Footer from "../components/Footer/Footer";
+import ChatBot from "../components/ChatBot/Chatbot";
 
 const BackgroundBox = styled(Box)({
   position: "absolute",
@@ -48,9 +48,9 @@ const Home = (props: Props) => {
       <BackgroundBox />
       <ContentBox>
         <NavBar />
-        {/*<JobList />*/}
         <JobListAxios />
       </ContentBox>
+      <ChatBot />
       <Footer />
     </Box>
   );

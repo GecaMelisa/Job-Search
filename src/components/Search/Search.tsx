@@ -75,36 +75,6 @@ const Search = ({ filterOptions, setFilterOptions }: Props) => {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [allJobs, setAllJobs] = useState<Job[]>([]);
 
-  /*useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/jobs?type=${jobType}&experience=${experienceLevel}&location=${location}`);
-        setAllJobs(response.data); 
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-      }
-    };
-
-    fetchData();
-}, [jobType, experienceLevel, location]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:8080/api/jobs/type/${jobType}`);
-        setAllJobs(response.data); 
-      } catch (error) {
-        console.error('Error fetching jobs:', error);
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    fetchData();
-  }, [jobType, experienceLevel, location]);*/
-
   const handleJobTypeChange = (event: any) => {
     setFilterOptions((prevState: any) => {
       return { ...prevState, jobType: event.target.value };

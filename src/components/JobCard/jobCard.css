@@ -1,13 +1,11 @@
 .job-card {
   border-radius: 25px !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
   margin: 15px auto;
   transition: transform 0.3s;
   border: 1.5px solid #175e5e !important;
   padding: 15px;
   background-color: #f0f0f0 !important;
-  width: 1000px !important;
-  max-width: 100%;
   transition: ease 300ms;
 }
 
@@ -54,8 +52,13 @@
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  max-width: 700px;
-  min-width: 400px;
+  /* max-width: 700px;
+  min-width: 400px; */
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    width: auto;
+  }
 }
 
 .job-location,
@@ -64,6 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  margin: 0% 20px;
 }
 
 .job-location-icon,
@@ -93,8 +97,8 @@
   border-radius: 15px;
 }
 
-.apply-button {
-  background-color: #175e5e;
+.apply-button div {
+  background-color: #175e5e !important;
 }
 
 .job-info-modal {
@@ -103,8 +107,14 @@
   text-align: center;
 }
 
+.job-info-modal ul li {
+  display: inline;
+}
+
 .modal-container {
-  width: 80%;
+  width: 50%;
+  height: 95%;
+  overflow-y: scroll;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 50px;
 }

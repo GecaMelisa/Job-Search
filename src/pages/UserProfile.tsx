@@ -481,23 +481,6 @@ const UserProfile: React.FC = () => {
               width: "100%",
             }}
           >
-            {/* Pagination controls */}
-            {/* <label htmlFor="">Select page size:</label>
-            <br />
-            <select
-              name="pageSize"
-              id=""
-              value={pageSize}
-              onChange={handlePageSizeChange}
-            >
-              <option value="3">3</option>
-              <option value="6">6</option>
-              <option value="9">9</option>
-              <option value="12">12</option>
-            </select> */}
-
-            {/* Conditional rendering based on user type */}
-            {/* {info.userType === "COMPANY_OWNER" && ( */}
             <Box
               sx={{
                 display: "flex",
@@ -507,11 +490,10 @@ const UserProfile: React.FC = () => {
                 width: "100%",
               }}
             >
-              {/* View all applications */}
-              <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
-                {/*<strong>VIEW ALL APPLICATIONS FOR YOUR JOB</strong>*/}
-              </Typography>
-              {/* Display applications */}
+              <Typography
+                variant="h5"
+                sx={{ mb: 2, textAlign: "center" }}
+              ></Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -651,7 +633,6 @@ const UserProfile: React.FC = () => {
                 </Grid>
               </Box>
             </Box>
-            {/* )} */}
 
             {info.userType === "ADMIN" && (
               <Box
@@ -664,10 +645,10 @@ const UserProfile: React.FC = () => {
                   width: "100%",
                 }}
               >
-                <Typography variant="h5" sx={{ mb: 3, textAlign: "center" }}>
-                  {/*<strong>VIEW ALL COMPANIES</strong>*/}
-                </Typography>
-                {/* Grid for displaying companies */}
+                <Typography
+                  variant="h5"
+                  sx={{ mb: 3, textAlign: "center" }}
+                ></Typography>
                 <Box
                   sx={{
                     display: "flex",

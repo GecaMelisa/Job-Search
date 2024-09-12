@@ -1,3 +1,9 @@
+/* Dodaj stilove za sidebar */
+.sidebar-content {
+  width: 250px;
+  background-color: white;
+}
+
 .navbar-title {
   font-family: "Satisfy", cursive;
   font-size: 28px;
@@ -21,9 +27,18 @@
   color: inherit;
 }
 
+.navbar-buttons {
+  color: #175e5e;
+}
+
+.navbar-buttons a {
+  margin: 0 6px;
+  font-weight: 600;
+}
+
 .navbar-buttons button:hover {
   color: #175e5e;
-  background-color: #e0e0e0;
+  background-color: #c7c776e3;
   transition: background-color 0.3s ease;
   border-radius: 8px;
 }

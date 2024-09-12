@@ -6,7 +6,12 @@
 
 .search-bar {
   margin-bottom: 20px;
-  max-width: "650px !important";
+  /* max-width: "650px !important"; */
+
+  @media screen and (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .loading-spinner {

@@ -1,26 +1,31 @@
-.root{
-    margin-left: 50px;
-    margin-right: 50px;
+.root {
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .home {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .home > div {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-  }
-  
-  .content {
-    position: relative;
-    z-index: 1;
-   }
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
 
-  
+.home > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+html body {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}

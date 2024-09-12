@@ -7,6 +7,7 @@ import {
   CardActions,
   DialogContent,
   DialogTitle,
+  Tooltip, // Import Tooltip
 } from "@mui/material";
 import { LocationOn, Schedule, BarChart } from "@mui/icons-material";
 import ApplicationModal from "../Modals/ApplicationModal";
@@ -37,8 +38,6 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
   const updateJobMutation = useUpdateJob();
   const deleteJobMutation = useDeleteJob();
   const [jobInfoModal, setJobInfoModal] = useState(false);
-
-  console.log(company, "companyyy");
 
   const handleApplyClick = () => {
     setIsModalOpen(true);
@@ -84,14 +83,23 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
   const formatDeadline = (deadline: string) => {
     dayjs.extend(customParseFormat);
     const deadlineDate = dayjs(deadline, "DD.MM.YYYY.");
-    // const deadlineDate = new Date(deadline);
-
     const now = dayjs();
+    if (!deadlineDate.isValid() || deadlineDate.diff(now, "day") < 0) {
+      return (
+        <>
+          <Typography variant="body2" color="error">
+            Expired
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            jobs@gmail.com
+          </Typography>
+        </>
+      );
+    }
     const difference = deadlineDate.diff(now, "day");
-    console.log(difference);
 
     if (difference < 0) {
-      return `Expired`;
+      return `Deadline expired, please submit your CV on jobsearch@gmail.com`;
     } else if (difference < 1) {
       const hoursDifference = deadlineDate.diff(now, "hour");
       return hoursDifference <= 1
@@ -106,10 +114,11 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
     <>
       <Card
         className="job-card"
-        style={{
+        sx={{
           borderRadius: "10px",
           border: "2px solid #ccc",
           marginBottom: "20px",
+          width: "75%",
         }}
       >
         <CardContent
@@ -285,60 +294,33 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
                 <h3>About the Job</h3>
                 <p>{job.description}</p>
                 <hr />
-                <div>
-                  <h3>Additional information</h3>
-                  <p>
-                    <b>Salary</b>: {job.salary}
-                  </p>
-                  {/* <p>Type: {job.jobType}</p> */}
-                  {/* <p>Location: {job.location}</p>
-              <p>Location: {job.location}</p>
-              <p>Location: {job.deadline}</p> */}
-                </div>
+                <h3>Requirements</h3>
+                <ul>
+                  {job.requirements.map((requirement, index) => (
+                    <li key={index}>{requirement}, </li>
+                  ))}
+                </ul>
               </div>
-              <h3></h3>
-              <hr />
-
-              <CardActions className="job-actions">
-                {info &&
-                  (info.userType === "COMPANY_OWNER" ||
-                    info.userType === "ADMIN") && (
-                    <>
-                      <Button
-                        variant="contained"
-                        className="update-button"
-                        onClick={handleUpdateClick}
-                        style={{
-                          backgroundColor: "#a9a965e3",
-                          borderRadius: "15px",
-                        }}
-                      >
-                        Update
-                      </Button>
-                      <Button
-                        variant="contained"
-                        className="delete-button"
-                        onClick={handleDeleteClick}
-                        style={{
-                          backgroundColor: "red",
-                          borderRadius: "15px",
-                        }}
-                      >
-                        Delete
-                      </Button>
-                    </>
-                  )}
-                <Button
-                  variant="contained"
-                  className="apply-button"
-                  onClick={handleApplyClick}
-                  disabled={!info}
-                  style={{ backgroundColor: "#175e5e", borderRadius: "15px" }}
-                >
-                  Apply
-                </Button>
-              </CardActions>
             </DialogContent>
+            <div style={{ textAlign: "center" }}>
+              <Tooltip
+                title={info ? "" : "Please register or log in to apply"}
+                placement="top"
+              >
+                <span>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#175e5e",
+                    }}
+                    onClick={handleApplyClick}
+                    disabled={!info}
+                  >
+                    Apply
+                  </Button>
+                </span>
+              </Tooltip>
+            </div>
           </div>
         </ModalDialog>
       </Modal>
