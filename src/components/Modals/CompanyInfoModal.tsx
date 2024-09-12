@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "@mui/material/Modal";
-import { DialogContent, DialogTitle } from "@mui/material";
+import { Button, DialogContent, DialogTitle } from "@mui/material";
 import { ModalClose, ModalDialog } from "@mui/joy";
 import ShareLocationIcon from "@mui/icons-material/ShareLocation";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
@@ -103,6 +103,25 @@ const CompanyInfoModal: React.FC<CompanyInfoModalProps> = ({
               </div>
             </div>
             <hr />
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Button
+                onClick={() => {
+                  window.open(
+                    `/companyJobs?companyId=${company?.id}`,
+                    "_blank"
+                  );
+                }}
+                style={{ color: "#175e5e" }}
+              >
+                Proceed to Company Jobs
+              </Button>
+            </div>
           </DialogContent>
         </div>
       </ModalDialog>

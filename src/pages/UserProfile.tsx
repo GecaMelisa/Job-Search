@@ -569,6 +569,16 @@ const UserProfile: React.FC = () => {
                               justifyContent: "flex-end",
                             }}
                           >
+                            {info.userType === "MEMBER" &&
+                              !application.response && <p>Pending</p>}
+                            {/*  {info.userType === "MEMBER" &&
+                              application.response === "ACCEPTED" && (
+                                <p>ACCEPTED</p>
+                              )}
+                            {info.userType === "MEMBER" &&
+                              application.response === "DECLINED" && (
+                                <p>DECLINED</p>
+                              )}*/}
                             {info.userType === "COMPANY_OWNER" &&
                               !application.response && (
                                 <div style={{ display: "flex", gap: "10px" }}>

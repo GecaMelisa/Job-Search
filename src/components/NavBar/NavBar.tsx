@@ -16,7 +16,7 @@ import { logout } from "../../store/authSlice";
 import { RootState } from "../../store";
 import MenuIcon from "@mui/icons-material/Menu";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "./NavBar.css";
+import "./navbar.css";
 
 const NavBar = () => {
   const { userToken } = useSelector((state: RootState) => state.auth);

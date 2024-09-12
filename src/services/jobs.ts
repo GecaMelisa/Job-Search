@@ -14,6 +14,18 @@ const getJobs = async (): Promise<Job[]> => {
   }
 };
 
+const getJobsByCompanyId = async (companyId: string): Promise<Job[]> => {
+  try {
+    const response = await appAxios.get(`/jobs/company/${companyId}`);
+    const data = response.data;
+    console.log(data, "dataaaaaa");
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching jobs:", error);
+    throw error;
+  }
+};
 const submitApplication = async (formData: any): Promise<void> => {
   try {
     const response = await appAxios.post(`/applications/submitApp`, formData);
@@ -50,4 +62,11 @@ const deleteJob = async (id: String) => {
   return await appAxios.delete(`/jobs/${id}`);
 };
 
-export default { getJobs, submitApplication, addJob, updateJob, deleteJob };
+export default {
+  getJobs,
+  getJobsByCompanyId,
+  submitApplication,
+  addJob,
+  updateJob,
+  deleteJob,
+};

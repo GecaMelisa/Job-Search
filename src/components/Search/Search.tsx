@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { styled } from "@mui/system";
 import axios from "axios";
-import "./Search.css";
+import "./search.css";
 import JobCard from "../JobCard";
 import { Job } from "../../utils/types";
 

@@ -9,7 +9,7 @@
   transition: ease 300ms;
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 1024px) {
   .job-card {
     width: 90%;
   }
@@ -117,4 +117,9 @@
   overflow-y: scroll;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 50px;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }

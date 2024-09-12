@@ -8,7 +8,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Search from "../Search";
 import { jobList } from "../../constants";
 
-const JobListAxios: React.FC = () => {
+const JobListAxios = ({ companyId }: { companyId?: string }) => {
   const [allJobs, setAllJobs] = useState<Job[]>([]);
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
@@ -49,9 +49,14 @@ const JobListAxios: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await JobService.getJobs();
-        setAllJobs(data);
-        setFilteredJobs(data);
+        let data;
+        if (!companyId) {
+          data = await JobService.getJobs();
+        } else if (companyId) {
+          data = await JobService.getJobsByCompanyId(companyId || "");
+        }
+        setAllJobs(data || []);
+        setFilteredJobs(data || []);
       } catch (error) {
         setError(error);
       } finally {
@@ -64,59 +69,66 @@ const JobListAxios: React.FC = () => {
 
   return (
     <>
-      <div
-        className="search-bar"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "20px",
-          marginBottom: "30px",
-          width: "100%",
-          alignItems: "center",
-          justifyItems: "center",
-          gap: "20px",
-          padding: "30px 0px 30px 0px",
-          maxWidth: "1000px",
-          paddingLeft: "10px",
-        }}
-      >
-        <FormControl
-          fullWidth
-          variant="outlined"
-          sx={{
-            borderRadius: "25px",
-            backgroundColor: "#ffff",
-            maxWidth: "400px",
-            maxHeight: "70px",
+      {!companyId && (
+        <div
+          className="search-bar"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "20px",
+            marginBottom: "30px",
+            width: "100%",
+            alignItems: "center",
+            justifyItems: "center",
+            gap: "20px",
+            padding: "30px 0px 30px 0px",
+            maxWidth: "1000px",
+            paddingLeft: "10px",
           }}
         >
-          <OutlinedInput
-            startAdornment={
-              <InputAdornment position="start">
-                <AiOutlineSearch />
-              </InputAdornment>
-            }
-            placeholder="Search for job..."
-            onChange={search}
+          <FormControl
+            fullWidth
+            variant="outlined"
             sx={{
               borderRadius: "25px",
-              "&:hover": {
-                backgroundColor: "#f0f0f0",
-              },
-              "&:focus": {
-                outline: "none", // Removes the default focus outline
-              },
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "#175e5e", // Removes the blue border when focused
-              },
+              backgroundColor: "#ffff",
+              maxWidth: "400px",
+              maxHeight: "70px",
             }}
+          >
+            <OutlinedInput
+              startAdornment={
+                <InputAdornment position="start">
+                  <AiOutlineSearch />
+                </InputAdornment>
+              }
+              placeholder="Search for job..."
+              onChange={search}
+              sx={{
+                borderRadius: "25px",
+                "&:hover": {
+                  backgroundColor: "#f0f0f0",
+                },
+                "&:focus": {
+                  outline: "none", // Removes the default focus outline
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#175e5e", // Removes the blue border when focused
+                },
+              }}
+            />
+          </FormControl>
+          <Search
+            filterOptions={filterOptions}
+            setFilterOptions={setFilterOptions}
           />
-        </FormControl>
-        <Search
-          filterOptions={filterOptions}
-          setFilterOptions={setFilterOptions}
-        />
-      </div>
+        </div>
+      )}
+      {companyId && (
+        <h1 style={{ marginBottom: "24px", marginTop: "45px" }}>
+          Jobs By {filteredJobs[0]?.companyName}
+        </h1>
+      )}
 
       {loading && (
         <div className="spinner-border text-primary" role="status">

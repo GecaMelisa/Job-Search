@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import JobTabs from "./components/Tabs";
 import ChatBot from "./components/ChatBot/Chatbot";
+import CompanyJobs from "./pages/CompanyJobs";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path="/registration" element={<Registration />} />
           <Route path="/userProfile/:id" element={<UserProfile />} />
           <Route path="/companies" element={<Companies />} />
+          <Route path="/companyJobs" element={<CompanyJobs />} />
 
           {/* add any other protected routes here */}
           {/* <Route element={<ProtectedRoute />}></Route> */}

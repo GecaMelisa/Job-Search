@@ -6,6 +6,20 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CloudUpload from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/system";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 type ApplicationModalProps = {
   isOpen: boolean;
@@ -24,11 +38,18 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
     jobId: "",
     education: "",
     workExperience: "",
-    cv: "",
+    coverLetter: "",
   });
+  const [file, setFile] = useState<any>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
   };
 
   const handleSendClick = async () => {
@@ -38,19 +59,21 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
       return;
     }
 
-    if (!formData.education || !formData.workExperience || !formData.cv) {
+    if (!formData.education || !formData.workExperience || !file) {
       toast.error("Please, enter all required fields.");
       return;
     }
     try {
+      const fData = new FormData();
+      fData.append("jobId", job.jobId);
+      fData.append("education", formData.education);
+      fData.append("workExperience", formData.workExperience);
+      fData.append("coverLetter", formData.coverLetter);
+      fData.append("cv", file);
+
       const response = await axios.post(
         "http://localhost:8080/api/applications/submitApp",
-        {
-          jobId: job.jobId,
-          education: formData.education,
-          workExperience: formData.workExperience,
-          cv: formData.cv,
-        },
+        fData,
         { headers: { Authorization: "Bearer " + token } }
       );
       if (response.status === 200) {
@@ -120,15 +143,28 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
         />
 
         <TextField
-          label="CV"
-          name="cv"
-          value={formData.cv}
+          label="Cover letter"
+          name="coverLetter"
+          value={formData.coverLetter}
           onChange={handleChange}
           multiline
           rows={8}
           fullWidth
           margin="normal"
         />
+
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUpload />}
+        >
+          Upload CV
+          <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+        </Button>
+        {file && <section>File name: {file.name}</section>}
+
         <Box
           sx={{
             display: "flex",
