@@ -90,9 +90,6 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
           <Typography variant="body2" color="error">
             Expired
           </Typography>
-          <Typography variant="body2" color="textSecondary">
-            jobs@gmail.com
-          </Typography>
         </>
       );
     }
@@ -215,17 +212,18 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "rgba(240, 240, 255, 0.5)",
+            padding: "30px",
           }}
         >
           <ModalClose />
           <div className="modal-container">
             <DialogTitle
               sx={{
-                fontSize: "40px",
-                justifyContent: "center",
+                fontSize: "36px",
                 textAlign: "center",
-                marginTop: "40px",
-                color: "#141b39",
+                marginTop: "20px",
+                color: "#175e5e",
+                fontWeight: "bold",
               }}
             >
               {job.position}
@@ -234,16 +232,15 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
               sx={{
                 justifyContent: "center",
                 textAlign: "left",
-                alignItems: "center",
                 marginTop: "0px",
-                marginBottom: "",
+                padding: "0px 20px", // Padding za razmak
               }}
             >
               <hr />
               <div
                 style={{
                   display: "flex",
-                  gap: "20px",
+                  gap: "30px",
                   justifyContent: "center",
                 }}
               >
@@ -253,10 +250,10 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
                       width: "30px",
                       height: "30px",
                       marginRight: "10px",
-                      color: "#141b39",
+                      color: "#175e5e",
                     }}
                   />
-                  <strong style={{ color: "#141b39" }}>{job.location}</strong>
+                  <strong style={{ color: "#175e5e" }}>{job.location}</strong>
                 </div>
                 <div style={{ marginRight: "20px" }}>
                   <WorkOutlineIcon
@@ -264,10 +261,10 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
                       width: "30px",
                       height: "30px",
                       marginRight: "10px",
-                      color: "#141b39",
+                      color: "#175e5e",
                     }}
                   />
-                  <strong style={{ color: "#141b39" }}>
+                  <strong style={{ color: "#175e5e" }}>
                     {job.jobType.split("_").join(" ")}
                   </strong>
                 </div>
@@ -277,50 +274,194 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
                       width: "30px",
                       height: "30px",
                       marginRight: "10px",
-                      color: "#141b39",
+                      color: "#175e5e",
                     }}
                   />
-                  <strong style={{ color: "#141b39" }}>
-                    {formatDeadline(job.deadline)}
-                  </strong>
+                  <strong style={{ color: "#175e5e" }}>{job.deadline}</strong>
                 </div>
               </div>
               <hr />
-              <div className="job-info-modal">
-                <h3>About the Company</h3>
-                <p>{company.companyName}</p>
-                <div>{company.description}</div>
-                <hr />
-                <h3>About the Job</h3>
-                <p>{job.description}</p>
-                <hr />
-                <h3>Requirements</h3>
-                <ul>
-                  {job.requirements.map((requirement, index) => (
-                    <li key={index}>{requirement}, </li>
-                  ))}
-                </ul>
-              </div>
-            </DialogContent>
-            <div style={{ textAlign: "center" }}>
-              <Tooltip
-                title={info ? "" : "Please register or log in to apply"}
-                placement="top"
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  marginTop: "20px",
+                  marginBottom: "30px",
+                  color: "#2b2b2b",
+                  textAlign: "center",
+                }}
               >
-                <span>
+                {/*  <h4 style={{ color: "#175e5e", marginBottom: "20px" }}>
+                  Job Details
+                </h4>*/}
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    lineHeight: "28px",
+                    maxWidth: "800px",
+                    textAlign: "center",
+                  }}
+                >
+                  <ul
+                    style={{
+                      paddingInlineStart: "25px",
+                      listStyleType: "none",
+                      margin: 0,
+                    }}
+                  >
+                    <li style={{ marginBottom: "15px" }}>
+                      <strong style={{ color: "#175e5e", fontSize: "26px" }}>
+                        About the company
+                      </strong>
+                      <hr
+                        style={{
+                          border: "none",
+                          borderBottom: "2px solid #a9a965e3",
+                          marginBottom: "10px",
+                          width: "40%",
+                          margin: "10px auto", // Centriranje hr
+                        }}
+                      />
+                      <div
+                        style={{
+                          color: "#2b2b2b",
+                          fontSize: "16px",
+                          textAlign: "justify",
+                        }}
+                      >
+                        {company.description}
+                      </div>
+                    </li>
+                    <li style={{ marginBottom: "15px" }}>
+                      <strong style={{ color: "#175e5e", fontSize: "26px" }}>
+                        About the job
+                      </strong>
+                      <hr
+                        style={{
+                          border: "none",
+                          borderBottom: "2px solid #a9a965e3",
+                          marginBottom: "10px",
+                          width: "30%",
+                          margin: "10px auto",
+                        }}
+                      />
+                      <div
+                        style={{
+                          color: "#2b2b2b",
+                          fontSize: "16px",
+                          textAlign: "justify",
+                        }}
+                      >
+                        {job.description}
+                      </div>
+                    </li>
+                    <li style={{ marginBottom: "0px 0px" }}>
+                      <strong
+                        style={{
+                          color: "#175e5e",
+                          fontSize: "26px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        Requirements
+                      </strong>
+                      <hr
+                        style={{
+                          border: "none",
+                          borderBottom: "2px solid #a9a965e3",
+                          marginBottom: "0px",
+                          width: "30%",
+                          margin: "10px auto",
+                        }}
+                      />
+                      <div
+                        style={{
+                          color: "#2b2b2b",
+                          fontSize: "16px",
+                          marginBottom: "0px",
+                          textAlign: "justify",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {job.requirements.join(", ")}
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+
+                <hr style={{ marginTop: "30px", borderColor: "#ddd" }} />
+              </div>
+
+              <div className="modal-buttons" style={{ textAlign: "center" }}>
+                {info?.userType === "ADMIN" ||
+                info?.userType === "COMPANY_OWNER" ? (
+                  <div className="admin-actions">
+                    <Button
+                      variant="contained"
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                        marginTop: "0px",
+                        marginLeft: "10px",
+                        width: "150px",
+                        backgroundColor: "#175e5e",
+                        "&:hover": {
+                          backgroundColor: "#005252",
+                        },
+                      }}
+                      onClick={handleUpdateClick}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        marginBottom: "0px",
+                        marginLeft: "10px",
+                        width: "150px",
+                        backgroundColor: "#a92e2e",
+                        "&:hover": {
+                          backgroundColor: "#a92e2e",
+                        },
+                      }}
+                      onClick={handleDeleteClick}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                ) : (
                   <Button
                     variant="contained"
                     sx={{
+                      color: "white",
+                      fontWeight: "bold",
+                      marginBottom: "50px",
+                      borderRadius: "6px",
+                      marginTop: "0px",
+                      width: "200px",
                       backgroundColor: "#175e5e",
+                      "&:hover": {
+                        backgroundColor: "#005252",
+                      },
                     }}
                     onClick={handleApplyClick}
-                    disabled={!info}
                   >
-                    Apply
+                    Apply Now
                   </Button>
-                </span>
-              </Tooltip>
-            </div>
+                )}
+              </div>
+            </DialogContent>
           </div>
         </ModalDialog>
       </Modal>

@@ -81,7 +81,7 @@ const StyledCard = styled(Card)({
   width: "320px",
   height: "320px",
   borderRadius: "15px",
-  border: "1px solid #175e5e",
+  border: "1.5px solid #175e5e",
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transform: "scale(1.02)",
@@ -430,7 +430,8 @@ const UserProfile: React.FC = () => {
             </Box>
           )}
 
-          {/* Search bar */}
+          {/*
+          {/* Search bar 
           <div
             className="search-bar"
             style={{
@@ -466,7 +467,7 @@ const UserProfile: React.FC = () => {
                 }}
               />
             </FormControl>
-          </div>
+          </div>  */}
 
           {/* Pagination and Search */}
           <Box
@@ -520,11 +521,27 @@ const UserProfile: React.FC = () => {
                         width: "100%",
                       }}
                     >
-                      <StyledCard>
+                      <StyledCard
+                        sx={{
+                          width: "100%", // Podesite širinu kartice prema potrebi
+                          maxWidth: "800px", // Maksimalna širina kartice
+                          height: "400px", // Povećajte visinu kartice
+                          display: "flex",
+                          flexDirection: "column",
+                          overflow: "hidden", // Sakrij prelivanje
+                        }}
+                      >
                         <StyledCardContent
                           style={{
+                            display: "flex",
+                            flexDirection: "column",
                             justifyContent: "space-between",
                             height: "100%",
+                            padding: "16px",
+                            backgroundColor: "#f9f9f9",
+                            borderRadius: "8px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                            overflowY: "auto", // Omogućite skrolovanje unutar kartice
                           }}
                         >
                           <div
@@ -532,34 +549,69 @@ const UserProfile: React.FC = () => {
                               display: "flex",
                               flexDirection: "column",
                               width: "100%",
+                              gap: "12px",
                             }}
                           >
-                            <Typography variant="h6">
+                            <Typography
+                              variant="h6"
+                              style={{
+                                fontWeight: "bold",
+                                color: "#175e5e",
+                                marginBottom: "8px",
+                              }}
+                            >
                               {application.job.position}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Name: </strong>
-                              {application.user.name}
+                            <Typography
+                              variant="body2"
+                              style={{ fontWeight: "bold", color: "#175e5e" }}
+                            >
+                              <strong>Name:</strong> {application.user.name}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Email: </strong>
-                              {application.user.email}
+                            <Typography
+                              variant="body2"
+                              style={{ color: "#777" }}
+                            >
+                              <strong>Email:</strong> {application.user.email}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Date of Birth: </strong>
+                            <Typography
+                              variant="body2"
+                              style={{ color: "#777" }}
+                            >
+                              <strong>Date of Birth:</strong>{" "}
                               {application.user.dateOfBirth}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Education: </strong>
+                            <Typography
+                              variant="body2"
+                              style={{ color: "#777" }}
+                            >
+                              <strong>Education:</strong>{" "}
                               {application.education}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Work Experience: </strong>
+                            <Typography
+                              variant="body2"
+                              style={{ color: "#777" }}
+                            >
+                              <strong>Work Experience:</strong>{" "}
                               {application.workExperience}
                             </Typography>
                             <Typography variant="body2">
-                              <strong>CV: </strong>
-                              {application.cv}
+                              <strong>CV:</strong>
+                              <a
+                                href={application.cv}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                  color: "#175e5e", // Boja linka
+                                  textDecoration: "underline",
+                                  fontWeight: "bold",
+                                  marginLeft: "8px",
+                                  marginBottom: "20px",
+                                  cursor: "pointer",
+                                }}
+                              >
+                                Download CV
+                              </a>
                             </Typography>
                           </div>
                           <div
@@ -567,23 +619,35 @@ const UserProfile: React.FC = () => {
                               display: "flex",
                               width: "100%",
                               justifyContent: "flex-end",
+                              gap: "10px",
+                              marginTop: "auto", // Pomerite kontent na dno kartice
                             }}
                           >
                             {info.userType === "MEMBER" &&
-                              !application.response && <p>Pending</p>}
-                            {/*  {info.userType === "MEMBER" &&
-                              application.response === "ACCEPTED" && (
-                                <p>ACCEPTED</p>
+                              !application.response && (
+                                <Typography
+                                  variant="body2"
+                                  sx={{
+                                    color: "#a9a965e3",
+                                    fontWeight: "bold",
+                                    backgroundColor: "#fff3e0",
+                                    border: "1px solid #a9a965e3",
+                                    borderRadius: "4px",
+                                    padding: "4px 8px",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Pending
+                                </Typography>
                               )}
-                            {info.userType === "MEMBER" &&
-                              application.response === "DECLINED" && (
-                                <p>DECLINED</p>
-                              )}*/}
                             {info.userType === "COMPANY_OWNER" &&
                               !application.response && (
                                 <div style={{ display: "flex", gap: "10px" }}>
                                   <StyledButton
-                                    style={{ backgroundColor: "green" }}
+                                    style={{
+                                      backgroundColor: "#175e5e",
+                                      marginTop: "20px",
+                                    }}
                                     onClick={() =>
                                       updateApplicationResponse(
                                         application.id,
@@ -595,7 +659,10 @@ const UserProfile: React.FC = () => {
                                     Accept
                                   </StyledButton>
                                   <StyledButton
-                                    style={{ backgroundColor: "red" }}
+                                    style={{
+                                      backgroundColor: "#a92e2e",
+                                      marginTop: "20px",
+                                    }}
                                     onClick={() =>
                                       updateApplicationResponse(
                                         application.id,
@@ -610,10 +677,7 @@ const UserProfile: React.FC = () => {
                               )}
                             {application.response === "ACCEPTED" && (
                               <span
-                                style={{
-                                  color: "green",
-                                  fontWeight: "500",
-                                }}
+                                style={{ color: "green", fontWeight: "500" }}
                               >
                                 <CheckCircle
                                   style={{
@@ -625,7 +689,9 @@ const UserProfile: React.FC = () => {
                               </span>
                             )}
                             {application.response === "DECLINED" && (
-                              <span style={{ color: "red", fontWeight: "500" }}>
+                              <span
+                                style={{ color: "#a92e2e", fontWeight: "500" }}
+                              >
                                 <Cancel
                                   style={{
                                     marginRight: "5px",
@@ -644,7 +710,7 @@ const UserProfile: React.FC = () => {
               </Box>
             </Box>
 
-            {info.userType === "ADMIN" && (
+            {info.userType === "___" && (
               <Box
                 sx={{
                   mt: 5,

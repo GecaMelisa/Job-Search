@@ -3,7 +3,12 @@ import JobCard from "../JobCard";
 import { Job } from "../../utils/types";
 import { JobService } from "../../services";
 import "./jobList.css";
-import { FormControl, InputAdornment, OutlinedInput } from "@mui/material";
+import {
+  FormControl,
+  InputAdornment,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
 import { AiOutlineSearch } from "react-icons/ai";
 import Search from "../Search";
 import { jobList } from "../../constants";
@@ -110,10 +115,10 @@ const JobListAxios = ({ companyId }: { companyId?: string }) => {
                   backgroundColor: "#f0f0f0",
                 },
                 "&:focus": {
-                  outline: "none", // Removes the default focus outline
+                  outline: "none",
                 },
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#175e5e", // Removes the blue border when focused
+                  borderColor: "#175e5e",
                 },
               }}
             />
@@ -125,9 +130,21 @@ const JobListAxios = ({ companyId }: { companyId?: string }) => {
         </div>
       )}
       {companyId && (
-        <h1 style={{ marginBottom: "24px", marginTop: "45px" }}>
+        <Typography
+          variant="h4"
+          sx={{
+            marginBottom: "24px",
+            marginTop: "45px",
+            color: "#175e5e",
+            fontWeight: 600,
+            textAlign: "center",
+            fontFamily: "Arial, sans-serif",
+            borderBottom: "3px solid #a9a965e3",
+            paddingBottom: "8px",
+          }}
+        >
           Jobs By {filteredJobs[0]?.companyName}
-        </h1>
+        </Typography>
       )}
 
       {loading && (

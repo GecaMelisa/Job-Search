@@ -58,7 +58,7 @@ const StyledCompanyCard = styled(Card)({
   width: "320px",
   height: "340px",
   borderRadius: "15px",
-  border: "1.5px solid #175e5e",
+  border: "2.0px solid #a9a965e3",
   transition: "transform 0.3s ease-in-out",
   "&:hover": {
     transform: "scale(1.02)",

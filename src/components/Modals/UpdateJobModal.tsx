@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { Button, TextField, Dialog, DialogTitle, DialogContent, Box } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Box,
+} from "@mui/material";
 //import { toast } from 'react-toastify';
 
 type Props = {
-    isOpen: boolean;
-    onCancel: () => void;
-    onSubmitJob: (formData: JobUpdate) => void;
-    initialJobData: JobUpdate;
-  };
+  isOpen: boolean;
+  onCancel: () => void;
+  onSubmitJob: (formData: JobUpdate) => void;
+  initialJobData: JobUpdate;
+};
 
 export type JobUpdate = {
   jobId: string;
@@ -24,13 +31,25 @@ export type JobUpdate = {
   statusRequest: string;
 };
 
-const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initialJobData }: Props) => {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<JobUpdate>({});
+const UpdateJobModal: React.FC<Props> = ({
+  isOpen,
+  onCancel,
+  onSubmitJob,
+  initialJobData,
+}: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<JobUpdate>({});
   const [position, setPosition] = useState(initialJobData.position);
   const [description, setDescription] = useState(initialJobData.description);
   const [location, setLocation] = useState(initialJobData.location);
   const [jobType, setJobType] = useState(initialJobData.jobType);
-  const [requirements, setRequirements] = useState<string[]>(initialJobData.requirements); // Ispravljeno
+  const [requirements, setRequirements] = useState<string[]>(
+    initialJobData.requirements
+  ); // Ispravljeno
   const [salary, setSalary] = useState(initialJobData.salary);
   const [deadline, setDeadline] = useState(initialJobData.deadline);
 
@@ -41,7 +60,7 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
       description: initialJobData.description,
       location: initialJobData.location,
       jobType: initialJobData.jobType,
-      requirements: initialJobData.requirements, // Ispravljeno
+      requirements: initialJobData.requirements,
       salary: initialJobData.salary,
       deadline: initialJobData.deadline,
     });
@@ -55,7 +74,7 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
       description,
       location,
       jobType,
-      requirements: data.requirements.map(item => item.trim()), 
+      requirements: data.requirements.map((item) => item.trim()),
       salary,
       deadline,
     };
@@ -71,11 +90,10 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
       <DialogTitle>Edit Job</DialogTitle>
       <DialogContent>
         <form onSubmit={handleSubmit(handleUpdateJob)}>
-
-        <TextField
+          <TextField
             label="Position"
             variant="outlined"
-            {...register('position', { required: 'This field is required' })}
+            {...register("position", { required: "This field is required" })}
             error={!!errors.position}
             helperText={errors.position?.message}
             value={position}
@@ -87,7 +105,7 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
           <TextField
             label="Description"
             variant="outlined"
-            {...register('description', { required: 'This field is required' })}
+            {...register("description", { required: "This field is required" })}
             error={!!errors.description}
             helperText={errors.description?.message}
             value={description}
@@ -99,7 +117,7 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
           <TextField
             label="Location"
             variant="outlined"
-            {...register('location', { required: 'This field is required' })}
+            {...register("location", { required: "This field is required" })}
             error={!!errors.location}
             helperText={errors.location?.message}
             value={location}
@@ -111,7 +129,7 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
           <TextField
             label="Job Type"
             variant="outlined"
-            {...register('jobType', { required: 'This field is required' })}
+            {...register("jobType", { required: "This field is required" })}
             error={!!errors.jobType}
             helperText={errors.jobType?.message}
             value={jobType}
@@ -123,29 +141,40 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
           <TextField
             label="Salary"
             variant="outlined"
-            {...register('salary', { required: 'This field is required' })}
+            {...register("salary", { required: "This field is required" })}
             error={!!errors.salary}
             helperText={errors.salary?.message}
             value={salary}
             onChange={(e) => setSalary(e.target.value)}
             fullWidth
             margin="normal"
+            sx={{ width: "100%" }} // Ensures full width
           />
+
           <TextField
             label="Requirements"
             variant="outlined"
-            {...register('requirements', { required: 'This field is required' })}
+            {...register("requirements", {
+              required: "This field is required",
+            })}
             error={!!errors.requirements}
             helperText={errors.requirements?.message}
-            value={requirements.join(', ')} // Convert the array to a string for display
-            onChange={(e) => setRequirements(e.target.value.split(',').map(item => item.trim()))} // Split the string into an array            fullWidth
+            value={requirements.join(", ")} // Convert the array to a string for display
+            onChange={
+              (e) =>
+                setRequirements(
+                  e.target.value.split(",").map((item) => item.trim())
+                ) // Split the string into an array
+            }
+            fullWidth
             margin="normal"
+            sx={{ width: "100%" }} // Ensures full width
           />
 
           <TextField
             label="Deadline"
             variant="outlined"
-            {...register('deadline', { required: 'This field is required' })}
+            {...register("deadline", { required: "This field is required" })}
             error={!!errors.deadline}
             helperText={errors.deadline?.message}
             value={deadline}
@@ -154,13 +183,41 @@ const UpdateJobModal: React.FC<Props> = ({ isOpen, onCancel, onSubmitJob, initia
             margin="normal"
           />
 
-
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-            <Button onClick={onCancel} sx={{ backgroundColor: '#ff862a', color: '#fff', width: '120px', height: '40px' }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: 2,
+            }}
+          >
+            <Button
+              onClick={onCancel}
+              sx={{
+                backgroundColor: "#a9a965e3",
+                color: "#fff",
+                width: "120px",
+                height: "40px",
+                "&:hover": {
+                  backgroundColor: "#8a8f60", // Smanjena zasićenost boje za hover efekat
+                  color: "#fff",
+                },
+              }}
+            >
               Cancel
             </Button>
-            <Button type="submit" sx={{ backgroundColor: '#175e5e', color: '#fff', width: '120px', height: '40px' }}>
+            <Button
+              type="submit"
+              sx={{
+                backgroundColor: "#175e5e",
+                color: "#fff",
+                width: "120px",
+                height: "40px",
+                "&:hover": {
+                  backgroundColor: "#004d4d", // Smanjena zasićenost boje za hover efekat
+                  color: "#fff",
+                },
+              }}
+            >
               Update
             </Button>
           </Box>

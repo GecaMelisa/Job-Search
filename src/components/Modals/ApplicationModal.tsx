@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import CloudUpload from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/system";
+import { Backdrop } from "@mui/material";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -88,7 +89,19 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
   };
 
   return (
-    <Modal open={isOpen} onClose={onClose}>
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      BackdropComponent={(props) => (
+        <Backdrop
+          {...props}
+          sx={{
+            backgroundColor: "rgba(0, 0, 0, 0.3)", // Prozirna tamna pozadina
+            backdropFilter: "blur(10px)", // Blur efekat
+          }}
+        />
+      )}
+    >
       <Box
         sx={{
           position: "absolute",
@@ -155,15 +168,37 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
 
         <Button
           component="label"
-          role={undefined}
           variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUpload />}
+          startIcon={<CloudUpload sx={{ fontSize: "24px" }} />}
+          sx={{
+            backgroundColor: "#175e5e",
+            color: "#fff",
+            padding: "8px 14px",
+            fontWeight: 500,
+            fontSize: "14px",
+            borderRadius: "3px",
+            textTransform: "none",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#88a097",
+            },
+          }}
         >
           Upload CV
           <VisuallyHiddenInput type="file" onChange={handleFileChange} />
         </Button>
-        {file && <section>File name: {file.name}</section>}
+
+        {file && (
+          <section
+            style={{
+              marginTop: "12px",
+              color: "#175e5e",
+              fontWeight: "bold",
+            }}
+          >
+            File name: {file.name}
+          </section>
+        )}
 
         <Box
           sx={{
@@ -179,10 +214,16 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
               color: "#fff",
               width: "120px",
               height: "40px",
+              "&:hover": {
+                backgroundColor: "#8c8c42",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              },
+              transition: "background-color 0.3s ease, box-shadow 0.3s ease",
             }}
           >
             Cancel
           </Button>
+
           <Button
             onClick={handleSendClick}
             sx={{
@@ -190,6 +231,11 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
               color: "#fff",
               width: "120px",
               height: "40px",
+              "&:hover": {
+                backgroundColor: "#0f4c4c",
+                boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+              },
+              transition: "background-color 0.3s ease, box-shadow 0.3s ease",
             }}
           >
             Send

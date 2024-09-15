@@ -4,7 +4,7 @@ import { Box, Typography, Container, Grid, Paper } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer/Footer";
 import BackgroundImage from "../utils/slika.avif";
-import Partnerships from "../utils/partnerships5.png";
+import Partnerships from "../utils/partneri6.png";
 import MissionImage from "../utils/job.jpg";
 import FounderImage from "../utils/founder1.jpg";
 import ContactBackgroundImage from "../utils/contactBackground.jpg";
@@ -27,7 +27,7 @@ const BackgroundBox = styled(Box)({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
     zIndex: -1,
   },
 });
@@ -35,12 +35,12 @@ const BackgroundBox = styled(Box)({
 const ContentContainer = styled(Container)({
   position: "relative",
   zIndex: 1,
-  padding: "50px 30px",
+  padding: "60px 20px",
   backgroundColor: "#ffffff",
-  borderRadius: "12px",
-  boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
-  marginTop: "70px",
-  marginBottom: "70px",
+  borderRadius: "16px",
+  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+  marginTop: "80px",
+  marginBottom: "80px",
   maxWidth: "1200px",
 });
 
@@ -48,67 +48,73 @@ const EnhancedCard = styled(Paper)({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: "10px",
-  borderRadius: "15px",
-  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
+  padding: "20px",
+  borderRadius: "12px",
+  boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.2)",
   textAlign: "center",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  background: "linear-gradient(145deg, #ffffff, #f0f0f0)",
+  background: "#ffffff",
+  border: "1px solid #e0e0e0",
   "&:hover": {
-    transform: "scale(1.05)",
-    boxShadow: "0px 12px 25px rgba(0, 0, 0, 0.4)",
+    transform: "scale(1.02)",
+    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.3)",
   },
   flex: 1,
   height: "100%",
 });
 
 const EnhancedHeading = styled(Typography)({
-  fontSize: "2.5em",
-  fontWeight: 600,
+  fontSize: "2.2em",
+  fontWeight: 700,
   color: "#175e5e",
-  marginBottom: "15px",
+  marginBottom: "12px",
   textAlign: "center",
+  lineHeight: "1.3",
 });
 
 const EnhancedSubHeading = styled(Typography)({
-  fontSize: "2em",
+  fontSize: "1.6em",
   fontWeight: 600,
   color: "#175e5e",
-  marginTop: "15px",
-  marginBottom: "15px",
+  marginTop: "10px",
+  marginBottom: "10px",
   textAlign: "center",
+  lineHeight: "1.4",
 });
 
 const EnhancedParagraph = styled(Typography)({
   textAlign: "justify",
-  fontSize: "1.1em",
-  lineHeight: "1.7",
-  marginBottom: "15px",
-  color: "#333",
+  fontSize: "1em",
+  lineHeight: "1.6",
+  marginBottom: "20px",
+  color: "#555",
 });
 
 const ImageStyled = styled("img")({
-  width: "80%",
-  maxWidth: "500px",
+  width: "100%",
+  maxWidth: "370px",
   borderRadius: "12px",
-  marginBottom: "20px",
-  marginTop: "68px",
+  marginBottom: "15px",
+  marginTop: "20px",
 });
 
-const FounderCard = styled(EnhancedCard)({
-  height: "auto",
+const ImageStylish = styled("img")({
+  width: "100%",
+  maxWidth: "450px",
+  borderRadius: "12px",
+  marginBottom: "15px",
+  marginTop: "20px",
 });
-
 const FounderImageStyled = styled("img")({
   width: "100%",
-  maxWidth: "400px",
+  maxWidth: "350px",
   height: "auto",
   borderRadius: "12px",
-  marginBottom: "20px",
+  marginBottom: "15px",
 });
 
 const Separator = styled("div")({
-  width: "60%",
+  width: "40%",
   height: "2px",
   backgroundColor: "#175e5e",
   margin: "40px auto",
@@ -117,7 +123,7 @@ const Separator = styled("div")({
 const ContactBox = styled(Box)({
   textAlign: "center",
   padding: "40px",
-  backgroundColor: "#f5f5f5",
+  backgroundColor: "#f9f9f9",
   borderRadius: "12px",
   boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.1)",
   marginTop: "40px",
@@ -129,8 +135,8 @@ const GetInTouchContainer = styled(Grid)({
   alignItems: "center",
   justifyContent: "space-between",
   textAlign: "center",
-  padding: "40px",
-  backgroundColor: "#f5f5f5",
+  padding: "30px",
+  backgroundColor: "#f9f9f9",
   borderRadius: "12px",
   boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.1)",
   marginTop: "40px",
@@ -138,7 +144,7 @@ const GetInTouchContainer = styled(Grid)({
 
 const GetInTouchText = styled(Box)({
   flex: 1,
-  padding: "20px",
+  padding: "15px",
   textAlign: "left",
 });
 
@@ -156,9 +162,9 @@ const About = () => {
         <BackgroundBox />
         <NavBar />
         <ContentContainer>
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <FounderCard>
+          <Grid container spacing={5} justifyContent={"center"}>
+            <Grid item xs={12} md={5}>
+              <EnhancedCard>
                 <EnhancedSubHeading variant="h5">
                   Meet the Founder
                 </EnhancedSubHeading>
@@ -174,11 +180,10 @@ const About = () => {
                 <EnhancedSubHeading variant="h5">
                   Melisa Geca
                 </EnhancedSubHeading>
-              </FounderCard>
+              </EnhancedCard>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={5}>
               <EnhancedCard>
-                <ImageStyled src={Partnerships} alt="Partnerships" />
                 <EnhancedSubHeading variant="h4">
                   Our Partnerships
                 </EnhancedSubHeading>
@@ -191,14 +196,14 @@ const About = () => {
                   Programming whose support and insights help us deliver
                   exceptional value to our community.
                 </EnhancedParagraph>
+                <ImageStyled src={Partnerships} alt="Partnerships" />
               </EnhancedCard>
             </Grid>
           </Grid>
           <Separator />
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
+          <Grid container spacing={5} justifyContent={"center"}>
+            <Grid item xs={12} md={5}>
               <EnhancedCard>
-                <ImageStyled src={MissionImage} alt="Our Mission" />
                 <EnhancedSubHeading variant="h5">
                   Our Mission
                 </EnhancedSubHeading>
@@ -213,10 +218,11 @@ const About = () => {
                   way people find their ideal jobs and how companies discover
                   their future stars.
                 </EnhancedParagraph>
+                <ImageStylish src={MissionImage} alt="Our Mission" />
               </EnhancedCard>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <EnhancedCard style={{ height: "auto" }}>
+            <Grid item xs={12} md={5}>
+              <EnhancedCard>
                 <ImageStyled src={ContactBackgroundImage} alt="Contact" />
                 <EnhancedSubHeading variant="h5">
                   Get in Touch
@@ -228,11 +234,11 @@ const About = () => {
                   Our team is here to assist you with any inquiries you may
                   have.
                 </EnhancedParagraph>
-                <Typography variant="h6" color="#000">
-                  Email: contact@yourplatform.com
+                <Typography variant="h6" color="#175e5e">
+                  Email: jobsearch@gmail.comcom
                 </Typography>
-                <Typography variant="h6" color="#000">
-                  Location: Stup, Sarajevo
+                <Typography variant="h6" color="#175e5e">
+                  Location: Stupska 19d, Sarajevo
                 </Typography>
               </EnhancedCard>
             </Grid>
