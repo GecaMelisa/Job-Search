@@ -25,6 +25,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import "./jobCard.css";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 type JobCardProps = {
   job: Job;
@@ -38,6 +40,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
   const updateJobMutation = useUpdateJob();
   const deleteJobMutation = useDeleteJob();
   const [jobInfoModal, setJobInfoModal] = useState(false);
+  const { userToken } = useSelector((state: RootState) => state.auth);
 
   const handleApplyClick = () => {
     setIsModalOpen(true);
@@ -442,6 +445,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
                   </div>
                 ) : (
                   <Button
+                    disabled={userToken ? false : true}
                     variant="contained"
                     sx={{
                       color: "white",
