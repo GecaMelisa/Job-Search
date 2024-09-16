@@ -170,7 +170,7 @@ const UserProfile: React.FC = () => {
         let userConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: "http://localhost:8080/api/users/userInfo",
+          url: `${import.meta.env.VITE_API_URL}/users/userInfo`,
           headers: {
             Authorization: "Bearer " + userToken,
           },
@@ -182,7 +182,7 @@ const UserProfile: React.FC = () => {
         let applicationsConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: "http://localhost:8080/api/applications/",
+          url: `${import.meta.env.VITE_API_URL}/applications/`,
           headers: {
             Authorization: "Bearer " + userToken,
           },
@@ -193,7 +193,7 @@ const UserProfile: React.FC = () => {
         let allCompaniesConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: "http://localhost:8080/api/companies/",
+          url: `${import.meta.env.VITE_API_URL}/companies/`,
           headers: {
             Authorization: "Bearer " + userToken,
           },
@@ -204,7 +204,7 @@ const UserProfile: React.FC = () => {
         let companyOwnersConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: "http://localhost:8080/api/companyOwners/",
+          url: `${import.meta.env.VITE_API_URL}/companyOwners/`,
           headers: {
             Authorization: "Bearer " + userToken,
           },
@@ -216,7 +216,9 @@ const UserProfile: React.FC = () => {
         let companiesConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: `http://localhost:8080/api/companies/withPagination?offset=${
+          url: `${
+            import.meta.env.VITE_API_URL
+          }/companies/withPagination?offset=${
             page * pageSize
           }&pageSize=${pageSize}&field=${searchTerm}`,
           headers: {
@@ -264,7 +266,7 @@ const UserProfile: React.FC = () => {
 
     try {
       const responseObject = await axios.patch(
-        `http://localhost:8080/api/applications/${id}`,
+        `${import.meta.env.VITE_API_URL}/applications/${id}`,
         {
           response: applicationResponse,
           toEmail: toEmail,

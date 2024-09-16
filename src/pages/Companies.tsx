@@ -105,7 +105,9 @@ const Companies: React.FC = () => {
         let companiesConfig = {
           method: "get",
           maxBodyLength: Infinity,
-          url: `http://localhost:8080/api/companies/withPagination?offset=${
+          url: `${
+            import.meta.env.VITE_API_URL
+          }/companies/withPagination?offset=${
             page * pageSize
           }&pageSize=${pageSize}&field=${searchTerm}`,
           // headers: {

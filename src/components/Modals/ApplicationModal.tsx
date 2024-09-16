@@ -73,7 +73,7 @@ const ApplicationModal: React.FC<ApplicationModalProps> = ({
       fData.append("cv", file);
 
       const response = await axios.post(
-        "http://localhost:8080/api/applications/submitApp",
+        `${import.meta.env.VITE_API_URL}/applications/submitApp`,
         fData,
         { headers: { Authorization: "Bearer " + token } }
       );

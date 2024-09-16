@@ -1,10 +1,10 @@
-import {useMutation } from "react-query";
-import axios from 'axios';
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const addJob = (job: any) => {
-    return axios.post("http://localhost:8080/api/jobs/createJob", job);
-}
+  return axios.post(`${import.meta.env.VITE_API_URL}/jobs/createJob`, job);
+};
 
 export const useCreateJob = () => {
-    return useMutation(addJob)
-}
+  return useMutation(addJob);
+};

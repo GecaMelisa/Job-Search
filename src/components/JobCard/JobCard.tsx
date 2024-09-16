@@ -66,7 +66,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, company }) => {
       if (userToken) {
         try {
           const response = await axios.get(
-            "http://localhost:8080/api/users/userInfo",
+            `${import.meta.env.VITE_API_URL}/users/userInfo`,
             {
               headers: {
                 Authorization: `Bearer ${userToken}`,

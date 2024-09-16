@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Job } from '../../utils/types';
-import { JobService } from '../../services';
-import './jobList.css';
-import { jobList } from '../../constants';
-import axios from 'axios';
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { Job } from "../../utils/types";
+import { JobService } from "../../services";
+import "./jobList.css";
+import { jobList } from "../../constants";
+import axios from "axios";
 
 const JobList = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -13,7 +13,7 @@ const JobList = () => {
   const [page, setPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [pageSize, setPageSize] = useState(10);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   /*
 
@@ -23,36 +23,38 @@ const JobList = () => {
     setJobs(filteredJobs)
  }*/
 
- const handlePageSizeChange = (e: any) => {
-  setPageSize(Number(e.target.value));
-  setPage(0)
-}
-
-useEffect(() => {
-  console.log('jobs after update:', jobs);
-}, [jobs]);
-
+  const handlePageSizeChange = (e: any) => {
+    setPageSize(Number(e.target.value));
+    setPage(0);
+  };
 
   useEffect(() => {
-    var userToken = localStorage.getItem('userToken');
+    console.log("jobs after update:", jobs);
+  }, [jobs]);
+
+  useEffect(() => {
+    var userToken = localStorage.getItem("userToken");
     const fetchData = async () => {
       try {
         setLoading(true);
 
-         //fetch jobs
+        //fetch jobs
 
-         let jobsConfig = {
-          method: 'get',
+        let jobsConfig = {
+          method: "get",
           maxBodyLength: Infinity,
-          url:`http://localhost:8080/api/jobs/jobsWithPagination?offset=${page * pageSize}&pageSize=${pageSize}&field=${searchTerm}`,
+          url: `${
+            import.meta.env.VITE_API_URL
+          }/jobs/jobsWithPagination?offset=${
+            page * pageSize
+          }&pageSize=${pageSize}&field=${searchTerm}`,
           headers: {
-            'Authorization': 'Bearer ' + userToken,
+            Authorization: "Bearer " + userToken,
           },
         };
         const jobsResponse = await axios.request(jobsConfig);
         setJobs(jobsResponse.data.data);
-        setTotalCount(jobsResponse.data.total)
-
+        setTotalCount(jobsResponse.data.total);
       } catch (error) {
         setError(error);
       } finally {
@@ -63,8 +65,7 @@ useEffect(() => {
     fetchData();
   }, [page, pageSize, searchTerm]);
 
-
-    /*
+  /*
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -81,21 +82,21 @@ useEffect(() => {
   }, []);
   */
 
-
   return (
     <>
-      {loading && <div className="spinner-border text-primary" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>}
-      {error && <div className="alert alert-danger" role="alert">
-        <h4 className="alert-heading">Unable to render data!</h4>
-        <p>{error?.response?.data?.message || error?.message}</p>
-        <hr />
-        <p className="mb-0">Something went wrong, please try again.</p>
-      </div>}
-
-  
-     
+      {loading && (
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      )}
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          <h4 className="alert-heading">Unable to render data!</h4>
+          <p>{error?.response?.data?.message || error?.message}</p>
+          <hr />
+          <p className="mb-0">Something went wrong, please try again.</p>
+        </div>
+      )}
     </>
   );
 };
